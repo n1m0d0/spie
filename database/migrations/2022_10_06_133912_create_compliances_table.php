@@ -19,6 +19,8 @@ return new class extends Migration
             $table->date('year');
             $table->tinyText('advance');
             $table->timestamps();
+
+            $table->foreign('indicator_id')->references('id')->on('indicators');
         });
     }
 
