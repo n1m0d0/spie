@@ -18,8 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('entity_id');
             $table->unsignedBigInteger('state_id');
             $table->string('name');
-            $table->string('lastname_paternal');
-            $table->string('lastname_maternal');
+            $table->string('lastname_paternal')->nullable();
+            $table->string('lastname_maternal')->nullable();
             $table->string('identity_card');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
