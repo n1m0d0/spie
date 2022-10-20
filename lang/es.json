@@ -197,5 +197,19 @@
     "Select an option": "Seleccione una opción",
     "Entity": "Entidad",
     "Edit": "Editar",
-    "Update": "Actualizar"
+    "Update": "Actualizar",
+    "Hub": "Eje",
+    "Description": "Descripción",
+    "Result": "Resultado",
+    "Goal": "Meta",
+    "Action": "Acción",
+    "Dissociation": "Disgregación",
+    "Indicator": "Indicador",
+    "Measure": "Medida",
+    "Type": "Tipo",
+    "Formula": "Fórmula",
+    "Periodicity": "Periodicidad",
+    "Source of information": "Fuente de información",
+    "Base line": "Línea base",
+    "Strategic theme": "Tematica estratégica"
 }

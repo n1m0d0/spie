@@ -16,82 +16,15 @@
                     </div>
 
                     <div class="relative z-0 mb-6 w-full group">
-                        <input type="text" name="paternal" id="paternal" wire:model='paternal'
+                        <input type="text" name="description" id="description" wire:model='description'
                             class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                             placeholder=" " />
 
-                        <label for="paternal"
+                        <label for="description"
                             class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                            {{ __('Lastname paternal') }}
+                            {{ __('Description') }}
                         </label>
-                        <x-jet-input-error for="paternal" />
-                    </div>
-                </div>
-
-                <div class="grid md:grid-cols-2 md:gap-6">
-                    <div class="relative z-0 mb-6 w-full group">
-                        <input type="text" name="maternal" id="maternal" wire:model='maternal'
-                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                            placeholder=" " />
-
-                        <label for="maternal"
-                            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                            {{ __('Lastname maternal') }}
-                        </label>
-                        <x-jet-input-error for="maternal" />
-                    </div>
-
-                    <div class="relative z-0 mb-6 w-full group">
-                        <input type="text" name="identity" id="identity" wire:model='identity'
-                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                            placeholder=" " />
-
-                        <label for="identity"
-                            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                            {{ __('Identity card') }}
-                        </label>
-                        <x-jet-input-error for="identity" />
-                    </div>
-                </div>
-
-                <div class="grid md:grid-cols-2 md:gap-6">
-                    <div class="relative z-0 mb-6 w-full group">
-                        <input type="email" name="email" id="email" wire:model='email'
-                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                            placeholder=" " />
-
-                        <label for="email"
-                            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                            {{ __('Email') }}
-                        </label>
-                        <x-jet-input-error for="email" />
-                    </div>
-                    <div class="relative z-0 mb-6 w-full group">
-                        <label for="entity_id"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">{{ __('Entity') }}</label>
-                        <select id="entity_id" wire:model="entity_id"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option value="">{{ __('Select an option') }}</option>
-                            @foreach ($entities as $entity)
-                                <option value="{{ $entity->id }}">{{ $entity->name }}</option>
-                            @endforeach
-                        </select>
-                        <x-jet-input-error for="entity_id" />
-                    </div>
-                </div>
-
-                <div class="grid md:grid-cols-2 md:gap-6">
-                    <div class="relative z-0 mb-6 w-full group">
-                        <label for="role"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">{{ __('Role') }}</label>
-                        <select id="role" wire:model="role"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option value="">{{ __('Select an option') }}</option>
-                            @foreach ($roles as $role)
-                                <option value="{{ $role->name }}">{{ $role->name }}</option>
-                            @endforeach
-                        </select>
-                        <x-jet-input-error for="role" />
+                        <x-jet-input-error for="description" />
                     </div>
                 </div>
 
@@ -157,14 +90,9 @@
                                 {{ __('Name') }}
                             </th>
                             <th scope="col" class="py-3 px-6">
-                                {{ __('Email') }}
+                                {{ __('Description') }}
                             </th>
-                            <th scope="col" class="py-3 px-6">
-                                {{ __('Identity card') }}
-                            </th>
-                            <th scope="col" class="py-3 px-6">
-                                {{ __('Role') }}
-                            </th>
+
                             <th scope="col" class="py-3 px-6">
                                 <span class="sr-only">Options</span>
                             </th>
@@ -172,25 +100,19 @@
                     </thead>
 
                     <tbody>
-                        @foreach ($users as $user)
+                        @foreach ($results as $result)
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                 <th scope="row"
                                     class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {{ $user->name }} {{ $user->paternal }} {{ $user->maternal }}
-                                </td>
+                                    {{ $result->name }}
+                                    </td>
                                 <td class="py-4 px-6">
-                                    {{ $user->email }}
-                                </td>
-                                <td class="py-4 px-6">
-                                    {{ $user->identity }}
-                                </td>
-                                <td class="py-4 px-6">
-                                    {{ $user->getRoleNames()[0] }}
+                                    {{ $result->description }}
                                 </td>
                                 <td class="py-4 px-6 text-right">
-                                    <a wire:click='edit({{ $user->id }})'
+                                    <a wire:click='edit({{ $result->id }})'
                                         class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">{{ __('Edit') }}</a>
-                                    <a wire:click='modalDelete({{ $user->id }})'
+                                    <a wire:click='modalDelete({{ $result->id }})'
                                         class="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer">{{ __('Delete') }}</a>
                                 </td>
                             </tr>
@@ -200,7 +122,7 @@
             </div>
         @endslot
         @slot('paginate')
-            {{ $users->links('vendor.livewire.custom') }}
+            {{ $results->links('vendor.livewire.custom') }}
         @endslot
     </x-table-form>
 
@@ -208,7 +130,7 @@
         <x-slot name="title">
             <div class="flex col-span-6 sm:col-span-4 items-center">
                 <x-feathericon-alert-triangle class="h-10 w-10 text-red-500 mr-2" />
-                {{ __('Delete user') }}
+                {{ __('Delete result') }}
             </div>
         </x-slot>
 
@@ -231,3 +153,4 @@
         </x-slot>
     </x-dialog-modal>
 </div>
+

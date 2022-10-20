@@ -201,4 +201,15 @@ return [
         'username'                 => 'usuario',
         'year'                     => 'año',
     ],
+
+    'attributes' => [
+        'name' => 'Nombre',
+        'description' => 'Descripción',
+        'entity_id' => 'Entidad',
+        'identity' => 'Cedula de identidad',
+        'email' => 'Correo electrónico',
+        'role' => 'Rol',
+        'paternal' => 'Apellido Paterno',
+        'maternal' => 'Apellido Materno',
+    ],
 ];

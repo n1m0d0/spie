@@ -10,6 +10,7 @@ use Illuminate\Validation\Rule;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use Usernotnull\Toast\Concerns\WireToast;
+use Illuminate\Support\Facades\DB;
 
 class ComponentUser extends Component
 {
@@ -17,18 +18,19 @@ class ComponentUser extends Component
     use WithFileUploads;
     use WireToast;
 
-    public $action;
+    public $activity;
     public $iteration;
     public $search;
 
     public $entity_id;
     public $state_id;
     public $name;
-    public $lastname_paternal;
-    public $lastname_maternal;
-    public $identity_card;
+    public $paternal;
+    public $maternal;
+    public $identity;
     public $email;
     public $password;
+    public $role;
     public $user_id;
 
     public $deleteModal;
@@ -41,15 +43,16 @@ class ComponentUser extends Component
     protected $rules = [
         'entity_id' => 'required',
         'name' => 'required|max:200',
-        'lastname_paternal' => 'max:200',
-        'lastname_maternal' => 'max:200',
-        'identity_card' => 'required|max:200',
-        'email' => 'required|unique:users|max:100'
+        'paternal' => 'max:200',
+        'maternal' => 'max:200',
+        'identity' => 'required|max:200',
+        'email' => 'required|unique:users|max:100',
+        'role' => 'required'
     ];
 
     public function mount()
     {
-        $this->action = 'create';
+        $this->activity = 'create';
         $this->iteration = rand(0, 999);
         $this->deleteModal = false;
     }
@@ -61,9 +64,10 @@ class ComponentUser extends Component
             $this->updatingSearch();
             $Query = $Query->where('name', 'like', '%' . $this->search . '%');
         }
-        $users = $Query->where('state_id', 1)->orderBy('id', 'DESC')->paginate(7);
+        $users = $Query->where('state_id', 1)->where('id', "!=", 1)->orderBy('id', 'DESC')->paginate(7);
         $entities = Entity::all();
-        return view('livewire.component-user', compact('users', 'entities'));
+        $roles = DB::table('roles')->where('guard_name', 'web')->get();
+        return view('livewire.component-user', compact('users', 'entities', 'roles'));
     }
 
     public function store()
@@ -74,12 +78,14 @@ class ComponentUser extends Component
         $user->entity_id = $this->entity_id;
         $user->state_id = 1;
         $user->name = $this->name;
-        $user->lastname_paternal = $this->lastname_paternal;
-        $user->lastname_maternal = $this->lastname_maternal;
-        $user->identity_card = $this->identity_card;
+        $user->paternal = $this->paternal;
+        $user->maternal = $this->maternal;
+        $user->identity = $this->identity;
         $user->email = $this->email;
         $user->password = bcrypt("sistemas123");
         $user->save();
+
+        $user->assignRole($this->role);
 
         $this->clear();
         toast()
@@ -90,15 +96,18 @@ class ComponentUser extends Component
     public function edit($id)
     {
         $this->user_id = $id;
+
         $user = User::find($id);
+
         $this->entity_id = $user->entity_id;
         $this->name = $user->name;
-        $this->lastname_paternal = $user->lastname_paternal;
-        $this->lastname_maternal = $user->lastname_maternal;
-        $this->identity_card = $user->identity_card;
+        $this->paternal = $user->paternal;
+        $this->maternal = $user->maternal;
+        $this->identity = $user->identity;
         $this->email = $user->email;
+        $this->role = $user->getRoleNames()[0];
 
-        $this->action = "edit";
+        $this->activity = "edit";
     }
 
     public function update()
@@ -108,32 +117,58 @@ class ComponentUser extends Component
         $this->validate([
             'entity_id' => 'required',
             'name' => 'required|max:200',
-            'lastname_paternal' => 'max:200',
-            'lastname_maternal' => 'max:200',
-            'identity_card' => 'required|max:200',
-            'email' => ['required', 'max:100', Rule::unique('users')->ignore($this->user_id)]
+            'paternal' => 'max:200',
+            'maternal' => 'max:200',
+            'identity' => 'required|max:200',
+            'email' => ['required', 'max:100', Rule::unique('users')->ignore($this->user_id)],
+            'role' => 'required'
         ]);
+
+        $user->removeRole($user->getRoleNames()[0]);
 
         $user->entity_id = $this->entity_id;
         $user->name = $this->name;
-        $user->lastname_paternal = $this->lastname_paternal;
-        $user->lastname_maternal = $this->lastname_maternal;
-        $user->identity_card = $this->identity_card;
+        $user->paternal = $this->paternal;
+        $user->maternal = $this->maternal;
+        $user->identity = $this->identity;
         $user->email = $this->email;
         $user->save();
 
-        $this->action = "create";
+        $user->assignRole($this->role);
+
+        $this->activity = "create";
         $this->clear();
         toast()
             ->success('Se actualizo correctamente')
             ->push();
     }
 
+    public function modalDelete($id)
+    {
+        $this->user_id = $id;
+
+        $this->deleteModal = true;
+    }
+
+    public function delete()
+    {
+        $user = User::find($this->user_id);
+
+        $user->state_id = 2;
+        $user->save();
+
+        $this->deleteModal = false;
+        $this->clear();
+        toast()
+            ->success('Se elimino correctamente')
+            ->push();
+    }
+
     public function clear()
     {
-        $this->reset(['entity_id', 'state_id', 'name', 'lastname_paternal', 'lastname_maternal', 'identity_card', 'email', 'user_id']);
+        $this->reset(['entity_id', 'state_id', 'name', 'paternal', 'maternal', 'identity', 'email', 'user_id']);
         $this->iteration++;
-        $this->action = "create";
+        $this->activity = "create";
     }
 
     public function resetSearch()

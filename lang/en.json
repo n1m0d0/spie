@@ -197,5 +197,19 @@
     "Select an option": "Select an option",
     "Entity": "Entity",
     "Edit": "Edit",
-    "Update": "Update"
+    "Update": "Update",
+    "Hub": "Hub",
+    "Description": "Description",
+    "Result": "Result",
+    "Goal": "Goal",
+    "Action": "Action",
+    "Dissociation": "Dissociation",
+    "Indicator": "Indicator",
+    "Measure": "Measure",
+    "Type": "Type",
+    "Formula": "Formula",
+    "Periodicity": "Periodicity",
+    "Source of information": "Source of information",
+    "Base line": "Base line",
+    "Strategic theme": "Strategic theme"
 }

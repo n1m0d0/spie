@@ -35,6 +35,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('goal_id')->references('id')->on('goals');
+            $table->foreign('action_id')->references('id')->on('actions');
         });
     }
 
