@@ -40,4 +40,19 @@ class PageController extends Controller
     {
         return view('pages.indicator');
     }
+
+    public function department()
+    {
+        return view('pages.department');
+    }
+
+    public function municipality()
+    {
+        return view('pages.municipality');
+    }
+
+    public function organization()
+    {
+        return view('pages.organization');
+    }
 }

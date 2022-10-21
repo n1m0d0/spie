@@ -4,6 +4,19 @@
             <form class="mt-2">
                 <div class="grid md:grid-cols-2 md:gap-6">
                     <div class="relative z-0 mb-6 w-full group">
+                        <label for="department_id"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">{{ __('Department') }}</label>
+                        <select id="department_id" wire:model="department_id"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option value="">{{ __('Select an option') }}</option>
+                            @foreach ($departments as $department)
+                                <option value="{{ $department->id }}">{{ $department->name }}</option>
+                            @endforeach
+                        </select>
+                        <x-jet-input-error for="department_id" />
+                    </div>
+
+                    <div class="relative z-0 mb-6 w-full group">
                         <input type="text" name="name" id="name" wire:model='name'
                             class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                             placeholder=" " />
@@ -77,6 +90,9 @@
                             <th scope="col" class="py-3 px-6">
                                 {{ __('Name') }}
                             </th>
+                            <th scope="col" class="py-3 px-6">
+                                {{ __('Department') }}
+                            </th>
 
                             <th scope="col" class="py-3 px-6">
                                 <span class="sr-only">Options</span>
@@ -85,17 +101,19 @@
                     </thead>
 
                     <tbody>
-                        @foreach ($departments as $department)
+                        @foreach ($municipalities as $municipality)
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                 <th scope="row"
                                     class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {{ $department->name }}
+                                    {{ $municipality->name }}
+                                    </td>
+                                <td class="py-4 px-6">
+                                    {{ $municipality->department->name }}
                                 </td>
-
                                 <td class="py-4 px-6 text-right">
-                                    <a wire:click='edit({{ $department->id }})'
+                                    <a wire:click='edit({{ $municipality->id }})'
                                         class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">{{ __('Edit') }}</a>
-                                    <a wire:click='modalDelete({{ $department->id }})'
+                                    <a wire:click='modalDelete({{ $municipality->id }})'
                                         class="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer">{{ __('Delete') }}</a>
                                 </td>
                             </tr>
@@ -105,7 +123,7 @@
             </div>
         @endslot
         @slot('paginate')
-            {{ $departments->links('vendor.livewire.custom') }}
+            {{ $municipalities->links('vendor.livewire.custom') }}
         @endslot
     </x-table-form>
 
@@ -113,7 +131,7 @@
         <x-slot name="title">
             <div class="flex col-span-6 sm:col-span-4 items-center">
                 <x-feathericon-alert-triangle class="h-10 w-10 text-red-500 mr-2" />
-                {{ __('Delete department') }}
+                {{ __('Delete municipality') }}
             </div>
         </x-slot>
 

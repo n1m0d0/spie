@@ -36,6 +36,15 @@
                     <x-jet-nav-link href="{{ route('page.indicator') }}" :active="request()->routeIs('page.indicator')">
                         {{ __('Indicator') }}
                     </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ route('page.department') }}" :active="request()->routeIs('page.department')">
+                        {{ __('Department') }}
+                    </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ route('page.municipality') }}" :active="request()->routeIs('page.municipality')">
+                        {{ __('Municipality') }}
+                    </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ route('page.organization') }}" :active="request()->routeIs('page.organization')">
+                        {{ __('Organization') }}
+                    </x-jet-nav-link>
                 </div>
             </div>
 
@@ -195,6 +204,15 @@
             </x-jet-responsive-nav-link>
             <x-jet-responsive-nav-link href="{{ route('page.indicator') }}" :active="request()->routeIs('page.indicator')">
                 {{ __('Indicator') }}
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="{{ route('page.department') }}" :active="request()->routeIs('page.department')">
+                {{ __('Department') }}
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="{{ route('page.municipality') }}" :active="request()->routeIs('page.municipality')">
+                {{ __('Municipality') }}
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="{{ route('page.organization') }}" :active="request()->routeIs('page.organization')">
+                {{ __('Organization') }}
             </x-jet-responsive-nav-link>
         </div>
 

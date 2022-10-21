@@ -14,6 +14,33 @@
                         </label>
                         <x-jet-input-error for="name" />
                     </div>
+
+                    <div class="relative z-0 mb-6 w-full group">
+                        <input type="text" name="description" id="description" wire:model='description'
+                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                            placeholder=" " />
+
+                        <label for="description"
+                            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                            {{ __('Description') }}
+                        </label>
+                        <x-jet-input-error for="description" />
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 md:gap-6">
+                    <div class="relative z-0 mb-6 w-full group">
+                        <label for="department_id"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">{{ __('Department') }}</label>
+                        <select id="department_id" wire:model="department_id"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option value="">{{ __('Select an option') }}</option>
+                            @foreach ($departments as $department)
+                                <option value="{{ $department->id }}">{{ $department->name }}</option>
+                            @endforeach
+                        </select>
+                        <x-jet-input-error for="department_id" />
+                    </div>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-12 gap-2">
@@ -77,6 +104,12 @@
                             <th scope="col" class="py-3 px-6">
                                 {{ __('Name') }}
                             </th>
+                            <th scope="col" class="py-3 px-6">
+                                {{ __('Description') }}
+                            </th>
+                            <th scope="col" class="py-3 px-6">
+                                {{ __('Department') }}
+                            </th>
 
                             <th scope="col" class="py-3 px-6">
                                 <span class="sr-only">Options</span>
@@ -85,17 +118,22 @@
                     </thead>
 
                     <tbody>
-                        @foreach ($departments as $department)
+                        @foreach ($organizations as $organization)
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                 <th scope="row"
                                     class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {{ $department->name }}
+                                    {{ $organization->name }}
+                                    </td>
+                                <td class="py-4 px-6">
+                                    {{ $organization->description }}
                                 </td>
-
+                                <td class="py-4 px-6">
+                                    {{ $organization->department->name }}
+                                </td>
                                 <td class="py-4 px-6 text-right">
-                                    <a wire:click='edit({{ $department->id }})'
+                                    <a wire:click='edit({{ $organization->id }})'
                                         class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">{{ __('Edit') }}</a>
-                                    <a wire:click='modalDelete({{ $department->id }})'
+                                    <a wire:click='modalDelete({{ $organization->id }})'
                                         class="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer">{{ __('Delete') }}</a>
                                 </td>
                             </tr>
@@ -105,7 +143,7 @@
             </div>
         @endslot
         @slot('paginate')
-            {{ $departments->links('vendor.livewire.custom') }}
+            {{ $organizations->links('vendor.livewire.custom') }}
         @endslot
     </x-table-form>
 
@@ -113,7 +151,7 @@
         <x-slot name="title">
             <div class="flex col-span-6 sm:col-span-4 items-center">
                 <x-feathericon-alert-triangle class="h-10 w-10 text-red-500 mr-2" />
-                {{ __('Delete department') }}
+                {{ __('Delete organization') }}
             </div>
         </x-slot>
 

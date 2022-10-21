@@ -36,4 +36,7 @@ Route::controller(PageController::class)->group(function () {
     Route::get('action', 'action')->name('page.action')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
     Route::get('dissociation', 'dissociation')->name('page.dissociation')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
     Route::get('indicator', 'indicator')->name('page.indicator')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
+    Route::get('department', 'department')->name('page.department')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
+    Route::get('municipality', 'municipality')->name('page.municipality')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
+    Route::get('organization', 'organization')->name('page.organization')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
 });

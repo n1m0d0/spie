@@ -3,12 +3,13 @@
 namespace App\Http\Livewire;
 
 use App\Models\Department;
+use App\Models\Municipality;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use Usernotnull\Toast\Concerns\WireToast;
 
-class ComponentDepartment extends Component
+class ComponentMunicipality extends Component
 {
     use WithPagination;
     use WithFileUploads;
@@ -20,6 +21,9 @@ class ComponentDepartment extends Component
 
     public $name;
     public $department_id;
+    public $municipality_id;
+
+    public $departments;
 
     public $deleteModal;
 
@@ -30,6 +34,7 @@ class ComponentDepartment extends Component
 
     protected $rules = [
         'name' => 'required|max:200',
+        'department_id' => 'required',
     ];
 
     public function mount()
@@ -37,26 +42,28 @@ class ComponentDepartment extends Component
         $this->activity = 'create';
         $this->iteration = rand(0, 999);
         $this->deleteModal = false;
+        $this->departments = Department::all();
     }
     
     public function render()
     {
-        $Query = Department::query();
+        $Query = Municipality::query();
         if ($this->search != null) {
             $this->updatingSearch();
             $Query = $Query->where('name', 'like', '%' . $this->search . '%');
         }
-        $departments = $Query->orderBy('id', 'DESC')->paginate(7);
-        return view('livewire.component-department', compact('departments'));
+        $municipalities = $Query->orderBy('id', 'DESC')->paginate(7);
+        return view('livewire.component-municipality', compact('municipalities'));
     }
 
     public function store()
     {
         $this->validate();
 
-        $department = new Department();
-        $department->name = $this->name;
-        $department->save();
+        $municipality = new Municipality();
+        $municipality->name = $this->name;
+        $municipality->department_id = $this->department_id;
+        $municipality->save();
 
         $this->clear();
         toast()
@@ -66,23 +73,25 @@ class ComponentDepartment extends Component
 
     public function edit($id)
     {
-        $this->department_id = $id;
+        $this->municipality_id = $id;
         
-        $department = Department::find($id);
+        $municipality = Municipality::find($id);
         
-        $this->name = $department->name;
+        $this->name = $municipality->name;
+        $this->department_id = $municipality->department_id;
 
         $this->activity = "edit";
     }
 
     public function update()
     {
-        $department = Department::find($this->department_id);
+        $municipality = Municipality::find($this->municipality_id);
 
         $this->validate();
 
-        $department->name = $this->name;
-        $department->save();
+        $municipality->name = $this->name;
+        $municipality->department_id = $this->department_id;
+        $municipality->save();
         
         $this->activity = "create";
         $this->clear();
@@ -93,15 +102,15 @@ class ComponentDepartment extends Component
 
     public function modalDelete($id)
     {
-        $this->department_id = $id;
+        $this->municipality_id = $id;
 
         $this->deleteModal = true;
     }
 
     public function delete()
     {
-        $department = Department::find($this->department_id);
-        $department->delete();
+        $municipality = Municipality::find($this->municipality_id);
+        $municipality->delete();
 
         $this->deleteModal = false;
         $this->clear();
@@ -112,7 +121,7 @@ class ComponentDepartment extends Component
 
     public function clear()
     {
-        $this->reset(['name', 'department_id']);
+        $this->reset(['name', 'department_id', 'municipality_id']);
         $this->iteration++;
         $this->activity = "create";
     }

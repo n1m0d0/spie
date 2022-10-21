@@ -2,13 +2,14 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Department;
 use Livewire\Component;
+use App\Models\Department;
+use App\Models\Organization;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use Usernotnull\Toast\Concerns\WireToast;
 
-class ComponentDepartment extends Component
+class ComponentOrganization extends Component
 {
     use WithPagination;
     use WithFileUploads;
@@ -19,7 +20,11 @@ class ComponentDepartment extends Component
     public $search;
 
     public $name;
+    public $description;
     public $department_id;
+    public $organization_id;
+
+    public $departments;
 
     public $deleteModal;
 
@@ -30,6 +35,8 @@ class ComponentDepartment extends Component
 
     protected $rules = [
         'name' => 'required|max:200',
+        'description' => 'required|max:200',
+        'department_id' => 'required|max:200',
     ];
 
     public function mount()
@@ -37,26 +44,29 @@ class ComponentDepartment extends Component
         $this->activity = 'create';
         $this->iteration = rand(0, 999);
         $this->deleteModal = false;
+        $this->departments = Department::all();
     }
     
     public function render()
     {
-        $Query = Department::query();
+        $Query = Organization::query();
         if ($this->search != null) {
             $this->updatingSearch();
             $Query = $Query->where('name', 'like', '%' . $this->search . '%');
         }
-        $departments = $Query->orderBy('id', 'DESC')->paginate(7);
-        return view('livewire.component-department', compact('departments'));
+        $organizations = $Query->orderBy('id', 'DESC')->paginate(7);
+        return view('livewire.component-organization', compact('organizations'));
     }
 
     public function store()
     {
         $this->validate();
 
-        $department = new Department();
-        $department->name = $this->name;
-        $department->save();
+        $organization = new Organization();
+        $organization->name = $this->name;
+        $organization->description = $this->description;
+        $organization->department_id = $this->department_id;
+        $organization->save();
 
         $this->clear();
         toast()
@@ -66,23 +76,27 @@ class ComponentDepartment extends Component
 
     public function edit($id)
     {
-        $this->department_id = $id;
+        $this->organization_id = $id;
         
-        $department = Department::find($id);
+        $organization = Organization::find($id);
         
-        $this->name = $department->name;
+        $this->name = $organization->name;
+        $this->description = $organization->description;
+        $this->department_id = $organization->department_id;
 
         $this->activity = "edit";
     }
 
     public function update()
     {
-        $department = Department::find($this->department_id);
+        $organization = Organization::find($this->organization_id);
 
         $this->validate();
 
-        $department->name = $this->name;
-        $department->save();
+        $organization->name = $this->name;
+        $organization->description = $this->description;
+        $organization->department_id = $this->department_id;
+        $organization->save();
         
         $this->activity = "create";
         $this->clear();
@@ -93,15 +107,15 @@ class ComponentDepartment extends Component
 
     public function modalDelete($id)
     {
-        $this->department_id = $id;
+        $this->organization_id = $id;
 
         $this->deleteModal = true;
     }
 
     public function delete()
     {
-        $department = Department::find($this->department_id);
-        $department->delete();
+        $organization = Organization::find($this->organization_id);
+        $organization->delete();
 
         $this->deleteModal = false;
         $this->clear();
@@ -112,7 +126,7 @@ class ComponentDepartment extends Component
 
     public function clear()
     {
-        $this->reset(['name', 'department_id']);
+        $this->reset(['name', 'description', 'department_id', 'organization_id']);
         $this->iteration++;
         $this->activity = "create";
     }
