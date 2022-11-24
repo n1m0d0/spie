@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Goal;
 use App\Models\Result;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -20,7 +21,10 @@ class ComponentResult extends Component
 
     public $name;
     public $description;
+    public $goal_id;
     public $result_id;
+
+    public $goals;
 
     public $deleteModal;
 
@@ -32,6 +36,7 @@ class ComponentResult extends Component
     protected $rules = [
         'name' => 'required|max:200',
         'description' => 'required|max:200',
+        'goal_id' => 'required'
     ];
 
     public function mount()
@@ -39,6 +44,7 @@ class ComponentResult extends Component
         $this->activity = 'create';
         $this->iteration = rand(0, 999);
         $this->deleteModal = false;
+        $this->goals = Goal::all();
     }
     
     public function render()
@@ -58,7 +64,8 @@ class ComponentResult extends Component
 
         $result = new Result();
         $result->name = $this->name;
-        $result->description = $this->description;
+        $result->description = $this->description;        
+        $result->goal_id = $this->goal_id;
         $result->save();
 
         $this->clear();
@@ -75,6 +82,7 @@ class ComponentResult extends Component
         
         $this->name = $result->name;
         $this->description = $result->description;
+        $this->goal_id = $result->goal_id;
 
         $this->activity = "edit";
     }
@@ -87,6 +95,7 @@ class ComponentResult extends Component
 
         $result->name = $this->name;
         $result->description = $this->description;
+        $result->goal_id = $this->goal_id;
         $result->save();
         
         $this->activity = "create";
@@ -117,7 +126,7 @@ class ComponentResult extends Component
 
     public function clear()
     {
-        $this->reset(['name', 'description', 'result_id']);
+        $this->reset(['name', 'description', 'goal_id', 'result_id']);
         $this->iteration++;
         $this->activity = "create";
     }

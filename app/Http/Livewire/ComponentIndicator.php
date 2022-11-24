@@ -16,21 +16,18 @@ class ComponentIndicator extends Component
     use WithFileUploads;
     use WireToast;
 
+    public $planning;
+
     public $activity;
     public $iteration;
     public $search;
 
-    public $goal_id;
-    public $action_id;
-    public $name;
+    
     public $description;
-    public $type;
-    public $measure;
     public $formula;
-    public $periodicity;
-    public $source_of_information;
+    public $year;
+    public $ending;
     public $base_line;
-    public $strategic_theme;
     public $indicator_id;
 
     public $goals;
@@ -44,17 +41,11 @@ class ComponentIndicator extends Component
     ];
 
     protected $rules = [
-        'goal_id' => 'required',
-        'action_id' => 'required',
-        'name' => 'required|max:200',
         'description' => 'required|max:200',
-        'type' => 'required',
-        'measure' => 'required',
         'formula' => 'required|max:200',
-        'periodicity' => 'required|max:200',
-        'source_of_information' => 'required|max:200',
+        'year' => 'required',
+        'ending' => 'required',
         'base_line' => 'required|max:200',
-        'strategic_theme' => 'required|max:200',
     ];
 
     public function mount()
@@ -62,8 +53,6 @@ class ComponentIndicator extends Component
         $this->activity = 'create';
         $this->iteration = rand(0, 999);
         $this->deleteModal = false;
-        $this->goals = Goal::all();
-        $this->actions = Action::all();
     }
     
     public function render()
@@ -71,7 +60,7 @@ class ComponentIndicator extends Component
         $Query = Indicator::query();
         if ($this->search != null) {
             $this->updatingSearch();
-            $Query = $Query->where('name', 'like', '%' . $this->search . '%');
+            $Query = $Query->where('description', 'like', '%' . $this->search . '%');
         }
         $indicators = $Query->orderBy('id', 'DESC')->paginate(7);
         return view('livewire.component-indicator', compact('indicators'));
@@ -82,17 +71,12 @@ class ComponentIndicator extends Component
         $this->validate();
 
         $indicator = new Indicator();
-        $indicator->goal_id = $this->goal_id;
-        $indicator->action_id = $this->action_id;
-        $indicator->name = $this->name;
+        $indicator->planning_id = $this->planning->id;
         $indicator->description = $this->description;
-        $indicator->type = $this->type;
-        $indicator->measure = $this->measure;
         $indicator->formula = $this->formula;
-        $indicator->periodicity = $this->periodicity;
-        $indicator->source_of_information = $this->source_of_information;
+        $indicator->year = $this->year;
+        $indicator->ending = $this->ending;
         $indicator->base_line = $this->base_line;
-        $indicator->strategic_theme = $this->strategic_theme;
         $indicator->save();
 
         $this->clear();
@@ -106,18 +90,12 @@ class ComponentIndicator extends Component
         $this->indicator_id = $id;
         
         $indicator = Indicator::find($id);
-        
-        $this->goal_id = $indicator->goal_id;
-        $this->action_id = $indicator->action_id;
-        $this->name = $indicator->name;
+
         $this->description = $indicator->description;
-        $this->type = $indicator->type;
-        $this->measure = $indicator->measure;
         $this->formula = $indicator->formula;
-        $this->periodicity = $indicator->periodicity;
-        $this->source_of_information = $indicator->source_of_information;
+        $this->year = $indicator->year;
+        $this->ending = $indicator->ending;
         $this->base_line = $indicator->base_line;
-        $this->strategic_theme = $indicator->strategic_theme;
 
         $this->activity = "edit";
     }
@@ -128,17 +106,11 @@ class ComponentIndicator extends Component
 
         $this->validate();
 
-        $indicator->goal_id = $this->goal_id;
-        $indicator->action_id = $this->action_id;
-        $indicator->name = $this->name;
         $indicator->description = $this->description;
-        $indicator->type = $this->type;
-        $indicator->measure = $this->measure;
         $indicator->formula = $this->formula;
-        $indicator->periodicity = $this->periodicity;
-        $indicator->source_of_information = $this->source_of_information;
+        $indicator->year = $this->year;
+        $indicator->ending = $this->ending;
         $indicator->base_line = $this->base_line;
-        $indicator->strategic_theme = $this->strategic_theme;
         $indicator->save();
         
         $this->activity = "create";
@@ -169,7 +141,7 @@ class ComponentIndicator extends Component
 
     public function clear()
     {
-        $this->reset(['goal_id', 'action_id', 'name', 'description', 'type', 'measure', 'formula', 'periodicity', 'source_of_information', 'base_line', 'strategic_theme', 'indicator_id']);
+        $this->reset(['description', 'formula', 'year', 'ending', 'base_line', 'indicator_id']);
         $this->iteration++;
         $this->activity = "create";
     }

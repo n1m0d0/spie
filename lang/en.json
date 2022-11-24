@@ -214,5 +214,18 @@
     "Strategic theme": "Strategic theme",
     "Department": "Department",
     "Accept": "Accept",
-    "Municipality": "Municipality"
+    "Municipality": "Municipality",
+    "Organization": "Organization",
+    "Pillar": "Pillar",
+    "Sector": "Sector",
+    "Planning": "Planning",
+    "Result description": "Result description",
+    "Action description": "Action description",
+    "Year": "Year",
+    "Ending": "Ending",
+    "Schedule": "Schedule",
+    "Date": "Date",
+    "Territory": "Territory",
+    "District": "District",
+    "Community": "Community"
 }

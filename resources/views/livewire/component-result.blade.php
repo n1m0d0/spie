@@ -28,6 +28,21 @@
                     </div>
                 </div>
 
+                <div class="grid md:grid-cols-2 md:gap-6">
+                    <div class="relative z-0 mb-6 w-full group">
+                        <label for="goal_id"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">{{ __('Goal') }}</label>
+                        <select id="goal_id" wire:model="goal_id"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option value="">{{ __('Select an option') }}</option>
+                            @foreach ($goals as $goal)
+                                <option value="{{ $goal->id }}">{{ $goal->name }}</option>
+                            @endforeach
+                        </select>
+                        <x-jet-input-error for="goal_id" />
+                    </div>
+                </div>
+
                 <div class="grid grid-cols-1 sm:grid-cols-12 gap-2">
                     @if ($activity == 'create')
                         <a wire:click='store' wire:loading.attr="disabled" wire:target="store"
@@ -92,6 +107,9 @@
                             <th scope="col" class="py-3 px-6">
                                 {{ __('Description') }}
                             </th>
+                            <th scope="col" class="py-3 px-6">
+                                {{ __('Goal') }}
+                            </th>
 
                             <th scope="col" class="py-3 px-6">
                                 <span class="sr-only">Options</span>
@@ -105,9 +123,12 @@
                                 <th scope="row"
                                     class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ $result->name }}
-                                    </td>
+                                </th>
                                 <td class="py-4 px-6">
                                     {{ $result->description }}
+                                </td>
+                                <td class="py-4 px-6">
+                                    {{ $result->goal->name }}
                                 </td>
                                 <td class="py-4 px-6 text-right">
                                     <a wire:click='edit({{ $result->id }})'
@@ -153,4 +174,3 @@
         </x-slot>
     </x-dialog-modal>
 </div>
-

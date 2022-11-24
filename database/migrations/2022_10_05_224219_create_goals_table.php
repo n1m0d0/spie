@@ -15,14 +15,12 @@ return new class extends Migration
     {
         Schema::create('goals', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('hub_id');
             $table->string('name');
             $table->tinyText('description');
-            $table->enum('type', [
-                'type1',
-                'type2',
-                'type3'
-            ]);
             $table->timestamps();
+
+            $table->foreign('hub_id')->references('id')->on('hubs');
         });
     }
 

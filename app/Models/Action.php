@@ -10,19 +10,14 @@ class Action extends Model
 {
     use HasFactory;
 
-    public function goal()
-    {
-        return $this->belongsTo(Goal::class);
-    }
-
-    public function hub()
-    {
-        return $this->belongsTo(Hub::class);
-    }
-
     public function result()
     {
         return $this->belongsTo(Result::class);
+    }
+
+    public function plannings()
+    {
+        return $this->hasMany(Planning::class);
     }
 
     protected function name(): Attribute

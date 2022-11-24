@@ -18,24 +18,33 @@
                     <x-jet-nav-link href="{{ route('page.user') }}" :active="request()->routeIs('page.user')">
                         {{ __('User') }}
                     </x-jet-nav-link>
+                    <!--
+                    <x-jet-nav-link href="{{ route('page.type') }}" :active="request()->routeIs('page.type')">
+                        {{ __('Type') }}
+                    </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ route('page.measure') }}" :active="request()->routeIs('page.measure')">
+                        {{ __('Measure') }}
+                    </x-jet-nav-link>
+                -->
+                    <x-jet-nav-link href="{{ route('page.sector') }}" :active="request()->routeIs('page.sector')">
+                        {{ __('Sector') }}
+                    </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ route('page.pillar') }}" :active="request()->routeIs('page.pillar')">
+                        {{ __('Pillar') }}
+                    </x-jet-nav-link>
                     <x-jet-nav-link href="{{ route('page.hub') }}" :active="request()->routeIs('page.hub')">
                         {{ __('Hub') }}
-                    </x-jet-nav-link>
-                    <x-jet-nav-link href="{{ route('page.result') }}" :active="request()->routeIs('page.result')">
-                        {{ __('Result') }}
                     </x-jet-nav-link>
                     <x-jet-nav-link href="{{ route('page.goal') }}" :active="request()->routeIs('page.goal')">
                         {{ __('Goal') }}
                     </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ route('page.result') }}" :active="request()->routeIs('page.result')">
+                        {{ __('Result') }}
+                    </x-jet-nav-link>
                     <x-jet-nav-link href="{{ route('page.action') }}" :active="request()->routeIs('page.action')">
                         {{ __('Action') }}
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="{{ route('page.dissociation') }}" :active="request()->routeIs('page.dissociation')">
-                        {{ __('Dissociation') }}
-                    </x-jet-nav-link>
-                    <x-jet-nav-link href="{{ route('page.indicator') }}" :active="request()->routeIs('page.indicator')">
-                        {{ __('Indicator') }}
-                    </x-jet-nav-link>
+                    <!--
                     <x-jet-nav-link href="{{ route('page.department') }}" :active="request()->routeIs('page.department')">
                         {{ __('Department') }}
                     </x-jet-nav-link>
@@ -44,6 +53,10 @@
                     </x-jet-nav-link>
                     <x-jet-nav-link href="{{ route('page.organization') }}" :active="request()->routeIs('page.organization')">
                         {{ __('Organization') }}
+                    </x-jet-nav-link>
+                    -->
+                    <x-jet-nav-link href="{{ route('page.planning') }}" :active="request()->routeIs('page.planning')">
+                        {{ __('Planning') }}
                     </x-jet-nav-link>
                 </div>
             </div>
@@ -187,24 +200,33 @@
             <x-jet-responsive-nav-link href="{{ route('page.user') }}" :active="request()->routeIs('page.user')">
                 {{ __('User') }}
             </x-jet-responsive-nav-link>
+            <!--
+            <x-jet-responsive-nav-link href="{{ route('page.type') }}" :active="request()->routeIs('page.type')">
+                {{ __('Type') }}
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="{{ route('page.measure') }}" :active="request()->routeIs('page.measure')">
+                {{ __('Measure') }}
+            </x-jet-responsive-nav-link>
+            -->
+            <x-jet-responsive-nav-link href="{{ route('page.sector') }}" :active="request()->routeIs('page.sector')">
+                {{ __('Sector') }}
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="{{ route('page.pillar') }}" :active="request()->routeIs('page.pillar')">
+                {{ __('Pillar') }}
+            </x-jet-responsive-nav-link>
             <x-jet-responsive-nav-link href="{{ route('page.hub') }}" :active="request()->routeIs('page.hub')">
                 {{ __('Hub') }}
-            </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="{{ route('page.result') }}" :active="request()->routeIs('page.result')">
-                {{ __('Result') }}
             </x-jet-responsive-nav-link>
             <x-jet-responsive-nav-link href="{{ route('page.goal') }}" :active="request()->routeIs('page.goal')">
                 {{ __('Goal') }}
             </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="{{ route('page.result') }}" :active="request()->routeIs('page.result')">
+                {{ __('Result') }}
+            </x-jet-responsive-nav-link>
             <x-jet-responsive-nav-link href="{{ route('page.action') }}" :active="request()->routeIs('page.action')">
                 {{ __('Action') }}
             </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="{{ route('page.dissociation') }}" :active="request()->routeIs('page.dissociation')">
-                {{ __('Dissociation') }}
-            </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="{{ route('page.indicator') }}" :active="request()->routeIs('page.indicator')">
-                {{ __('Indicator') }}
-            </x-jet-responsive-nav-link>
+            <!--
             <x-jet-responsive-nav-link href="{{ route('page.department') }}" :active="request()->routeIs('page.department')">
                 {{ __('Department') }}
             </x-jet-responsive-nav-link>
@@ -214,6 +236,7 @@
             <x-jet-responsive-nav-link href="{{ route('page.organization') }}" :active="request()->routeIs('page.organization')">
                 {{ __('Organization') }}
             </x-jet-responsive-nav-link>
+            -->
         </div>
 
         <!-- Responsive Settings Options -->

@@ -10,9 +10,14 @@ class Hub extends Model
 {
     use HasFactory;
 
-    public function actions()
+    public function pillar()
     {
-        return $this->hasMany(Action::class);
+        return $this->belongsTo(Pillar::class);
+    }
+
+    public function goals()
+    {
+        return $this->hasMany(Goal::class);
     }
 
     protected function name(): Attribute

@@ -10,11 +10,16 @@ class Result extends Model
 {
     use HasFactory;
 
+    public function goal()
+    {
+        return $this->belongsTo(Goal::class);
+    }
+
     public function actions()
     {
         return $this->hasMany(Action::class);
     }
-
+    
     protected function name(): Attribute
     {
         return Attribute::make(

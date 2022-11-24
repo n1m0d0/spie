@@ -18,6 +18,11 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             EntitySeeder::class,
             StateSeeder::class,
+            MeasureSeeder::class,
+            TypeSeeder::class,
+            SectorSeeder::class,
+            PillarSeeder::class,
+            DepartmentSeeder::class,
             UserSeeder::class,
         ]);
     }

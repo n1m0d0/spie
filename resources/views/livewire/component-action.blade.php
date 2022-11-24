@@ -27,35 +27,7 @@
                         <x-jet-input-error for="description" />
                     </div>
                 </div>
-
-                <div class="grid md:grid-cols-2 md:gap-6">
-                    <div class="relative z-0 mb-6 w-full group">
-                        <label for="goal_id"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">{{ __('Goal') }}</label>
-                        <select id="goal_id" wire:model="goal_id"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option value="">{{ __('Select an option') }}</option>
-                            @foreach ($goals as $goal)
-                                <option value="{{ $goal->id }}">{{ $goal->name }}</option>
-                            @endforeach
-                        </select>
-                        <x-jet-input-error for="goal_id" />
-                    </div>
-
-                    <div class="relative z-0 mb-6 w-full group">
-                        <label for="hub_id"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">{{ __('Hub') }}</label>
-                        <select id="hub_id" wire:model="hub_id"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option value="">{{ __('Select an option') }}</option>
-                            @foreach ($hubs as $hub)
-                                <option value="{{ $hub->id }}">{{ $hub->name }}</option>
-                            @endforeach
-                        </select>
-                        <x-jet-input-error for="hub_id" />
-                    </div>
-                </div>
-
+                
                 <div class="grid md:grid-cols-2 md:gap-6">
                     <div class="relative z-0 mb-6 w-full group">
                         <label for="result_id"
@@ -136,7 +108,7 @@
                                 {{ __('Description') }}
                             </th>
                             <th scope="col" class="py-3 px-6">
-                                {{ __('Enable') }}
+                                {{ __('Result') }}
                             </th>
                             <th scope="col" class="py-3 px-6">
                                 <span class="sr-only">Options</span>
@@ -150,22 +122,12 @@
                                 <th scope="row"
                                     class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ $action->name }}
-                                    </td>
+                                </th>
                                 <td class="py-4 px-6">
                                     {{ $action->description }}
                                 </td>
                                 <td class="py-4 px-6">
-                                    <ul>
-                                        @if ($action->goal_id != null)
-                                            <li>{{ $action->goal->name }}</li>
-                                        @endif
-                                        @if ($action->hub_id != null)
-                                            <li>{{ $action->hub->name }}</li>
-                                        @endif
-                                        @if ($action->result_id != null)
-                                            <li>{{ $action->result->name }}</li>
-                                        @endif
-                                    </ul>
+                                    {{ $action->result->name }}
                                 </td>
                                 <td class="py-4 px-6 text-right">
                                     <a wire:click='edit({{ $action->id }})'

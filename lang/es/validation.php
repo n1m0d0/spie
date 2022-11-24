@@ -211,5 +211,16 @@ return [
         'role' => 'Rol',
         'paternal' => 'Apellido Paterno',
         'maternal' => 'Apellido Materno',
+        'pillar_id' => 'Pilar',
+        'hub_id' => 'Eje',
+        'goal_id' => 'Meta',
+        'result_id' => 'Resultado',
+        'department_id' => 'Departamento',
+        'municipality_id' => 'Municipio',
+        'action_id' => 'Acción',
+        'sector_id' => 'Sector',
+        'code' => 'Código',
+        'result_description' => 'Descripción del resultado',
+        'action_description' => 'Descripción de la acción'
     ],
 ];

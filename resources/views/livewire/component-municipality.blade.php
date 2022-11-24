@@ -2,7 +2,19 @@
     <x-data-form>
         @slot('form')
             <form class="mt-2">
-                <div class="grid md:grid-cols-2 md:gap-6">
+                <div class="grid md:grid-cols-2 md:gap-6">           
+                    <div class="relative z-0 mb-6 w-full group">
+                        <input type="text" name="name" id="name" wire:model='name'
+                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                            placeholder=" " />
+
+                        <label for="name"
+                            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                            {{ __('Name') }}
+                        </label>
+                        <x-jet-input-error for="name" />
+                    </div>
+                    
                     <div class="relative z-0 mb-6 w-full group">
                         <label for="department_id"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">{{ __('Department') }}</label>
@@ -14,18 +26,6 @@
                             @endforeach
                         </select>
                         <x-jet-input-error for="department_id" />
-                    </div>
-
-                    <div class="relative z-0 mb-6 w-full group">
-                        <input type="text" name="name" id="name" wire:model='name'
-                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                            placeholder=" " />
-
-                        <label for="name"
-                            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                            {{ __('Name') }}
-                        </label>
-                        <x-jet-input-error for="name" />
                     </div>
                 </div>
 
@@ -106,7 +106,7 @@
                                 <th scope="row"
                                     class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ $municipality->name }}
-                                    </td>
+                                </th>
                                 <td class="py-4 px-6">
                                     {{ $municipality->department->name }}
                                 </td>

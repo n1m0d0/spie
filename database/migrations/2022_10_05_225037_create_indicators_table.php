@@ -15,27 +15,15 @@ return new class extends Migration
     {
         Schema::create('indicators', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('action_id');
-            $table->unsignedBigInteger('goal_id');
-            $table->string('name');
-            $table->enum('type', [
-                'type1',
-                'type2'
-            ]);
-            $table->enum('measure', [
-                'measure1',
-                'measure2'
-            ]);
-            $table->string('formula');
-            $table->string('periodicity');
+            $table->unsignedBigInteger('planning_id');
             $table->tinyText('description');
-            $table->string('source_of_information');
+            $table->string('formula');
+            $table->string('year');
             $table->string('base_line');
-            $table->tinyText('strategic_theme');
+            $table->tinyText('ending');
             $table->timestamps();
 
-            $table->foreign('goal_id')->references('id')->on('goals');
-            $table->foreign('action_id')->references('id')->on('actions');
+            $table->foreign('planning_id')->references('id')->on('plannings');
         });
     }
 

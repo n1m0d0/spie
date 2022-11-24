@@ -105,7 +105,7 @@
                                 <th scope="row"
                                     class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ $dissociation->name }}
-                                    </td>
+                                </th>
                                 <td class="py-4 px-6">
                                     {{ $dissociation->description }}
                                 </td>
@@ -153,4 +153,3 @@
         </x-slot>
     </x-dialog-modal>
 </div>
-

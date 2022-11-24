@@ -23,14 +23,10 @@ class ComponentAction extends Component
 
     public $name;
     public $description;
-    public $goal_id;
     public $result_id;
-    public $hub_id;
     public $action_id;
 
-    public $goals;
     public $results;
-    public $hubs;
 
     public $deleteModal;
 
@@ -42,6 +38,7 @@ class ComponentAction extends Component
     protected $rules = [
         'name' => 'required|max:200',
         'description' => 'required|max:200',
+        'result_id' => 'required'
     ];
 
     public function mount()
@@ -50,9 +47,7 @@ class ComponentAction extends Component
         $this->iteration = rand(0, 999);
         $this->deleteModal = false;
 
-        $this->goals = Goal::all();
         $this->results = Result::all();
-        $this->hubs = Hub::all();
     }
 
     public function render()
@@ -70,36 +65,16 @@ class ComponentAction extends Component
     {
         $this->validate();
 
-        if ($this->hub_id != null || $this->goal_id != null || $this->result_id != null) {
-            if ($this->goal_id == null) {
-                $this->goal_id = null;
-            }
+        $action = new Action();
+        $action->name = $this->name;
+        $action->description = $this->description;
+        $action->result_id = $this->result_id;
+        $action->save();
 
-            if ($this->hub_id == null) {
-                $this->hub_id = null;
-            }
-
-            if ($this->result_id == null) {
-                $this->result_id = null;
-            }
-
-            $action = new Action();
-            $action->goal_id = $this->goal_id;
-            $action->hub_id = $this->hub_id;
-            $action->result_id = $this->result_id;
-            $action->name = $this->name;
-            $action->description = $this->description;
-            $action->save();
-
-            $this->clear();
-            toast()
-                ->success('Se guardo correctamente')
-                ->push();
-        } else {
-            toast()
-                ->warning('Debe Selecionar una Meta o Eje y/o Resultado')
-                ->push();
-        }
+        $this->clear();
+        toast()
+            ->success('Se guardo correctamente')
+            ->push();
     }
 
     public function edit($id)
@@ -108,11 +83,9 @@ class ComponentAction extends Component
 
         $action = Action::find($id);
 
-        $this->goal_id = $action->goal_id;
-        $this->hub_id = $action->hub_id;
-        $this->result_id = $action->result_id;
         $this->name = $action->name;
         $this->description = $action->description;
+        $this->result_id = $action->result_id;
 
         $this->activity = "edit";
     }
@@ -123,36 +96,16 @@ class ComponentAction extends Component
 
         $this->validate();
 
-        if ($this->hub_id != null || $this->goal_id != null || $this->result_id != null) {
-            if ($this->goal_id == null) {
-                $this->goal_id = null;
-            }
+        $action->name = $this->name;
+        $action->description = $this->description;
+        $action->result_id = $this->result_id;
+        $action->save();
 
-            if ($this->hub_id == null) {
-                $this->hub_id = null;
-            }
-
-            if ($this->result_id == null) {
-                $this->result_id = null;
-            }
-
-            $action->goal_id = $this->goal_id;
-            $action->hub_id = $this->hub_id;
-            $action->result_id = $this->result_id;
-            $action->name = $this->name;
-            $action->description = $this->description;
-            $action->save();
-
-            $this->activity = "create";
-            $this->clear();
-            toast()
-                ->success('Se actualizo correctamente')
-                ->push();
-        } else {
-            toast()
-                ->warning('Debe Selecionar una Meta o Eje y/o Resultado')
-                ->push();
-        }
+        $this->activity = "create";
+        $this->clear();
+        toast()
+            ->success('Se actualizo correctamente')
+            ->push();
     }
 
     public function modalDelete($id)
@@ -176,7 +129,7 @@ class ComponentAction extends Component
 
     public function clear()
     {
-        $this->reset(['goal_id', 'hub_id', 'result_id', 'name', 'description', 'action_id']);
+        $this->reset(['name', 'description', 'result_id', 'action_id']);
         $this->iteration++;
         $this->activity = "create";
     }

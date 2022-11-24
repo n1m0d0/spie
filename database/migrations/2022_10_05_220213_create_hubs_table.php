@@ -15,9 +15,12 @@ return new class extends Migration
     {
         Schema::create('hubs', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('pillar_id');
             $table->string('name');
             $table->tinyText('description');
             $table->timestamps();
+
+            $table->foreign('pillar_id')->references('id')->on('pillars');
         });
     }
 

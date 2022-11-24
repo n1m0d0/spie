@@ -10,9 +10,14 @@ class Goal extends Model
 {
     use HasFactory;
 
-    public function actions()
+    public function hub()
     {
-        return $this->hasMany(Action::class);
+        return $this->belongsTo(Hub::class);
+    }
+
+    public function results()
+    {
+        return $this->hasMany(Result::class);
     }
 
     protected function name(): Attribute

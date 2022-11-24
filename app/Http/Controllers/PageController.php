@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Indicator;
+use App\Models\Planning;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -36,11 +38,6 @@ class PageController extends Controller
         return view('pages.dissociation');
     }
 
-    public function indicator()
-    {
-        return view('pages.indicator');
-    }
-
     public function department()
     {
         return view('pages.department');
@@ -54,5 +51,50 @@ class PageController extends Controller
     public function organization()
     {
         return view('pages.organization');
+    }
+
+    public function type()
+    {
+        return view('pages.type');
+    }
+
+    public function measure()
+    {
+        return view('pages.measure');
+    }
+
+    public function pillar()
+    {
+        return view('pages.pillar');
+    }
+
+    public function sector()
+    {
+        return view('pages.sector');
+    }
+
+    public function district()
+    {
+        return view('pages.district');
+    }
+
+    public function planning()
+    {
+        return view('pages.planning');
+    }
+
+    public function indicator(Planning $planning)
+    {
+        return view('pages.indicator', compact('planning'));
+    }
+
+    public function schedule(Indicator $indicator)
+    {
+        return view('pages.schedule', compact('indicator'));
+    }
+
+    public function territory(Planning $planning)
+    {
+        return view('pages.territory', compact('planning'));
     }
 }

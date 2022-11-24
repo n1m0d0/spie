@@ -15,6 +15,11 @@ class Municipality extends Model
         return $this->belongsTo(Department::class);
     }
 
+    public function district()
+    {
+        return $this->hasMany(District::class);
+    }
+
     protected function name(): Attribute
     {
         return Attribute::make(

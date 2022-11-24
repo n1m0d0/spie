@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Hub;
+use App\Models\Pillar;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
@@ -20,7 +21,10 @@ class ComponentHub extends Component
 
     public $name;
     public $description;
+    public $pillar_id;
     public $hub_id;
+
+    public $pillars;
 
     public $deleteModal;
 
@@ -32,6 +36,7 @@ class ComponentHub extends Component
     protected $rules = [
         'name' => 'required|max:200',
         'description' => 'required|max:200',
+        'pillar_id' => 'required'
     ];
 
     public function mount()
@@ -39,6 +44,7 @@ class ComponentHub extends Component
         $this->activity = 'create';
         $this->iteration = rand(0, 999);
         $this->deleteModal = false;
+        $this->pillars = Pillar::all();
     }
     
     public function render()
@@ -59,6 +65,7 @@ class ComponentHub extends Component
         $hub = new Hub();
         $hub->name = $this->name;
         $hub->description = $this->description;
+        $hub->pillar_id = $this->pillar_id;
         $hub->save();
 
         $this->clear();
@@ -75,6 +82,7 @@ class ComponentHub extends Component
         
         $this->name = $hub->name;
         $this->description = $hub->description;
+        $this->pillar_id = $hub->pillar_id;
 
         $this->activity = "edit";
     }
@@ -87,6 +95,7 @@ class ComponentHub extends Component
 
         $hub->name = $this->name;
         $hub->description = $this->description;
+        $hub->pillar_id = $this->pillar_id;
         $hub->save();
         
         $this->activity = "create";
@@ -117,7 +126,7 @@ class ComponentHub extends Component
 
     public function clear()
     {
-        $this->reset(['name', 'description', 'hub_id']);
+        $this->reset(['name', 'description', 'pillar_id', 'hub_id']);
         $this->iteration++;
         $this->activity = "create";
     }

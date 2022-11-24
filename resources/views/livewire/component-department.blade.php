@@ -90,7 +90,7 @@
                                 <th scope="row"
                                     class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ $department->name }}
-                                </td>
+                                </th>
 
                                 <td class="py-4 px-6 text-right">
                                     <a wire:click='edit({{ $department->id }})'

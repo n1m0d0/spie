@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Goal;
+use App\Models\Hub;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
@@ -20,7 +21,10 @@ class ComponentGoal extends Component
 
     public $name;
     public $description;
+    public $hub_id;
     public $goal_id;
+
+    public $hubs;
 
     public $deleteModal;
 
@@ -32,6 +36,7 @@ class ComponentGoal extends Component
     protected $rules = [
         'name' => 'required|max:200',
         'description' => 'required|max:200',
+        'hub_id' => 'required'
     ];
 
     public function mount()
@@ -39,6 +44,7 @@ class ComponentGoal extends Component
         $this->activity = 'create';
         $this->iteration = rand(0, 999);
         $this->deleteModal = false;
+        $this->hubs = Hub::all();
     }
     
     public function render()
@@ -59,6 +65,7 @@ class ComponentGoal extends Component
         $goal = new Goal();
         $goal->name = $this->name;
         $goal->description = $this->description;
+        $goal->hub_id = $this->hub_id;
         $goal->save();
 
         $this->clear();
@@ -75,6 +82,7 @@ class ComponentGoal extends Component
         
         $this->name = $goal->name;
         $this->description = $goal->description;
+        $this->hub_id = $goal->hub_id;
 
         $this->activity = "edit";
     }
@@ -87,6 +95,7 @@ class ComponentGoal extends Component
 
         $goal->name = $this->name;
         $goal->description = $this->description;
+        $goal->hub_id = $this->hub_id;
         $goal->save();
         
         $this->activity = "create";
@@ -117,7 +126,7 @@ class ComponentGoal extends Component
 
     public function clear()
     {
-        $this->reset(['name', 'description', 'goal_id']);
+        $this->reset(['name', 'description', 'hub_id', 'goal_id']);
         $this->iteration++;
         $this->activity = "create";
     }
