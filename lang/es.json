@@ -227,5 +227,8 @@
     "Date": "Fecha",
     "Territory": "Territorio",
     "District": "Distrito",
-    "Community": "Communidad"
+    "Community": "Communidad",
+    "Finance": "Finanzas",
+    "Programmatic Category": "Categoría programática",
+    "Budget": "Presupuesto"
 }

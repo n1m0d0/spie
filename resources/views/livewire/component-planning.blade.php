@@ -246,6 +246,8 @@
                                         class="font-medium text-orange-600 dark:text-orange-500 hover:underline cursor-pointer">{{ __('Indicator') }}</a>
                                     <a href="{{ route('page.territory', $planning) }}"
                                         class="font-medium text-green-600 dark:text-green-500 hover:underline cursor-pointer">{{ __('Territory') }}</a>
+                                    <a href="{{ route('page.finance', $planning) }}"
+                                        class="font-medium text-yellow-600 dark:text-yellow-500 hover:underline cursor-pointer">{{ __('Finance') }}</a>
                                 </td>
                             </tr>
                         @endforeach

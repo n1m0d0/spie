@@ -221,6 +221,8 @@ return [
         'sector_id' => 'Sector',
         'code' => 'Código',
         'result_description' => 'Descripción del resultado',
-        'action_description' => 'Descripción de la acción'
+        'action_description' => 'Descripción de la acción',
+        'programmatic_category' => 'Categoría programática',
+        'budget' => 'Presupuesto'
     ],
 ];

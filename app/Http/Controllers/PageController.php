@@ -97,4 +97,9 @@ class PageController extends Controller
     {
         return view('pages.territory', compact('planning'));
     }
+
+    public function finance(Planning $planning)
+    {
+        return view('pages.finance', compact('planning'));
+    }
 }

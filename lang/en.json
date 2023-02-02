@@ -227,5 +227,8 @@
     "Date": "Date",
     "Territory": "Territory",
     "District": "District",
-    "Community": "Community"
+    "Community": "Community",
+    "Finance": "Finance",
+    "Programmatic Category": "Programmatic Category",
+    "Budget": "Budget"
 }
