@@ -88,7 +88,8 @@ class ComponentPlanning extends Component
     
     public function updatedPillarId()
     {
-        $this->hubs = Hub::where('pillar_id', $this->pillar_id)->get();
+        $pillar = Pillar::find($this->pillar_id);
+        $this->hubs = $pillar->hubs;
         $this->hub_id = null;
     }
 

@@ -151,7 +151,7 @@
         <x-slot name="title">
             <div class="flex col-span-6 sm:col-span-4 items-center">
                 <x-feathericon-alert-triangle class="h-10 w-10 text-red-500 mr-2" />
-                {{ __('Delete goal') }}
+                {{ __('Delete') }} {{ __('Goal') }}
             </div>
         </x-slot>
 

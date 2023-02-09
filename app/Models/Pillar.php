@@ -12,7 +12,7 @@ class Pillar extends Model
 
     public function hubs()
     {
-        return $this->hasMany(Hub::class);
+        return $this->belongsToMany(Hub::class);
     }
 
     protected function name(): Attribute

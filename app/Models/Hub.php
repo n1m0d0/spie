@@ -10,9 +10,9 @@ class Hub extends Model
 {
     use HasFactory;
 
-    public function pillar()
+    public function pillars()
     {
-        return $this->belongsTo(Pillar::class);
+        return $this->belongsToMany(Pillar::class);
     }
 
     public function goals()

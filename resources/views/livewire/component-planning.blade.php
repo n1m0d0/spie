@@ -10,7 +10,7 @@
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="">{{ __('Select an option') }}</option>
                             @foreach ($pillars as $pillar)
-                                <option value="{{ $pillar->id }}">{{ $pillar->name }}</option>
+                                <option value="{{ $pillar->id }}">{{ $pillar->name }}-{{ $pillar->description }}</option>
                             @endforeach
                         </select>
                         <x-jet-input-error for="pillar_id" />
@@ -23,7 +23,7 @@
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="">{{ __('Select an option') }}</option>
                             @foreach ($hubs as $hub)
-                                <option value="{{ $hub->id }}">{{ $hub->name }}</option>
+                                <option value="{{ $hub->id }}">{{ $hub->name }}-{{ $hub->description }}</option>
                             @endforeach
                         </select>
                         <x-jet-input-error for="hub_id" />
@@ -36,7 +36,7 @@
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="">{{ __('Select an option') }}</option>
                             @foreach ($goals as $goal)
-                                <option value="{{ $goal->id }}">{{ $goal->name }}</option>
+                                <option value="{{ $goal->id }}">{{ $goal->name }}-{{ $goal->description }}</option>
                             @endforeach
                         </select>
                         <x-jet-input-error for="goal_id" />
@@ -49,7 +49,7 @@
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="">{{ __('Select an option') }}</option>
                             @foreach ($results as $result)
-                                <option value="{{ $result->id }}">{{ $result->name }}</option>
+                                <option value="{{ $result->id }}">{{ $result->name }}-{{ $result->description }}</option>
                             @endforeach
                         </select>
                         <x-jet-input-error for="result_id" />
@@ -64,7 +64,7 @@
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="">{{ __('Select an option') }}</option>
                             @foreach ($actions as $action)
-                                <option value="{{ $action->id }}">{{ $action->name }}</option>
+                                <option value="{{ $action->id }}">{{ $action->name }}-{{ $action->description }}</option>
                             @endforeach
                         </select>
                         <x-jet-input-error for="action_id" />
@@ -77,7 +77,7 @@
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="">{{ __('Select an option') }}</option>
                             @foreach ($sectors as $sector)
-                                <option value="{{ $sector->id }}">{{ $sector->name }}</option>
+                                <option value="{{ $sector->id }}">{{ $sector->name }}-{{ $sector->description }}</option>
                             @endforeach
                         </select>
                         <x-jet-input-error for="sector_id" />
