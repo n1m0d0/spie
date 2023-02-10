@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('year');
             $table->tinyText('advance');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('indicator_id')->references('id')->on('indicators');
         });

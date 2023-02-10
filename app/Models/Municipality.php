@@ -15,9 +15,9 @@ class Municipality extends Model
         return $this->belongsTo(Department::class);
     }
 
-    public function district()
+    public function territories()
     {
-        return $this->hasMany(District::class);
+        return $this->hasMany(Territory::class);
     }
 
     protected function name(): Attribute

@@ -33,7 +33,7 @@ class ComponentFinance extends Component
 
     protected $rules = [
         'programmatic_category' => 'required|numeric|min:0',
-        'budget' => 'required|numeric|min:0'
+        'budget' => 'required|decimal:0,2',
     ];
 
     public function mount()

@@ -93,4 +93,9 @@ class User extends Authenticatable
             set: fn ($value) => strtolower($value)
         );
     }
+
+    public function plannings()
+    {
+        return $this->hasMany(Planning::class);
+    }
 }

@@ -2,15 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Territory extends Model
 {
     use HasFactory;
 
-    public function district()
+    use SoftDeletes;
+
+    public function municipality()
     {
-        return $this->belongsTo(District::class);
+        return $this->belongsTo(Municipality::class);
     }
 }

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('dissociation_id');
             $table->unsignedBigInteger('indicator_id');
-            $table->timestamps();
+            $table->timestamps();   
 
             $table->foreign('dissociation_id')->references('id')->on('dissociations');
             $table->foreign('indicator_id')->references('id')->on('indicators');

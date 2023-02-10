@@ -16,9 +16,10 @@ return new class extends Migration
         Schema::create('schedules', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('indicator_id');
-            $table->date('date');
+            $table->string('date');
             $table->string('description');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('indicator_id')->references('id')->on('indicators');
         });

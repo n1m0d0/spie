@@ -34,19 +34,6 @@
                     </div>
 
                     <div class="relative z-0 mb-6 w-full group">
-                        <label for="district_id"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">{{ __('District') }}</label>
-                        <select id="district_id" wire:model="district_id"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option value="">{{ __('Select an option') }}</option>
-                            @foreach ($districts as $district)
-                                <option value="{{ $district->id }}">{{ $district->name }}</option>
-                            @endforeach
-                        </select>
-                        <x-jet-input-error for="district_id" />
-                    </div>
-
-                    <div class="relative z-0 mb-6 w-full group">
                         <label for="community"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">{{ __('Community') }}</label>
                         <select id="community" wire:model="community"
@@ -125,9 +112,6 @@
                                 {{ __('Municipality') }}
                             </th>
                             <th scope="col" class="py-3 px-6">
-                                {{ __('District') }}
-                            </th>
-                            <th scope="col" class="py-3 px-6">
                                 {{ __('community') }}
                             </th>
 
@@ -145,13 +129,10 @@
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                 <th scope="row"
                                     class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {{ $territory->district->municipality->department->name }}
+                                    {{ $territory->municipality->department->name }}
                                 </th>
                                 <td class="py-4 px-6">
-                                    {{ $territory->district->municipality->name }}
-                                </td>
-                                <td class="py-4 px-6">
-                                    {{ $territory->district->name }}
+                                    {{ $territory->municipality->name }}
                                 </td>
                                 <td class="py-4 px-6">
                                     {{ $territory->community }}

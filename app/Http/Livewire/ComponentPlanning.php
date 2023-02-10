@@ -25,6 +25,8 @@ class ComponentPlanning extends Component
     public $iteration;
     public $search;
 
+    public $user_id;
+
     public $pillar_id;
     public $hub_id;
     public $goal_id;
@@ -54,7 +56,7 @@ class ComponentPlanning extends Component
 
     protected $rules = [
         'action_id' => 'required',
-        'sector_id' => 'required',        
+        'sector_id' => 'required',
         'entity_id' => 'required',
         'code' => 'required',
         'result_description' => 'required',
@@ -63,6 +65,8 @@ class ComponentPlanning extends Component
 
     public function mount()
     {
+        $this->user_id = auth()->user()->id;
+
         $this->activity = 'create';
         $this->iteration = rand(0, 999);
         $this->deleteModal = false;
@@ -85,30 +89,74 @@ class ComponentPlanning extends Component
         $plannings = $Query->orderBy('id', 'DESC')->paginate(7);
         return view('livewire.component-planning', compact('plannings'));
     }
-    
+
     public function updatedPillarId()
     {
-        $pillar = Pillar::find($this->pillar_id);
-        $this->hubs = $pillar->hubs;
-        $this->hub_id = null;
+        if ($this->pillar_id != null) {
+            $pillar = Pillar::find($this->pillar_id);
+            $this->hubs = $pillar->hubs;
+            $this->hub_id = null;
+        } else {
+            $this->hub_id = null;
+            $this->hubs = collect();
+            $this->goals = collect();
+            $this->results = collect();
+            $this->actions = collect();
+            $this->result_description = null;
+            $this->action_description = null;
+        }
     }
 
     public function updatedHubId()
     {
-        $this->goals = Goal::where('hub_id', $this->hub_id)->get();
-        $this->goal_id = null;
+        if ($this->hub_id != null) {
+            $this->goals = Goal::where('hub_id', $this->hub_id)->get();
+            $this->goal_id = null;
+        } else {
+            $this->goal_id = null;
+            $this->goals = collect();
+            $this->results = collect();
+            $this->actions = collect();
+            $this->result_description = null;
+            $this->action_description = null;
+        }
     }
 
     public function updatedGoalId()
     {
-        $this->results = Result::where('goal_id', $this->goal_id)->get();
-        $this->result_id = null;
+        if ($this->goal_id != null) {
+            $this->results = Result::where('goal_id', $this->goal_id)->get();
+            $this->result_id = null;
+        } else {
+            $this->result_id = null;
+            $this->results = collect();
+            $this->actions = collect();
+            $this->result_description = null;
+            $this->action_description = null;
+        }
     }
 
     public function updatedResultId()
     {
-        $this->actions = Action::where('result_id', $this->result_id)->get();
-        $this->action_id = null;
+        if ($this->goal_id != null && $this->result_id != null) {
+            $this->actions = Action::where('result_id', $this->result_id)->get();
+            $this->action_id = null;
+            $this->result_description = Result::find($this->result_id)->description;
+        } else {
+            $this->action_id = null;
+            $this->result_description = null;
+            $this->actions = collect();
+            $this->action_description = null;
+        }
+    }
+
+    public function updatedActionId()
+    {
+        if ($this->action_id != null) {
+            $this->action_description = Action::find($this->action_id)->description;
+        } else {
+            $this->action_description = null;
+        }
     }
 
     public function store()
@@ -116,6 +164,7 @@ class ComponentPlanning extends Component
         $this->validate();
 
         $planning = new Planning();
+        $planning->user_id = $this->user_id;
         $planning->action_id = $this->action_id;
         $planning->sector_id = $this->sector_id;
         $planning->entity_id = $this->entity_id;
@@ -133,10 +182,10 @@ class ComponentPlanning extends Component
     public function edit($id)
     {
         $this->planning_id = $id;
-        
+
         $planning = Planning::find($id);
 
-        $this->pillar_id = $planning->action->result->goal->hub->pillar->id;        
+        $this->pillar_id = $planning->action->result->goal->hub->pillar->id;
         $this->hub_id = $planning->action->result->goal->hub->id;
         $this->goal_id = $planning->action->result->goal->id;
         $this->result_id = $planning->action->result->id;
@@ -156,6 +205,7 @@ class ComponentPlanning extends Component
 
         $this->validate();
 
+        $planning->user_id = $this->user_id;
         $planning->action_id = $this->action_id;
         $planning->sector_id = $this->sector_id;
         $planning->entity_id = $this->entity_id;
@@ -163,7 +213,7 @@ class ComponentPlanning extends Component
         $planning->result_description = $this->result_description;
         $planning->action_description = $this->action_description;
         $planning->save();
-        
+
         $this->activity = "create";
         $this->clear();
         toast()

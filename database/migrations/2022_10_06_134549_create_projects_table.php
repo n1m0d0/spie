@@ -34,6 +34,7 @@ return new class extends Migration
             $table->float('total_cost');
             $table->float('executed_amount');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('entity_id')->references('id')->on('entities');
             $table->foreign('municipality_id')->references('id')->on('municipalities');

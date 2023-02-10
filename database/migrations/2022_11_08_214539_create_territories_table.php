@@ -16,16 +16,17 @@ return new class extends Migration
         Schema::create('territories', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('planning_id');
-            $table->unsignedBigInteger('district_id');
+            $table->unsignedBigInteger('municipality_id');
             $table->enum('community', [
                 "URBANO",
                 "RURAL",
                 "URBANO/RURAL"
             ]);
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('planning_id')->references('id')->on('plannings');
-            $table->foreign('district_id')->references('id')->on('districts');
+            $table->foreign('municipality_id')->references('id')->on('municipalities');
         });
     }
 

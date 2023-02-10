@@ -26,7 +26,6 @@ class ComponentTerritory extends Component
     
     public $department_id;
     public $municipality_id;
-    public $district_id;
     public $community;
     public $territory_id;
 
@@ -44,7 +43,7 @@ class ComponentTerritory extends Component
     ];
 
     protected $rules = [
-        'district_id' => 'required',
+        'municipality_id' => 'required',
         'community' => 'required',
     ];
 
@@ -56,7 +55,6 @@ class ComponentTerritory extends Component
         
         $this->departments = Department::all();
         $this->municipalities = collect();
-        $this->districts = collect();
     }
     
     public function render()
@@ -75,20 +73,14 @@ class ComponentTerritory extends Component
         $this->municipalities = Municipality::where('department_id', $this->department_id)->get();
         $this->municipality_id = null;
     }
-
-    public function updatedMunicipalityId()
-    {
-        $this->districts = District::where('municipality_id', $this->municipality_id)->get();
-        $this->district_id = null;
-    }
-
+    
     public function store()
     {
         $this->validate();
 
         $territory = new Territory();
         $territory->planning_id = $this->planning->id;
-        $territory->district_id = $this->district_id;
+        $territory->municipality_id = $this->municipality_id;
         $territory->community = $this->community;
         $territory->save();
 
@@ -106,7 +98,6 @@ class ComponentTerritory extends Component
         
         $this->department_id = $territory->district->municipality->department->id;
         $this->municipality_id = $territory->district->municipality->id;
-        $this->district_id = $territory->district_id;
         $this->community = $territory->community;
 
         $this->activity = "edit";
@@ -118,7 +109,7 @@ class ComponentTerritory extends Component
 
         $this->validate();
 
-        $territory->district_id = $this->district_id;
+        $territory->municipality_id = $this->municipality_id;
         $territory->community = $this->community;
         $territory->save();
         
@@ -150,7 +141,7 @@ class ComponentTerritory extends Component
 
     public function clear()
     {
-        $this->reset(['department_id', 'municipality_id', 'district_id', 'community', 'territory_id']);
+        $this->reset(['department_id', 'municipality_id', 'community', 'territory_id']);
         $this->iteration++;
         $this->activity = "create";
     }

@@ -20,8 +20,11 @@ return new class extends Migration
             $table->string('formula');
             $table->string('year');
             $table->string('base_line');
-            $table->tinyText('ending');
+            $table->string('ending');
+            $table->string('worth');
+            $table->string('measure');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('planning_id')->references('id')->on('plannings');
         });

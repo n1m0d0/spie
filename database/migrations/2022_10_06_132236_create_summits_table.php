@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('proposals');
             $table->tinyText('description');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('goal_id')->references('id')->on('goals');
             $table->foreign('department_id')->references('id')->on('departments');

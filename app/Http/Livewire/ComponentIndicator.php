@@ -28,6 +28,8 @@ class ComponentIndicator extends Component
     public $year;
     public $ending;
     public $base_line;
+    public $worth;
+    public $measure;
     public $indicator_id;
 
     public $goals;
@@ -46,6 +48,8 @@ class ComponentIndicator extends Component
         'year' => 'required',
         'ending' => 'required',
         'base_line' => 'required|max:200',
+        'worth' => 'required|max:200',
+        'measure' => 'required|max:200',
     ];
 
     public function mount()
@@ -77,6 +81,8 @@ class ComponentIndicator extends Component
         $indicator->year = $this->year;
         $indicator->ending = $this->ending;
         $indicator->base_line = $this->base_line;
+        $indicator->worth = $this->worth;
+        $indicator->measure = $this->measure;
         $indicator->save();
 
         $this->clear();
@@ -96,6 +102,8 @@ class ComponentIndicator extends Component
         $this->year = $indicator->year;
         $this->ending = $indicator->ending;
         $this->base_line = $indicator->base_line;
+        $this->worth = $indicator->worth;
+        $this->measure = $indicator->measure;
 
         $this->activity = "edit";
     }
@@ -111,6 +119,8 @@ class ComponentIndicator extends Component
         $indicator->year = $this->year;
         $indicator->ending = $this->ending;
         $indicator->base_line = $this->base_line;
+        $indicator->worth = $this->worth;
+        $indicator->measure = $this->measure;
         $indicator->save();
         
         $this->activity = "create";
@@ -141,7 +151,7 @@ class ComponentIndicator extends Component
 
     public function clear()
     {
-        $this->reset(['description', 'formula', 'year', 'ending', 'base_line', 'indicator_id']);
+        $this->reset(['description', 'formula', 'year', 'ending', 'base_line', 'worth', 'measure', 'indicator_id']);
         $this->iteration++;
         $this->activity = "create";
     }

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('file');
             $table->string('amount');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('project_id')->references('id')->on('projects');
             $table->foreign('plan_id')->references('id')->on('plans');

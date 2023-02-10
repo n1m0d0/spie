@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('plannings', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('action_id');
             $table->unsignedBigInteger('sector_id');
             $table->unsignedBigInteger('entity_id');
@@ -22,7 +23,9 @@ return new class extends Migration
             $table->tinyText('result_description');
             $table->tinyText('action_description');
             $table->timestamps();
+            $table->softDeletes();
 
+            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('action_id')->references('id')->on('actions');
             $table->foreign('sector_id')->references('id')->on('sectors');
             $table->foreign('entity_id')->references('id')->on('entities');

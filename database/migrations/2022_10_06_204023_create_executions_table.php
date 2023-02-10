@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('year');
             $table->float('amount');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('project_id')->references('id')->on('projects');
         });

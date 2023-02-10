@@ -8,7 +8,7 @@
                 <div class="grid md:grid-cols-2 md:gap-6">
                     <div class="relative z-0 mb-6 w-full group">
                         <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">
-                            {{ __('Description') }}
+                            {{ __('Indicator') }}
                         </label>
                         <textarea id="description" wire:model='description' rows="4"
                             class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -30,7 +30,7 @@
                 <div class="grid md:grid-cols-2 md:gap-6">
                     <div class="relative z-0 mb-6 w-full group">
                         <label for="year"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">{{ __('Year') }}</label>
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">{{ __('Year') }} {{ __('Base line') }}</label>
                         <select id="year" wire:model="year"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="">{{ __('Select an option') }}</option>
@@ -41,7 +41,7 @@
 
                     <div class="relative z-0 mb-6 w-full group">
                         <label for="ending"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">{{ __('Ending') }}</label>
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">{{ __('Goal') }}</label>
                         <select id="ending" wire:model="ending"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="">{{ __('Select an option') }}</option>
@@ -56,7 +56,7 @@
                     </div>
                 </div>
 
-                <div class="grid md:grid-cols-2 md:gap-6">                 
+                <div class="grid md:grid-cols-4 md:gap-6">                 
                     <div class="relative z-0 mb-6 w-full group">
                         <input type="text" name="base_line" id="base_line" wire:model='base_line'
                             class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -64,9 +64,36 @@
 
                         <label for="base_line"
                             class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                            {{ __('Base line') }}
+                            {{ __('Value') }}
                         </label>
                         <x-jet-input-error for="base_line" />
+                    </div>
+
+                    <div class="relative z-0 mb-6 w-full group">
+                    </div>
+
+                    <div class="relative z-0 mb-6 w-full group">
+                        <input type="text" name="worth" id="worth" wire:model='worth'
+                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                            placeholder=" " />
+
+                        <label for="worth"
+                            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                            {{ __('Value') }}
+                        </label>
+                        <x-jet-input-error for="worth" />
+                    </div>
+
+                    <div class="relative z-0 mb-6 w-full group">
+                        <input type="text" name="measure" id="measure" wire:model='measure'
+                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                            placeholder=" " />
+
+                        <label for="measure"
+                            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                            {{ __('Measure') }}
+                        </label>
+                        <x-jet-input-error for="measure" />
                     </div>
                 </div>
 
@@ -138,7 +165,10 @@
                                 {{ __('Base line') }}
                             </th>
                             <th scope="col" class="py-3 px-6">
-                                {{ __('Ending') }}
+                                {{ __('Goal') }}
+                            </th>
+                            <th scope="col" class="py-3 px-6">
+                                {{ __('Measure') }}
                             </th>
 
                             <th scope="col" class="py-3 px-6">
@@ -164,18 +194,20 @@
                                     {{ $indicator->year }} - {{ $indicator->base_line }}
                                 </td>
                                 <td class="py-4 px-6">
-                                    {{ $indicator->ending }}
+                                    {{ $indicator->ending }} - {{ $indicator->worth }}
+                                </td>
+
+                                <td class="py-4 px-6">
+                                    {{ $indicator->measure }}
                                 </td>
 
                                 <td class="py-4 px-6 text-right">
+                                    <a href="{{ route('page.schedule', $indicator) }}"
+                                        class="font-medium text-orange-600 dark:text-orange-500 hover:underline cursor-pointer">{{ __('Schedule') }}</a>
                                     <a wire:click='edit({{ $indicator->id }})'
                                         class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">{{ __('Edit') }}</a>
                                     <a wire:click='modalDelete({{ $indicator->id }})'
-                                        class="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer">{{ __('Delete') }}</a>
-                                </td>
-                                <td class="py-4 px-6 text-right">
-                                    <a href="{{ route('page.schedule', $indicator) }}"
-                                        class="font-medium text-orange-600 dark:text-orange-500 hover:underline cursor-pointer">{{ __('Schedule') }}</a>
+                                        class="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer">{{ __('Delete') }}</a>                                    
                                 </td>
                             </tr>
                         @endforeach

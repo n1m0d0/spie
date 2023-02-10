@@ -17,8 +17,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('planning_id');
             $table->integer('programmatic_category');
-            $table->float('budget', 10, 2);
+            $table->float('budget', 20, 2);
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('planning_id')->references('id')->on('plannings');
         });

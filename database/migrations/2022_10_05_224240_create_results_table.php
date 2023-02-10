@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('name');
             $table->tinyText('description');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('goal_id')->references('id')->on('goals');
         });
