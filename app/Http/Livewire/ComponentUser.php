@@ -166,7 +166,7 @@ class ComponentUser extends Component
 
     public function clear()
     {
-        $this->reset(['entity_id', 'state_id', 'name', 'paternal', 'maternal', 'identity', 'email', 'user_id']);
+        $this->reset(['entity_id', 'state_id', 'name', 'paternal', 'maternal', 'identity', 'email', 'user_id', 'role']);
         $this->iteration++;
         $this->activity = "create";
     }

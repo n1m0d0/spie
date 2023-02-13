@@ -6,6 +6,7 @@
                     <div class="relative z-0 mb-6 w-full group">
                         <label for="pillar_id"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">{{ __('Pillar') }}</label>
+
                         <select id="pillar_id" wire:model="pillar_id"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="">{{ __('Select an option') }}</option>
@@ -13,12 +14,30 @@
                                 <option value="{{ $pillar->id }}">{{ $pillar->name }}-{{ $pillar->description }}</option>
                             @endforeach
                         </select>
+
+                        <input wire:model='inputSearchPillar' type="text"
+                            placeholder="{{ __('Search') }} {{ __('Pillar') }}"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-2">
+
+                        @if ($inputSearchPillar != null)
+                            <ul
+                                class="w-full max-h-64 overflow-y-auto text-sm font-medium text-gray-900 bg-white border border-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                                @foreach ($searchPillars as $searchPillar)
+                                    <li wire:click='selectPillar({{ $searchPillar->id }})'
+                                        class="w-full px-4 py-2 border-b border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-500 cursor-pointer">
+                                        {{ $searchPillar->name }}-{{ $searchPillar->description }}
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
+
                         <x-jet-input-error for="pillar_id" />
                     </div>
 
                     <div class="relative z-0 mb-6 w-full group">
                         <label for="hub_id"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">{{ __('Hub') }}</label>
+
                         <select id="hub_id" wire:model="hub_id"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="">{{ __('Select an option') }}</option>
@@ -26,12 +45,30 @@
                                 <option value="{{ $hub->id }}">{{ $hub->name }}-{{ $hub->description }}</option>
                             @endforeach
                         </select>
+
+                        <input wire:model='inputSearchHub' type="text"
+                            placeholder="{{ __('Search') }} {{ __('Hub') }}"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-2">
+
+                        @if ($inputSearchHub != null)
+                            <ul
+                                class="w-full max-h-64 overflow-y-auto text-sm font-medium text-gray-900 bg-white border border-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                                @foreach ($searchHubs as $searchHub)
+                                    <li wire:click='selectHub({{ $searchHub->id }})'
+                                        class="w-full px-4 py-2 border-b border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-500 cursor-pointer">
+                                        {{ $searchHub->name }}-{{ $searchHub->description }}
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
+
                         <x-jet-input-error for="hub_id" />
                     </div>
 
                     <div class="relative z-0 mb-6 w-full group">
                         <label for="goal_id"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">{{ __('Goal') }}</label>
+
                         <select id="goal_id" wire:model="goal_id"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="">{{ __('Select an option') }}</option>
@@ -39,19 +76,55 @@
                                 <option value="{{ $goal->id }}">{{ $goal->name }}-{{ $goal->description }}</option>
                             @endforeach
                         </select>
+
+                        <input wire:model='inputSearchGoal' type="text"
+                            placeholder="{{ __('Search') }} {{ __('Goal') }}"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-2">
+
+                        @if ($inputSearchGoal != null)
+                            <ul
+                                class="w-full max-h-64 overflow-y-auto text-sm font-medium text-gray-900 bg-white border border-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                                @foreach ($searchGoals as $searchGoal)
+                                    <li wire:click='selectGoal({{ $searchGoal->id }})'
+                                        class="w-full px-4 py-2 border-b border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-500 cursor-pointer">
+                                        {{ $searchGoal->name }}-{{ $searchGoal->description }}
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
+
                         <x-jet-input-error for="goal_id" />
                     </div>
 
                     <div class="relative z-0 mb-6 w-full group">
                         <label for="result_id"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">{{ __('Result') }}</label>
+
                         <select id="result_id" wire:model="result_id"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="">{{ __('Select an option') }}</option>
                             @foreach ($results as $result)
-                                <option value="{{ $result->id }}">{{ $result->name }}-{{ $result->description }}</option>
+                                <option value="{{ $result->id }}">{{ $result->name }}-{{ $result->description }}
+                                </option>
                             @endforeach
                         </select>
+
+                        <input wire:model='inputSearchResult' type="text"
+                            placeholder="{{ __('Search') }} {{ __('Result') }}"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-2">
+
+                        @if ($inputSearchResult != null)
+                            <ul
+                                class="w-full max-h-64 overflow-y-auto text-sm font-medium text-gray-900 bg-white border border-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                                @foreach ($searchResults as $searchResult)
+                                    <li wire:click='selectResult({{ $searchResult->id }})'
+                                        class="w-full px-4 py-2 border-b border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-500 cursor-pointer">
+                                        {{ $searchResult->name }}-{{ $searchResult->description }}
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
+
                         <x-jet-input-error for="result_id" />
                     </div>
                 </div>
@@ -60,13 +133,32 @@
                     <div class="relative z-0 mb-6 w-full group">
                         <label for="action_id"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">{{ __('Action') }}</label>
+
                         <select id="action_id" wire:model="action_id"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="">{{ __('Select an option') }}</option>
                             @foreach ($actions as $action)
-                                <option value="{{ $action->id }}">{{ $action->name }}-{{ $action->description }}</option>
+                                <option value="{{ $action->id }}">{{ $action->name }}-{{ $action->description }}
+                                </option>
                             @endforeach
                         </select>
+
+                        <input wire:model='inputSearchAction' type="text"
+                            placeholder="{{ __('Search') }} {{ __('Action') }}"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-2">
+
+                        @if ($inputSearchAction != null)
+                            <ul
+                                class="w-full max-h-64 overflow-y-auto text-sm font-medium text-gray-900 bg-white border border-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                                @foreach ($searchActions as $searchAction)
+                                    <li wire:click='selectAction({{ $searchAction->id }})'
+                                        class="w-full px-4 py-2 border-b border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-500 cursor-pointer">
+                                        {{ $searchAction->name }}-{{ $searchAction->description }}
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
+
                         <x-jet-input-error for="action_id" />
                     </div>
 
@@ -77,7 +169,8 @@
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="">{{ __('Select an option') }}</option>
                             @foreach ($sectors as $sector)
-                                <option value="{{ $sector->id }}">{{ $sector->name }}-{{ $sector->description }}</option>
+                                <option value="{{ $sector->id }}">{{ $sector->name }}-{{ $sector->description }}
+                                </option>
                             @endforeach
                         </select>
                         <x-jet-input-error for="sector_id" />

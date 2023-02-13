@@ -49,6 +49,13 @@ class ComponentPlanning extends Component
 
     public $deleteModal;
 
+    //input select
+    public $inputSearchPillar;
+    public $inputSearchHub;
+    public $inputSearchGoal;
+    public $inputSearchResult;
+    public $inputSearchAction;
+
     protected $queryString = [
         'search' => ['except' => ''],
         'page' => ['except' => 1],
@@ -86,13 +93,86 @@ class ComponentPlanning extends Component
             $this->updatingSearch();
             $Query = $Query->where('code', 'like', '%' . $this->search . '%');
         }
+
+        $searchPillars = Pillar::query();
+        if ($this->inputSearchPillar != null) {
+            $searchPillars = $searchPillars->where('name', 'like', '%' . $this->inputSearchPillar . '%')->get();
+        }
+
+        $searchHubs = collect();
+        if ($this->inputSearchHub != null) {
+            $searchHubs = Pillar::find($this->pillar_id)->hubs()->where('name', 'like', '%' . $this->inputSearchHub . '%')->get();
+        }
+
+        $searchGoals = Goal::query();
+        if ($this->inputSearchGoal != null) {
+            $searchGoals = $searchGoals->where('hub_id', $this->hub_id)->where('name', 'like', '%' . $this->inputSearchGoal . '%')->get();
+        }
+
+        $searchResults = Result::query();
+        if ($this->inputSearchResult != null) {
+            $searchResults = $searchResults->where('goal_id', $this->goal_id)->where('name', 'like', '%' . $this->inputSearchResult . '%')->get();
+        }
+
+        $searchActions = Action::query();
+        if ($this->inputSearchAction != null) {
+            $searchActions = $searchActions->where('result_id', $this->result_id)->where('name', 'like', '%' . $this->inputSearchAction . '%')->get();
+        }
+
         $plannings = $Query->orderBy('id', 'DESC')->paginate(7);
-        return view('livewire.component-planning', compact('plannings'));
+        return view('livewire.component-planning', compact('plannings', 'searchPillars', 'searchHubs', 'searchGoals', 'searchResults', 'searchActions'));
+    }
+
+    public function selectPillar($id)
+    {
+        $this->pillar_id = $id;
+        $this->inputSearchPillar = null;
+
+        $this->updatedPillarId();
+    }
+
+    public function selectHub($id)
+    {
+        $this->hub_id = $id;
+        $this->inputSearchHub = null;
+
+        $this->updatedHubId();
+    }
+
+    public function selectGoal($id)
+    {
+        $this->goal_id = $id;
+        $this->inputSearchGoal = null;
+
+        $this->updatedGoalId();
+    }
+
+    public function selectResult($id)
+    {
+        $this->result_id = $id;
+        $this->inputSearchResult = null;
+
+        $this->updatedResultId();
+    }
+
+    public function selectAction($id)
+    {
+        $this->action_id = $id;
+        $this->inputSearchAction = null;
+
+        $this->updatedActionId();
     }
 
     public function updatedPillarId()
     {
         if ($this->pillar_id != null) {
+            $this->hubs = collect();
+            $this->goals = collect();
+            $this->results = collect();
+            $this->actions = collect();
+            $this->result_description = null;
+            $this->action_description = null;
+
             $pillar = Pillar::find($this->pillar_id);
             $this->hubs = $pillar->hubs;
             $this->hub_id = null;
@@ -110,6 +190,12 @@ class ComponentPlanning extends Component
     public function updatedHubId()
     {
         if ($this->hub_id != null) {
+            $this->goals = collect();
+            $this->results = collect();
+            $this->actions = collect();
+            $this->result_description = null;
+            $this->action_description = null;
+
             $this->goals = Goal::where('hub_id', $this->hub_id)->get();
             $this->goal_id = null;
         } else {
@@ -125,7 +211,12 @@ class ComponentPlanning extends Component
     public function updatedGoalId()
     {
         if ($this->goal_id != null) {
-            $this->results = Result::where('goal_id', $this->goal_id)->get();
+            $this->results = collect();
+            $this->actions = collect();
+            $this->result_description = null;
+            $this->action_description = null;
+
+            $this->results = Result::where('goal_id', $this->goal_id)->get();            
             $this->result_id = null;
         } else {
             $this->result_id = null;
@@ -139,13 +230,17 @@ class ComponentPlanning extends Component
     public function updatedResultId()
     {
         if ($this->goal_id != null && $this->result_id != null) {
+            $this->actions = collect();
+            $this->result_description = null;
+            $this->action_description = null;
+
             $this->actions = Action::where('result_id', $this->result_id)->get();
             $this->action_id = null;
             $this->result_description = Result::find($this->result_id)->description;
         } else {
             $this->action_id = null;
-            $this->result_description = null;
             $this->actions = collect();
+            $this->result_description = null;
             $this->action_description = null;
         }
     }
