@@ -66,7 +66,7 @@ class ComponentIndicator extends Component
             $this->updatingSearch();
             $Query = $Query->where('description', 'like', '%' . $this->search . '%');
         }
-        $indicators = $Query->orderBy('id', 'DESC')->paginate(7);
+        $indicators = $Query->where('planning_id', $this->planning->id)->orderBy('id', 'DESC')->paginate(7);
         return view('livewire.component-indicator', compact('indicators'));
     }
 

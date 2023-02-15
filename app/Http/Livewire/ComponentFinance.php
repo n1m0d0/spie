@@ -50,7 +50,7 @@ class ComponentFinance extends Component
             $this->updatingSearch();
             $Query = $Query->where('programmatic_category', 'like', '%' . $this->search . '%');
         }
-        $finances = $Query->orderBy('id', 'DESC')->paginate(7);
+        $finances = $Query->where('planning_id', $this->planning->id)->orderBy('id', 'DESC')->paginate(7);
         return view('livewire.component-finance', compact('finances'));
     }
 

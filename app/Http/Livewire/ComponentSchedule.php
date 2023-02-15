@@ -50,7 +50,7 @@ class ComponentSchedule extends Component
             $this->updatingSearch();
             $Query = $Query->where('date', 'like', '%' . $this->search . '%');
         }
-        $schedules = $Query->orderBy('id', 'DESC')->paginate(7);
+        $schedules = $Query->where('indicator_id', $this->indicator->id)->orderBy('id', 'DESC')->paginate(7);
         return view('livewire.component-schedule', compact('schedules'));
     }
 

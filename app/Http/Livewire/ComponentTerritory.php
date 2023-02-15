@@ -64,7 +64,7 @@ class ComponentTerritory extends Component
             $this->updatingSearch();
             $Query = $Query->where('description', 'like', '%' . $this->search . '%');
         }
-        $territories = $Query->orderBy('id', 'DESC')->paginate(7);
+        $territories = $Query->where('planning_id', $this->planning->id)->orderBy('id', 'DESC')->paginate(7);
         return view('livewire.component-territory', compact('territories'));
     }
 
@@ -96,8 +96,9 @@ class ComponentTerritory extends Component
         
         $territory = Territory::find($id);
         
-        $this->department_id = $territory->district->municipality->department->id;
-        $this->municipality_id = $territory->district->municipality->id;
+        $this->department_id = $territory->municipality->department->id;
+        $this->updatedDepartmentId();
+        $this->municipality_id = $territory->municipality->id;
         $this->community = $territory->community;
 
         $this->activity = "edit";

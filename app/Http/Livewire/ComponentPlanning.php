@@ -280,11 +280,11 @@ class ComponentPlanning extends Component
 
         $planning = Planning::find($id);
 
-        $this->pillar_id = $planning->action->result->goal->hub->pillar->id;
+        /*$this->pillar_id = $planning->action->result->goal->hub->pillar->id;
         $this->hub_id = $planning->action->result->goal->hub->id;
         $this->goal_id = $planning->action->result->goal->id;
         $this->result_id = $planning->action->result->id;
-        $this->action_id = $planning->action_id;
+        $this->action_id = $planning->action_id;*/
         $this->sector_id = $planning->sector_id;
         $this->entity_id = $planning->entity_id;
         $this->code = $planning->code;
