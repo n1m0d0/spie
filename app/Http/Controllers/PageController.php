@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Finance;
 use App\Models\Indicator;
 use App\Models\Planning;
 use Illuminate\Http\Request;
@@ -101,5 +102,15 @@ class PageController extends Controller
     public function finance(Planning $planning)
     {
         return view('pages.finance', compact('planning'));
+    }
+
+    public function investment(Finance $finance)
+    {
+        return view('pages.investment', compact('finance'));
+    }
+
+    public function current(Finance $finance)
+    {
+        return view('pages.current', compact('finance'));
     }
 }

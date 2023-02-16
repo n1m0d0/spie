@@ -234,5 +234,8 @@
     "Once deleted, the record cannot be recovered.": "Once deleted, the record cannot be recovered.",
     "Value": "Value",
     "Search": "Search",
-    "Area": "Area"
+    "Area": "Area",
+    "Investment": "Investment",
+    "Current": "Current",
+    "Spent": "Spent"
 }

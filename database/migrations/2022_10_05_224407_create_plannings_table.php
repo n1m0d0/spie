@@ -20,8 +20,8 @@ return new class extends Migration
             $table->unsignedBigInteger('sector_id');
             $table->unsignedBigInteger('entity_id');
             $table->string('code');
-            $table->tinyText('result_description');
-            $table->tinyText('action_description');
+            $table->longText('result_description');
+            $table->longText('action_description');
             $table->timestamps();
             $table->softDeletes();
 

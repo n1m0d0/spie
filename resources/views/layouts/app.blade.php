@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
 
 <head>
     <meta charset="utf-8">
@@ -15,7 +15,7 @@
     @toastScripts
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    
+
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
@@ -49,6 +49,22 @@
     @stack('modals')
 
     @livewireScripts
+
+    <script>
+        const checkbox = document.querySelector("#checkbox");
+        const html = document.querySelector("html");
+
+        const toggleDarkMode = function() {
+            checkbox.checked ?
+                html.classList.add("dark") :
+                html.classList.remove("dark");
+        }
+
+        //calling the function directly
+
+        toggleDarkMode();
+        checkbox.addEventListener("click", toggleDarkMode);
+    </script>
 
     @stack('scripts')
 </body>

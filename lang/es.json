@@ -234,5 +234,8 @@
     "Once deleted, the record cannot be recovered.": "Una vez eliminado, el registro no se puede recuperar.",
     "Value": "Valor",
     "Search": "Buscar",
-    "Area": "Área"
+    "Area": "Área",
+    "Investment": "Inversión",
+    "Current": "Corriente",
+    "Spent": "Gasto"
 }

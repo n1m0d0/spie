@@ -48,4 +48,6 @@ Route::controller(PageController::class)->group(function () {
     Route::get('territory/{planning}', 'territory')->name('page.territory')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
     Route::get('finance/{planning}', 'finance')->name('page.finance')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
     Route::get('organization', 'organization')->name('page.organization')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
+    Route::get('investment/{finance}', 'investment')->name('page.investment')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
+    Route::get('current/{finance}', 'current')->name('page.current')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
 });
