@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('indicators', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('planning_id');
-            $table->tinyText('description');
+            $table->text('description');
             $table->string('formula');
             $table->string('year');
             $table->string('base_line');

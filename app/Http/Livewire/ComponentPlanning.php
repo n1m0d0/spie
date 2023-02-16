@@ -26,6 +26,7 @@ class ComponentPlanning extends Component
     public $search;
 
     public $user_id;
+    public $entity;
 
     public $pillar_id;
     public $hub_id;
@@ -73,6 +74,7 @@ class ComponentPlanning extends Component
     public function mount()
     {
         $this->user_id = auth()->user()->id;
+        $this->entity = auth()->user()->entity_id;
 
         $this->activity = 'create';
         $this->iteration = rand(0, 999);
@@ -119,7 +121,7 @@ class ComponentPlanning extends Component
             $searchActions = $searchActions->where('result_id', $this->result_id)->where('name', 'like', '%' . $this->inputSearchAction . '%')->get();
         }
 
-        $plannings = $Query->orderBy('id', 'DESC')->paginate(7);
+        $plannings = $Query->where('entity_id', $this->entity)->orderBy('id', 'DESC')->paginate(7);
         return view('livewire.component-planning', compact('plannings', 'searchPillars', 'searchHubs', 'searchGoals', 'searchResults', 'searchActions'));
     }
 

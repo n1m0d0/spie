@@ -43,7 +43,7 @@ class ComponentIndicator extends Component
     ];
 
     protected $rules = [
-        'description' => 'required|max:200',
+        'description' => 'required',
         'formula' => 'required|max:200',
         'year' => 'required',
         'ending' => 'required',
