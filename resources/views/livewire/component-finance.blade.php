@@ -120,12 +120,17 @@
                                 </td>
 
                                 <td class="py-4 px-6 text-right">
+                                    <a href="{{ route('page.consolidated', $finance) }}"
+                                        class="font-medium text-green-600 dark:text-green-500 hover:underline cursor-pointer">
+                                        {{ __('Consolidated') }}</a>
+                                        <!--
                                     <a href="{{ route('page.investment', $finance) }}"
-                                        class="font-medium text-orange-600 dark:text-orange-500 hover:underline cursor-pointer">{{ __('Spent') }}
+                                        class="font-medium text-orange-600 dark:text-orange-500 hover:underline cursor-pointer">
                                         {{ __('Investment') }}</a>
                                     <a href="{{ route('page.current', $finance) }}"
                                         class="font-medium text-yellow-600 dark:text-yellow-500 hover:underline cursor-pointer">{{ __('Spent') }}
                                         {{ __('Current') }}</a>
+                                        -->
                                     <a wire:click='edit({{ $finance->id }})'
                                         class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">{{ __('Edit') }}</a>
                                     <a wire:click='modalDelete({{ $finance->id }})'

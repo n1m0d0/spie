@@ -21,7 +21,7 @@ class ComponentInvestment extends Component
     public $search;
 
     public $date;
-    public $description;
+    public $budget;
     public $investment_id;
 
     public $deleteModal;
@@ -33,7 +33,7 @@ class ComponentInvestment extends Component
 
     protected $rules = [
         'date' => 'required|max:200',
-        'description' => 'required|max:200'
+        'budget' => 'required|max:200'
     ];
 
     public function mount()
@@ -61,7 +61,7 @@ class ComponentInvestment extends Component
         $investment = new Investment();        
         $investment->finance_id = $this->finance->id;
         $investment->date = $this->date;
-        $investment->description = $this->description;
+        $investment->budget = $this->budget;
         $investment->save();
 
         $this->clear();
@@ -77,7 +77,7 @@ class ComponentInvestment extends Component
         $investment = Investment::find($id);
         
         $this->date = $investment->date;
-        $this->description = $investment->description;
+        $this->budget = $investment->budget;
 
         $this->activity = "edit";
     }
@@ -89,7 +89,7 @@ class ComponentInvestment extends Component
         $this->validate();
 
         $investment->date = $this->date;
-        $investment->description = $this->description;
+        $investment->budget = $this->budget;
         $investment->save();
         
         $this->activity = "create";
@@ -120,7 +120,7 @@ class ComponentInvestment extends Component
 
     public function clear()
     {
-        $this->reset(['date', 'description', 'investment_id']);
+        $this->reset(['date', 'budget', 'investment_id']);
         $this->iteration++;
         $this->activity = "create";
     }

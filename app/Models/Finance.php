@@ -21,4 +21,9 @@ class Finance extends Model
     {
         return $this->hasMany(Current::class);
     }
+
+    public function consolidateds()
+    {
+        return $this->hasMany(Consolidated::class);
+    }
 }

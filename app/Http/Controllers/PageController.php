@@ -113,4 +113,9 @@ class PageController extends Controller
     {
         return view('pages.current', compact('finance'));
     }
+
+    public function consolidated(Finance $finance)
+    {
+        return view('pages.consolidated', compact('finance'));
+    }
 }

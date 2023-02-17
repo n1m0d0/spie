@@ -11,4 +11,9 @@ class Current extends Model
     use HasFactory;
 
     use SoftDeletes;
+
+    public function finance()
+    {
+        return $this->belongsTo(Finance::class);
+    }
 }

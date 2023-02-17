@@ -21,7 +21,7 @@ class ComponentCurrent extends Component
     public $search;
 
     public $date;
-    public $description;
+    public $budget;
     public $current_id;
 
     public $deleteModal;
@@ -33,7 +33,7 @@ class ComponentCurrent extends Component
 
     protected $rules = [
         'date' => 'required|max:200',
-        'description' => 'required|max:200'
+        'budget' => 'required|decimal:0,2',
     ];
 
     public function mount()
@@ -61,7 +61,7 @@ class ComponentCurrent extends Component
         $current = new Current();        
         $current->finance_id = $this->finance->id;
         $current->date = $this->date;
-        $current->description = $this->description;
+        $current->budget = $this->budget;
         $current->save();
 
         $this->clear();
@@ -77,7 +77,7 @@ class ComponentCurrent extends Component
         $current = Current::find($id);
         
         $this->date = $current->date;
-        $this->description = $current->description;
+        $this->budget = $current->budget;
 
         $this->activity = "edit";
     }
@@ -89,7 +89,7 @@ class ComponentCurrent extends Component
         $this->validate();
 
         $current->date = $this->date;
-        $current->description = $this->description;
+        $current->budget = $this->budget;
         $current->save();
         
         $this->activity = "create";
@@ -120,7 +120,7 @@ class ComponentCurrent extends Component
 
     public function clear()
     {
-        $this->reset(['date', 'description', 'current_id']);
+        $this->reset(['date', 'budget', 'current_id']);
         $this->iteration++;
         $this->activity = "create";
     }

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('finance_id');
             $table->string('date');
-            $table->string('description');
+            $table->float('budget', 20, 2);
             $table->timestamps();
             $table->softDeletes();
 
