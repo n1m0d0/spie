@@ -11,4 +11,9 @@ class Indicator extends Model
     use HasFactory;
 
     use SoftDeletes;
+
+    public function planning()
+    {
+        return $this->belongsTo(Planning::class);
+    }
 }

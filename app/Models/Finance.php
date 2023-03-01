@@ -12,6 +12,11 @@ class Finance extends Model
    
     use SoftDeletes;
 
+    public function planning()
+    {
+        return $this->belongsTo(Planning::class);
+    }
+
     public function investments()
     {
         return $this->hasMany(Investment::class);

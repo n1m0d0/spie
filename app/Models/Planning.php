@@ -21,4 +21,14 @@ class Planning extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function indicators()
+    {
+        return $this->hasMany(Indicator::class);
+    }
+
+    public function finances()
+    {
+        return $this->hasMany(Finance::class);
+    }
 }

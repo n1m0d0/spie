@@ -70,7 +70,7 @@ class ComponentTerritory extends Component
 
     public function updatedDepartmentId()
     {
-        $this->municipalities = Municipality::where('department_id', $this->department_id)->get();
+        $this->municipalities = Municipality::where('department_id', $this->department_id)->orderBy('name', 'ASC')->get();
         $this->municipality_id = null;
     }
     

@@ -93,7 +93,7 @@ class ComponentPlanning extends Component
         $Query = Planning::query();
         if ($this->search != null) {
             $this->updatingSearch();
-            $Query = $Query->where('code', 'like', '%' . $this->search . '%');
+            $Query = $Query->where('code', 'like', '%' . $this->search . '%')->orWhere('result_description', 'like', '%' . $this->search . '%')->orWhere('action_description', 'like', '%' . $this->search . '%');
         }
 
         $searchPillars = Pillar::query();
