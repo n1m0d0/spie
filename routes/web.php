@@ -51,4 +51,5 @@ Route::controller(PageController::class)->group(function () {
     Route::get('investment/{finance}', 'investment')->name('page.investment')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
     Route::get('current/{finance}', 'current')->name('page.current')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
     Route::get('consolidated/{finance}', 'consolidated')->name('page.consolidated')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
+    Route::get('report', 'report')->name('page.report')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);    
 });

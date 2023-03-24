@@ -334,7 +334,7 @@
                                     <a wire:click='modalDelete({{ $planning->id }})'
                                         class="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer">{{ __('Delete') }}</a>
                                 </td>
-                                <td class="py-4 px-6 text-right">
+                                <td class="py-4 px-6">
                                     <a href="{{ route('page.indicator', $planning) }}"
                                         class="font-medium text-orange-600 dark:text-orange-500 hover:underline cursor-pointer">{{ __('Indicator') }}</a>
                                     <a href="{{ route('page.territory', $planning) }}"

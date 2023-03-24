@@ -94,8 +94,8 @@ class User extends Authenticatable
         );
     }
 
-    public function plannings()
+    public function entity()
     {
-        return $this->hasMany(Planning::class);
+        return $this->belongsTo(Entity::class);
     }
 }

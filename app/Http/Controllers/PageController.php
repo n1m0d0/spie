@@ -118,4 +118,9 @@ class PageController extends Controller
     {
         return view('pages.consolidated', compact('finance'));
     }
+
+    public function report()
+    {
+        return view('pages.report');
+    }
 }

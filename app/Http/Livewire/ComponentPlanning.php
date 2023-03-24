@@ -261,7 +261,7 @@ class ComponentPlanning extends Component
         $this->validate();
 
         $planning = new Planning();
-        $planning->user_id = $this->user_id;
+        //$planning->user_id = $this->user_id;
         $planning->action_id = $this->action_id;
         $planning->sector_id = $this->sector_id;
         $planning->entity_id = $this->entity_id;
@@ -302,7 +302,7 @@ class ComponentPlanning extends Component
 
         $this->validate();
 
-        $planning->user_id = $this->user_id;
+        //$planning->user_id = $this->user_id;
         $planning->action_id = $this->action_id;
         $planning->sector_id = $this->sector_id;
         $planning->entity_id = $this->entity_id;

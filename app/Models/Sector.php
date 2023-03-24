@@ -28,4 +28,9 @@ class Sector extends Model
             set: fn ($value) => strtolower($value)
         );
     }
+
+    public function plannings()
+    {
+        return $this->hasMany(Planning::class);
+    }
 }

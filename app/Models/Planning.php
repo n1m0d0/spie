@@ -5,21 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Planning extends Model
+class Planning extends Model implements Auditable
 {
     use HasFactory;
 
     use SoftDeletes;
 
+    use \OwenIt\Auditing\Auditable;
+
     public function action()
     {
         return $this->belongsTo(Action::class);
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
     }
 
     public function indicators()
@@ -30,5 +28,20 @@ class Planning extends Model
     public function finances()
     {
         return $this->hasMany(Finance::class);
+    }
+
+    public function entity()
+    {
+        return $this->belongsTo(Entity::class);
+    }
+
+    public function sector()
+    {
+        return $this->belongsTo(Sector::class);
+    }
+
+    public function territories()
+    {
+        return $this->hasMany(Territory::class);
     }
 }
