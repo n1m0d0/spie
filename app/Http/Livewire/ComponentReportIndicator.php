@@ -10,6 +10,20 @@ class ComponentReportIndicator extends Component
     public function render()
     {
         $entities = Entity::all();
-        return view('livewire.component-report-indicator', compact('entities'));
+
+        $indicatorPerEntity = [];
+
+        foreach ($entities as $entity) {
+            $aux = 0;            
+            $indicatorPerEntity['label'][] = $entity->acronym;
+            foreach ($entity->plannings as $planning) {
+                $aux = $aux + $planning->indicators->count();
+            }
+            $indicatorPerEntity['amount'][] = $aux;
+        }
+
+        $indicatorPerEntity = json_encode($indicatorPerEntity);
+
+        return view('livewire.component-report-indicator', compact('entities', 'indicatorPerEntity'));
     }
 }

@@ -13,6 +13,20 @@
                     {{ __('Goal') }}
                 </h5>
             </div>
+            <div class="flow-root">
+                <canvas id="goal" goal="{{ $goalPerAxis }}"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-span-1 md:col-span-6 p-2">
+        <div
+            class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+            <div class="flex items-center justify-between mb-4">
+                <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">
+                    {{ __('Goal') }}
+                </h5>
+            </div>
 
             @foreach ($hubs as $hub)
                 <div class="flow-root">
@@ -39,6 +53,20 @@
                     </ul>
                 </div>
             @endforeach
+        </div>
+    </div>
+
+    <div class="col-span-1 md:col-span-6 p-2">
+        <div
+            class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+            <div class="flex items-center justify-between mb-4">
+                <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">
+                    {{ __('Result') }}
+                </h5>
+            </div>
+            <div class="flow-root">
+                <canvas id="result" result="{{ $resultPerAxis }}"></canvas>
+            </div>
         </div>
     </div>
 
@@ -94,6 +122,20 @@
                     {{ __('Action') }}
                 </h5>
             </div>
+            <div class="flow-root">
+                <canvas id="action" action="{{ $actionPerAxis }}"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-span-1 md:col-span-6 p-2">
+        <div
+            class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+            <div class="flex items-center justify-between mb-4">
+                <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">
+                    {{ __('Action') }}
+                </h5>
+            </div>
 
             @foreach ($hubs as $hub)
                 <div class="flow-root">
@@ -137,7 +179,21 @@
             class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
             <div class="flex items-center justify-between mb-4">
                 <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">
-                    {{ __('Action') }}
+                    {{ __('Planning') }}
+                </h5>
+            </div>
+            <div class="flow-root">
+                <canvas id="planning" planning="{{ $planningPerAxis }}"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-span-1 md:col-span-6 p-2">
+        <div
+            class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+            <div class="flex items-center justify-between mb-4">
+                <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">
+                    {{ __('Planning') }}
                 </h5>
             </div>
 

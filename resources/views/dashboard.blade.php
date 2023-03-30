@@ -24,7 +24,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-900 overflow-hidden shadow-xl sm:rounded-lg">
-                @livewire('component-report-dictum')
+                @livewire('component-report-indicator')
             </div>
         </div>
     </div>
@@ -32,7 +32,15 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-900 overflow-hidden shadow-xl sm:rounded-lg">
-                @livewire('component-report-indicator')
+                @livewire('component-report-budget')
+            </div>
+        </div>
+    </div>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white dark:bg-gray-900 overflow-hidden shadow-xl sm:rounded-lg">
+                @livewire('component-report-dictum')
             </div>
         </div>
     </div>
