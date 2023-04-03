@@ -1,8 +1,9 @@
 <div>
-    <x-data-form>      
+    <x-data-form>
         @slot('form')
             <form class="mt-2">
-                <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-xl lg:text-2xl dark:text-gray-400">
+                <h1
+                    class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-xl lg:text-2xl dark:text-gray-400">
                     {{ __('code') }}: {{ $planning->code }}
                 </h1>
                 <div class="grid md:grid-cols-2 md:gap-6">
@@ -30,7 +31,8 @@
                 <div class="grid md:grid-cols-2 md:gap-6">
                     <div class="relative z-0 mb-6 w-full group">
                         <label for="year"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">{{ __('Year') }} {{ __('Base line') }}</label>
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">{{ __('Year') }}
+                            {{ __('Base line') }}</label>
                         <select id="year" wire:model="year"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="">{{ __('Select an option') }}</option>
@@ -55,7 +57,7 @@
                     </div>
                 </div>
 
-                <div class="grid md:grid-cols-4 md:gap-6">                 
+                <div class="grid md:grid-cols-4 md:gap-6">
                     <div class="relative z-0 mb-6 w-full group">
                         <input type="text" name="base_line" id="base_line" wire:model='base_line'
                             class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -169,6 +171,9 @@
                             <th scope="col" class="py-3 px-6">
                                 {{ __('Measure') }}
                             </th>
+                            <th scope="col" class="py-3 px-6">
+                                {{ __('Dissociation') }}
+                            </th>
 
                             <th scope="col" class="py-3 px-6">
                                 <span class="sr-only">Options</span>
@@ -182,8 +187,7 @@
                     <tbody>
                         @foreach ($indicators as $indicator)
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                <th scope="row"
-                                    class="py-4 px-6 font-medium text-gray-900 dark:text-white">
+                                <th scope="row" class="py-4 px-6 font-medium text-gray-900 dark:text-white">
                                     {{ $indicator->description }}
                                 </th>
                                 <td class="py-4 px-6">
@@ -202,9 +206,25 @@
 
                                 <td class="py-4 px-6">
                                     <ul>
+                                        @foreach ($indicator->dissociations as $dissociation)
+                                            <li class="flex items-center gap-2">
+                                                {{ $dissociation->name }}
+                                                <a wire:click='modalDeleteDissociation({{ $indicator->id }}, {{ $dissociation->id }})'
+                                                    class="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer">{{ __('Delete') }}</a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </td>
+
+                                <td class="py-4 px-6">
+                                    <ul>
+                                        <li>
+                                            <a wire:click='modalAdd({{ $indicator->id }})'
+                                                class="font-medium text-green-600 dark:text-red-green hover:underline cursor-pointer">{{ __('Dissociation') }}</a>
+                                        </li>
                                         <li>
                                             <a href="{{ route('page.schedule', $indicator) }}"
-                                        class="font-medium text-orange-600 dark:text-orange-500 hover:underline cursor-pointer">{{ __('Schedule') }}</a>
+                                                class="font-medium text-orange-600 dark:text-orange-500 hover:underline cursor-pointer">{{ __('Schedule') }}</a>
                                         </li>
 
                                         <li>
@@ -214,9 +234,9 @@
 
                                         <li>
                                             <a wire:click='modalDelete({{ $indicator->id }})'
-                                                class="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer">{{ __('Delete') }}</a>    
+                                                class="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer">{{ __('Delete') }}</a>
                                         </li>
-                                    </ul>                                                                    
+                                    </ul>
                                 </td>
                             </tr>
                         @endforeach
@@ -251,6 +271,69 @@
                 {{ __('Cancel') }}
             </x-jet-danger-button>
             <x-jet-secondary-button class="ml-2" wire:click='delete' wire:loading.attr="disabled">
+                {{ __('Accept') }}
+            </x-jet-secondary-button>
+        </x-slot>
+    </x-dialog-modal>
+
+    <x-dialog-modal wire:model="addModal">
+        <x-slot name="title">
+            <div class="flex col-span-6 sm:col-span-4 items-center">
+                <x-feathericon-alert-triangle class="h-10 w-10 text-green-500 mr-2" />
+                {{ __('Add') }} {{ __('Dissociation') }}
+            </div>
+        </x-slot>
+
+        <x-slot name="content">
+            <div class="flex col-span-6 sm:col-span-4 items-center gap-2">
+                <x-feathericon-folder-plus class="h-20 w-20 text-green-500 mr-2" />
+                <div class="relative z-0 mb-6 w-full group">
+                    <label for="dissociation_id"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">{{ __('Dissociation') }}</label>
+                    <select id="dissociation_id" wire:model="dissociation_id"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="">{{ __('Select an option') }}</option>
+                        @foreach ($dissociations as $dissociation)
+                            <option value="{{ $dissociation->id }}">{{ $dissociation->name }}</option>
+                        @endforeach
+                    </select>
+                    <x-jet-input-error for="dissociation_id" />
+                </div>
+            </div>
+        </x-slot>
+
+        <x-slot name="footer">
+            <x-jet-danger-button wire:click="$set('addModal', false)" wire:loading.attr="disabled">
+                {{ __('Cancel') }}
+            </x-jet-danger-button>
+            <x-jet-secondary-button class="ml-2" wire:click='add' wire:loading.attr="disabled">
+                {{ __('Accept') }}
+            </x-jet-secondary-button>
+        </x-slot>
+    </x-dialog-modal>
+
+    <x-dialog-modal wire:model="deleteDissociationModal">
+        <x-slot name="title">
+            <div class="flex col-span-6 sm:col-span-4 items-center">
+                <x-feathericon-alert-triangle class="h-10 w-10 text-red-500 mr-2" />
+                {{ __('Delete') }} {{ __('Dissociation') }}
+            </div>
+        </x-slot>
+
+        <x-slot name="content">
+            <div class="flex col-span-6 sm:col-span-4 items-center gap-2">
+                <x-feathericon-trash class="h-20 w-20 text-red-500 mr-2" />
+                <p>
+                    {{ __('Once deleted, the record cannot be recovered.') }}
+                </p>
+            </div>
+        </x-slot>
+
+        <x-slot name="footer">
+            <x-jet-danger-button wire:click="$set('deleteDissociationModal', false)" wire:loading.attr="disabled">
+                {{ __('Cancel') }}
+            </x-jet-danger-button>
+            <x-jet-secondary-button class="ml-2" wire:click='deleteDissociation' wire:loading.attr="disabled">
                 {{ __('Accept') }}
             </x-jet-secondary-button>
         </x-slot>

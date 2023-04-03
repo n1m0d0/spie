@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Action;
+use App\Models\Dissociation;
 use App\Models\Goal;
 use App\Models\Indicator;
 use Livewire\Component;
@@ -34,8 +35,13 @@ class ComponentIndicator extends Component
 
     public $goals;
     public $actions;
+    public $dissociations;
+
+    public $dissociation_id;
 
     public $deleteModal;
+    public $addModal;
+    public $deleteDissociationModal;
 
     protected $queryString = [
         'search' => ['except' => ''],
@@ -57,6 +63,7 @@ class ComponentIndicator extends Component
         $this->activity = 'create';
         $this->iteration = rand(0, 999);
         $this->deleteModal = false;
+        $this->dissociations = Dissociation::all();
     }
     
     public function render()
@@ -149,9 +156,52 @@ class ComponentIndicator extends Component
             ->push();
     }
 
+    public function modalAdd($id)
+    {
+        $this->indicator_id = $id;
+
+        $this->addModal = true;
+    }
+
+    public function add()
+    {
+        $this->validate([
+            'dissociation_id' => 'required'
+        ]);
+
+        $indicator = Indicator::find($this->indicator_id);
+        $indicator->dissociations()->attach($this->dissociation_id);
+
+        $this->addModal = false;
+        $this->clear();
+        toast()
+            ->success('Se añadido correctamente')
+            ->push();
+    }
+
+    public function modalDeleteDissociation($id, $idDissociation)
+    {
+        $this->indicator_id = $id;
+        $this->dissociation_id = $idDissociation;
+
+        $this->deleteDissociationModal = true;
+    }
+
+    public function deleteDissociation()
+    {
+        $indicator = Indicator::find($this->indicator_id);
+        $indicator->dissociations()->detach($this->dissociation_id);
+
+        $this->deleteDissociationModal = false;
+        $this->clear();
+        toast()
+            ->success('Se elimino correctamente')
+            ->push();
+    }
+
     public function clear()
     {
-        $this->reset(['description', 'formula', 'year', 'ending', 'base_line', 'worth', 'measure', 'indicator_id']);
+        $this->reset(['description', 'formula', 'year', 'ending', 'base_line', 'worth', 'measure', 'indicator_id', 'dissociation_id']);
         $this->iteration++;
         $this->activity = "create";
     }

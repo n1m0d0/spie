@@ -189,7 +189,18 @@
                         <x-jet-input-error for="entity_id" />
                     </div>
 
-
+                    <div class="relative z-0 mb-6 w-full group">
+                        <label for="type_id"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">{{ __('Type') }}</label>
+                        <select id="type_id" wire:model="type_id"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option value="">{{ __('Select an option') }}</option>
+                            @foreach ($types as $type)
+                                <option value="{{ $type->id }}">{{ $type->name }}</option>
+                            @endforeach
+                        </select>
+                        <x-jet-input-error for="type_id" />
+                    </div>
                 </div>
 
                 <div class="grid md:grid-cols-4 md:gap-6">
@@ -229,6 +240,21 @@
                             placeholder=""></textarea>
                         <x-jet-input-error for="action_description" />
                     </div>
+                </div>
+
+                <div class="relative z-0 mb-6 w-full group">
+                    <label for="parent_id"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">{{ __('Father') }}</label>
+
+                    <select id="parent_id" wire:model="parent_id"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="">{{ __('Select an option') }}</option>
+                        @foreach ($parents as $parent)
+                            <option value="{{ $parent->id }}">{{ $parent->type->name }} - {{ $parent->code }}</option>
+                        @endforeach
+                    </select>
+
+                    <x-jet-input-error for="parent_id" />
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-12 gap-2">
@@ -293,6 +319,9 @@
                                 {{ __('Code') }}
                             </th>
                             <th scope="col" class="py-3 px-6">
+                                {{ __('Type') }}
+                            </th>
+                            <th scope="col" class="py-3 px-6">
                                 {{ __('Result description') }}
                             </th>
                             <th scope="col" class="py-3 px-6">
@@ -319,6 +348,9 @@
                                     class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ $planning->code }}
                                 </th>
+                                <td class="py-4 px-6">
+                                    {{ $planning->type->name }}
+                                </td>
                                 <td class="py-4 px-6">
                                     {{ $planning->result_description }}
                                 </td>

@@ -11,6 +11,7 @@ use Livewire\Component;
 use App\Models\Planning;
 use App\Models\Result;
 use App\Models\Sector;
+use App\Models\Type;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use Usernotnull\Toast\Concerns\WireToast;
@@ -40,6 +41,9 @@ class ComponentPlanning extends Component
     public $action_description;
     public $planning_id;
 
+    public $parent_id;
+    public $type_id;
+
     public $pillars;
     public $hubs;
     public $goals;
@@ -47,6 +51,9 @@ class ComponentPlanning extends Component
     public $actions;
     public $sectors;
     public $entities;
+
+    public $types;
+    public $parents;
 
     public $deleteModal;
 
@@ -63,6 +70,8 @@ class ComponentPlanning extends Component
     ];
 
     protected $rules = [
+        'parent_id' => 'nullable',
+        'type_id' => 'required',
         'action_id' => 'required',
         'sector_id' => 'required',
         'entity_id' => 'required',
@@ -86,6 +95,9 @@ class ComponentPlanning extends Component
         $this->actions = collect();
         $this->sectors = Sector::all();
         $this->entities = Entity::all();
+
+        $this->types = Type::all();
+        $this->parents = Planning::where('entity_id', $this->entity)->orderBy('id', 'DESC')->get();
     }
 
     public function render()
@@ -262,6 +274,8 @@ class ComponentPlanning extends Component
 
         $planning = new Planning();
         //$planning->user_id = $this->user_id;
+        $planning->planning_id = $this->parent_id;
+        $planning->type_id = $this->type_id;
         $planning->action_id = $this->action_id;
         $planning->sector_id = $this->sector_id;
         $planning->entity_id = $this->entity_id;
@@ -287,6 +301,8 @@ class ComponentPlanning extends Component
         $this->goal_id = $planning->action->result->goal->id;
         $this->result_id = $planning->action->result->id;
         $this->action_id = $planning->action_id;*/
+        $this->parent_id = $planning->planning_id;        
+        $this->type_id = $planning->type_id;
         $this->sector_id = $planning->sector_id;
         $this->entity_id = $planning->entity_id;
         $this->code = $planning->code;
@@ -303,6 +319,8 @@ class ComponentPlanning extends Component
         $this->validate();
 
         //$planning->user_id = $this->user_id;
+        $planning->planning_id = $this->parent_id;
+        $planning->type_id = $this->type_id;
         $planning->action_id = $this->action_id;
         $planning->sector_id = $this->sector_id;
         $planning->entity_id = $this->entity_id;
@@ -339,7 +357,7 @@ class ComponentPlanning extends Component
 
     public function clear()
     {
-        $this->reset(['pillar_id', 'hub_id', 'goal_id', 'result_id', 'action_id', 'sector_id', 'entity_id', 'code', 'result_description', 'action_description', 'planning_id']);
+        $this->reset(['pillar_id', 'hub_id', 'goal_id', 'result_id', 'action_id', 'sector_id', 'entity_id', 'code', 'result_description', 'action_description', 'planning_id', 'parent_id', 'type_id']);
         $this->iteration++;
         $this->activity = "create";
     }

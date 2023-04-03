@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('plannings', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('planning_id')->nullable();
+            $table->unsignedBigInteger('type_id');
             $table->unsignedBigInteger('action_id');
             $table->unsignedBigInteger('sector_id');
             $table->unsignedBigInteger('entity_id');
@@ -24,6 +26,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
+            $table->foreign('type_id')->references('id')->on('types');
             $table->foreign('action_id')->references('id')->on('actions');
             $table->foreign('sector_id')->references('id')->on('sectors');
             $table->foreign('entity_id')->references('id')->on('entities');
