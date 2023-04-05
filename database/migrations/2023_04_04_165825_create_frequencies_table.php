@@ -13,13 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('entities', function (Blueprint $table) {
+        Schema::create('frequencies', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('entity_id');
-            $table->string('name');
-            $table->string('acronym');
+            $table->unsignedBigInteger('indicator_id');
+            $table->string('date');
+            $table->string('description');
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('indicator_id')->references('id')->on('indicators');
         });
     }
 
@@ -30,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('entities');
+        Schema::dropIfExists('frequencies');
     }
 };

@@ -98,6 +98,22 @@
                     </div>
                 </div>
 
+                <div class="grid md:grid-cols-2 md:gap-6">
+                    <div class="relative z-0 mb-6 w-full group">
+                        <label for="type_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">
+                            {{ __('Type') }}
+                        </label>
+                        <select id="type_id" wire:model="type_id"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option value="">{{ __('Select an option') }}</option>
+                            @foreach ($types as $type)
+                                <option value="{{ $type->id }}">{{ $type->name }}</option>
+                            @endforeach
+                        </select>
+                        <x-jet-input-error for="type_id" />
+                    </div>
+                </div>
+
                 <div class="grid grid-cols-1 sm:grid-cols-12 gap-2">
                     @if ($activity == 'create')
                         <a wire:click='store' wire:loading.attr="disabled" wire:target="store"
@@ -160,6 +176,9 @@
                                 {{ __('Description') }}
                             </th>
                             <th scope="col" class="py-3 px-6">
+                                {{ __('Type') }}
+                            </th>
+                            <th scope="col" class="py-3 px-6">
                                 {{ __('Formula') }}
                             </th>
                             <th scope="col" class="py-3 px-6">
@@ -191,6 +210,9 @@
                                     {{ $indicator->description }}
                                 </th>
                                 <td class="py-4 px-6">
+                                    {{ $indicator->type->name }}
+                                </td>
+                                <td class="py-4 px-6">
                                     {{ $indicator->formula }}
                                 </td>
                                 <td class="py-4 px-6">
@@ -220,8 +242,14 @@
                                     <ul>
                                         <li>
                                             <a wire:click='modalAdd({{ $indicator->id }})'
-                                                class="font-medium text-green-600 dark:text-red-green hover:underline cursor-pointer">{{ __('Dissociation') }}</a>
+                                                class="font-medium text-green-600 dark:text-green-500 hover:underline cursor-pointer">{{ __('Dissociation') }}</a>
                                         </li>
+
+                                        <li>
+                                            <a href="{{ route('page.frequency', $indicator) }}"
+                                                class="font-medium text-purple-600 dark:text-purple-500 hover:underline cursor-pointer">{{ __('Frequency') }}</a>
+                                        </li>
+
                                         <li>
                                             <a href="{{ route('page.schedule', $indicator) }}"
                                                 class="font-medium text-orange-600 dark:text-orange-500 hover:underline cursor-pointer">{{ __('Schedule') }}</a>

@@ -31,6 +31,7 @@ Route::middleware([
 Route::controller(PageController::class)->group(function () {
     Route::get('user', 'user')->name('page.user')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);    
     Route::get('type', 'type')->name('page.type')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']); 
+    Route::get('entity', 'entity')->name('page.entity')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
     Route::get('measure', 'measure')->name('page.measure')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
     Route::get('pillar', 'pillar')->name('page.pillar')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
     Route::get('sector', 'sector')->name('page.sector')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
@@ -52,4 +53,5 @@ Route::controller(PageController::class)->group(function () {
     Route::get('current/{finance}', 'current')->name('page.current')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
     Route::get('consolidated/{finance}', 'consolidated')->name('page.consolidated')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
     Route::get('report', 'report')->name('page.report')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);    
+    Route::get('frequency/{indicator}', 'frequency')->name('page.frequency')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
 });

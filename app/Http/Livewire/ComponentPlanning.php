@@ -230,7 +230,7 @@ class ComponentPlanning extends Component
             $this->result_description = null;
             $this->action_description = null;
 
-            $this->results = Result::where('goal_id', $this->goal_id)->get();            
+            $this->results = Result::where('goal_id', $this->goal_id)->get();
             $this->result_id = null;
         } else {
             $this->result_id = null;
@@ -301,7 +301,7 @@ class ComponentPlanning extends Component
         $this->goal_id = $planning->action->result->goal->id;
         $this->result_id = $planning->action->result->id;
         $this->action_id = $planning->action_id;*/
-        $this->parent_id = $planning->planning_id;        
+        $this->parent_id = $planning->planning_id;
         $this->type_id = $planning->type_id;
         $this->sector_id = $planning->sector_id;
         $this->entity_id = $planning->entity_id;
@@ -316,18 +316,40 @@ class ComponentPlanning extends Component
     {
         $planning = Planning::find($this->planning_id);
 
-        $this->validate();
+        if ($this->action_id != null) {
+            $this->validate();
 
-        //$planning->user_id = $this->user_id;
-        $planning->planning_id = $this->parent_id;
-        $planning->type_id = $this->type_id;
-        $planning->action_id = $this->action_id;
-        $planning->sector_id = $this->sector_id;
-        $planning->entity_id = $this->entity_id;
-        $planning->code = $this->code;
-        $planning->result_description = $this->result_description;
-        $planning->action_description = $this->action_description;
-        $planning->save();
+            $planning->planning_id = $this->parent_id;
+            $planning->type_id = $this->type_id;
+            $planning->action_id = $this->action_id;
+            $planning->sector_id = $this->sector_id;
+            $planning->entity_id = $this->entity_id;
+            $planning->code = $this->code;
+            $planning->result_description = $this->result_description;
+            $planning->action_description = $this->action_description;
+            $planning->save();
+        } else {
+            $this->validate([
+                'parent_id' => 'nullable',
+                'type_id' => 'required',
+                'sector_id' => 'required',
+                'entity_id' => 'required',
+                'code' => 'required',
+                'result_description' => 'required',
+                'action_description' => 'required'
+            ]);
+
+            //$planning->user_id = $this->user_id;
+            $planning->planning_id = $this->parent_id;
+            $planning->type_id = $this->type_id;
+            $planning->sector_id = $this->sector_id;
+            $planning->entity_id = $this->entity_id;
+            $planning->code = $this->code;
+            $planning->result_description = $this->result_description;
+            $planning->action_description = $this->action_description;
+            $planning->save();
+        }
+
 
         $this->activity = "create";
         $this->clear();

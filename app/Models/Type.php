@@ -33,4 +33,9 @@ class Type extends Model
     {
         return $this->hasMany(Planning::class);
     }
+
+    public function indicators()
+    {
+        return $this->hasMany(Indicator::class);
+    }
 }

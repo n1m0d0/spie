@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('indicators', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('planning_id');
+            $table->unsignedBigInteger('planning_id');            
+            $table->unsignedBigInteger('type_id');
             $table->longText('description');
             $table->longText('formula');
             $table->string('year');
@@ -27,6 +28,7 @@ return new class extends Migration
             $table->softDeletes();
 
             $table->foreign('planning_id')->references('id')->on('plannings');
+            $table->foreign('type_id')->references('id')->on('types');
         });
     }
 

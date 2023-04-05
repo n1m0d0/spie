@@ -6,6 +6,7 @@ use App\Models\Action;
 use App\Models\Dissociation;
 use App\Models\Goal;
 use App\Models\Indicator;
+use App\Models\Type;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
@@ -38,6 +39,9 @@ class ComponentIndicator extends Component
     public $dissociations;
 
     public $dissociation_id;
+    public $type_id;
+
+    public $types;
 
     public $deleteModal;
     public $addModal;
@@ -49,6 +53,7 @@ class ComponentIndicator extends Component
     ];
 
     protected $rules = [
+        'type_id' => 'required',
         'description' => 'required',
         'formula' => 'required',
         'year' => 'required',
@@ -64,6 +69,7 @@ class ComponentIndicator extends Component
         $this->iteration = rand(0, 999);
         $this->deleteModal = false;
         $this->dissociations = Dissociation::all();
+        $this->types = Type::all();
     }
     
     public function render()
@@ -83,6 +89,7 @@ class ComponentIndicator extends Component
 
         $indicator = new Indicator();
         $indicator->planning_id = $this->planning->id;
+        $indicator->type_id = $this->type_id;
         $indicator->description = $this->description;
         $indicator->formula = $this->formula;
         $indicator->year = $this->year;
@@ -104,6 +111,7 @@ class ComponentIndicator extends Component
         
         $indicator = Indicator::find($id);
 
+        $this->type_id = $indicator->type_id;
         $this->description = $indicator->description;
         $this->formula = $indicator->formula;
         $this->year = $indicator->year;
@@ -121,6 +129,7 @@ class ComponentIndicator extends Component
 
         $this->validate();
 
+        $indicator->type_id = $this->type_id;
         $indicator->description = $this->description;
         $indicator->formula = $this->formula;
         $indicator->year = $this->year;
@@ -201,7 +210,7 @@ class ComponentIndicator extends Component
 
     public function clear()
     {
-        $this->reset(['description', 'formula', 'year', 'ending', 'base_line', 'worth', 'measure', 'indicator_id', 'dissociation_id']);
+        $this->reset(['description', 'formula', 'year', 'ending', 'base_line', 'worth', 'measure', 'indicator_id', 'dissociation_id', 'type_id']);
         $this->iteration++;
         $this->activity = "create";
     }

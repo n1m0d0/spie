@@ -239,5 +239,8 @@
     "Current": "Current",
     "Spent": "Spent",
     "Consolidated": "Consolidated",
-    "Dictum": "Dictum"
+    "Dictum": "Dictum",
+    "Frequency": "Frequency",
+    "Continuity": "Continuity",
+    "Acronym": "Acronym"
 }

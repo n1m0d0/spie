@@ -14,6 +14,11 @@ class PageController extends Controller
         return view('pages.user');
     }
 
+    public function entity()
+    {
+        return view('pages.entity');
+    }
+
     public function hub()
     {
         return view('pages.hub');
@@ -122,5 +127,10 @@ class PageController extends Controller
     public function report()
     {
         return view('pages.report');
+    }
+
+    public function frequency(Indicator $indicator)
+    {
+        return view('pages.frequency', compact('indicator'));
     }
 }

@@ -24,4 +24,9 @@ class Indicator extends Model implements Auditable
     {
         return $this->belongsToMany(Dissociation::class);
     }
+
+    public function type()
+    {
+        return $this->belongsTo(Type::class);
+    }
 }
