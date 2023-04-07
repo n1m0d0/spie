@@ -56,6 +56,8 @@ class ComponentPlanning extends Component
     public $parents;
 
     public $deleteModal;
+    public $addModalType;
+    public $deleteTypeModal;
 
     //input select
     public $inputSearchPillar;
@@ -71,7 +73,6 @@ class ComponentPlanning extends Component
 
     protected $rules = [
         'parent_id' => 'nullable',
-        'type_id' => 'required',
         'action_id' => 'required',
         'sector_id' => 'required',
         'entity_id' => 'required',
@@ -88,6 +89,7 @@ class ComponentPlanning extends Component
         $this->activity = 'create';
         $this->iteration = rand(0, 999);
         $this->deleteModal = false;
+        $this->addModalType = false;
         $this->pillars = Pillar::all();
         $this->hubs = collect();
         $this->goals = collect();
@@ -273,9 +275,8 @@ class ComponentPlanning extends Component
         $this->validate();
 
         $planning = new Planning();
-        //$planning->user_id = $this->user_id;
+        
         $planning->planning_id = $this->parent_id;
-        $planning->type_id = $this->type_id;
         $planning->action_id = $this->action_id;
         $planning->sector_id = $this->sector_id;
         $planning->entity_id = $this->entity_id;
@@ -296,13 +297,7 @@ class ComponentPlanning extends Component
 
         $planning = Planning::find($id);
 
-        /*$this->pillar_id = $planning->action->result->goal->hub->pillar->id;
-        $this->hub_id = $planning->action->result->goal->hub->id;
-        $this->goal_id = $planning->action->result->goal->id;
-        $this->result_id = $planning->action->result->id;
-        $this->action_id = $planning->action_id;*/
         $this->parent_id = $planning->planning_id;
-        $this->type_id = $planning->type_id;
         $this->sector_id = $planning->sector_id;
         $this->entity_id = $planning->entity_id;
         $this->code = $planning->code;
@@ -320,7 +315,6 @@ class ComponentPlanning extends Component
             $this->validate();
 
             $planning->planning_id = $this->parent_id;
-            $planning->type_id = $this->type_id;
             $planning->action_id = $this->action_id;
             $planning->sector_id = $this->sector_id;
             $planning->entity_id = $this->entity_id;
@@ -331,7 +325,6 @@ class ComponentPlanning extends Component
         } else {
             $this->validate([
                 'parent_id' => 'nullable',
-                'type_id' => 'required',
                 'sector_id' => 'required',
                 'entity_id' => 'required',
                 'code' => 'required',
@@ -339,9 +332,7 @@ class ComponentPlanning extends Component
                 'action_description' => 'required'
             ]);
 
-            //$planning->user_id = $this->user_id;
             $planning->planning_id = $this->parent_id;
-            $planning->type_id = $this->type_id;
             $planning->sector_id = $this->sector_id;
             $planning->entity_id = $this->entity_id;
             $planning->code = $this->code;
@@ -371,6 +362,49 @@ class ComponentPlanning extends Component
         $planning->delete();
 
         $this->deleteModal = false;
+        $this->clear();
+        toast()
+            ->success('Se elimino correctamente')
+            ->push();
+    }
+
+    public function modalAddType($id)
+    {
+        $this->planning_id = $id;
+
+        $this->addModalType = true;
+    }
+
+    public function addType()
+    {
+        $this->validate([
+            'type_id' => 'required'
+        ]);
+
+        $planning = Planning::find($this->planning_id);
+        $planning->types()->attach($this->type_id);
+
+        $this->addModalType = false;
+        $this->clear();
+        toast()
+            ->success('Se añadido correctamente')
+            ->push();
+    }
+
+    public function modalDeleteType($id, $idType)
+    {
+        $this->planning_id = $id;
+        $this->type_id = $idType;
+
+        $this->deleteTypeModal = true;
+    }
+
+    public function deleteType()
+    {
+        $planning = Planning::find($this->planning_id);
+        $planning->types()->detach($this->type_id);
+
+        $this->deleteTypeModal = false;
         $this->clear();
         toast()
             ->success('Se elimino correctamente')

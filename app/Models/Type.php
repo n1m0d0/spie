@@ -31,11 +31,11 @@ class Type extends Model
 
     public function plannings()
     {
-        return $this->hasMany(Planning::class);
+        return $this->belongsToMany(Planning::class);
     }
 
     public function indicators()
     {
-        return $this->hasMany(Indicator::class);
+        return $this->belongsToMany(Indicator::class);
     }
 }

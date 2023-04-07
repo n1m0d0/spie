@@ -45,8 +45,8 @@ class Planning extends Model implements Auditable
         return $this->hasMany(Territory::class);
     }
 
-    public function type()
+    public function types()
     {
-        return $this->belongsTo(Type::class);
+        return $this->belongsToMany(Type::class);
     }
 }

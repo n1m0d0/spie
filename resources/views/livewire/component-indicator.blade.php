@@ -98,22 +98,6 @@
                     </div>
                 </div>
 
-                <div class="grid md:grid-cols-2 md:gap-6">
-                    <div class="relative z-0 mb-6 w-full group">
-                        <label for="type_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">
-                            {{ __('Type') }}
-                        </label>
-                        <select id="type_id" wire:model="type_id"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option value="">{{ __('Select an option') }}</option>
-                            @foreach ($types as $type)
-                                <option value="{{ $type->id }}">{{ $type->name }}</option>
-                            @endforeach
-                        </select>
-                        <x-jet-input-error for="type_id" />
-                    </div>
-                </div>
-
                 <div class="grid grid-cols-1 sm:grid-cols-12 gap-2">
                     @if ($activity == 'create')
                         <a wire:click='store' wire:loading.attr="disabled" wire:target="store"
@@ -210,7 +194,15 @@
                                     {{ $indicator->description }}
                                 </th>
                                 <td class="py-4 px-6">
-                                    {{ $indicator->type->name }}
+                                    <ul>
+                                        @foreach ($indicator->types as $type)
+                                            <li class="flex items-center gap-2">
+                                                {{ $type->name }}
+                                                <a wire:click='modalDeleteType({{ $indicator->id }}, {{ $type->id }})'
+                                                    class="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer">{{ __('Delete') }}</a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
                                 </td>
                                 <td class="py-4 px-6">
                                     {{ $indicator->formula }}
@@ -241,6 +233,24 @@
                                 <td class="py-4 px-6">
                                     <ul>
                                         <li>
+                                            <a wire:click='edit({{ $indicator->id }})'
+                                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">{{ __('Edit') }}</a>
+                                        </li>
+
+                                        <li>
+                                            <a wire:click='modalDelete({{ $indicator->id }})'
+                                                class="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer">{{ __('Delete') }}</a>
+                                        </li>
+                                    </ul>
+                                </td>
+                                <td class="py-4 px-6">
+                                    <ul>
+                                        <li>
+                                            <a wire:click='modalAddType({{ $indicator->id }})'
+                                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">{{ __('Type') }}</a>
+                                        </li>
+
+                                        <li>
                                             <a wire:click='modalAdd({{ $indicator->id }})'
                                                 class="font-medium text-green-600 dark:text-green-500 hover:underline cursor-pointer">{{ __('Dissociation') }}</a>
                                         </li>
@@ -253,17 +263,7 @@
                                         <li>
                                             <a href="{{ route('page.schedule', $indicator) }}"
                                                 class="font-medium text-orange-600 dark:text-orange-500 hover:underline cursor-pointer">{{ __('Schedule') }}</a>
-                                        </li>
-
-                                        <li>
-                                            <a wire:click='edit({{ $indicator->id }})'
-                                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">{{ __('Edit') }}</a>
-                                        </li>
-
-                                        <li>
-                                            <a wire:click='modalDelete({{ $indicator->id }})'
-                                                class="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer">{{ __('Delete') }}</a>
-                                        </li>
+                                        </li>                                        
                                     </ul>
                                 </td>
                             </tr>
@@ -362,6 +362,69 @@
                 {{ __('Cancel') }}
             </x-jet-danger-button>
             <x-jet-secondary-button class="ml-2" wire:click='deleteDissociation' wire:loading.attr="disabled">
+                {{ __('Accept') }}
+            </x-jet-secondary-button>
+        </x-slot>
+    </x-dialog-modal>
+    
+    <x-dialog-modal wire:model="addModalType">
+        <x-slot name="title">
+            <div class="flex col-span-6 sm:col-span-4 items-center">
+                <x-feathericon-alert-triangle class="h-10 w-10 text-blue-500 mr-2" />
+                {{ __('Add') }} {{ __('Type') }}
+            </div>
+        </x-slot>
+
+        <x-slot name="content">
+            <div class="flex col-span-6 sm:col-span-4 items-center gap-2">
+                <x-feathericon-folder-plus class="h-20 w-20 text-blue-500 mr-2" />
+                <div class="relative z-0 mb-6 w-full group">
+                    <label for="type_id"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">{{ __('Dissociation') }}</label>
+                    <select id="type_id" wire:model="type_id"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="">{{ __('Select an option') }}</option>
+                        @foreach ($types as $type)
+                            <option value="{{ $type->id }}">{{ $type->name }}</option>
+                        @endforeach
+                    </select>
+                    <x-jet-input-error for="type_id" />
+                </div>
+            </div>
+        </x-slot>
+
+        <x-slot name="footer">
+            <x-jet-danger-button wire:click="$set('addModalType', false)" wire:loading.attr="disabled">
+                {{ __('Cancel') }}
+            </x-jet-danger-button>
+            <x-jet-secondary-button class="ml-2" wire:click='addType' wire:loading.attr="disabled">
+                {{ __('Accept') }}
+            </x-jet-secondary-button>
+        </x-slot>
+    </x-dialog-modal>
+
+    <x-dialog-modal wire:model="deleteTypeModal">
+        <x-slot name="title">
+            <div class="flex col-span-6 sm:col-span-4 items-center">
+                <x-feathericon-alert-triangle class="h-10 w-10 text-red-500 mr-2" />
+                {{ __('Delete') }} {{ __('Type') }}
+            </div>
+        </x-slot>
+
+        <x-slot name="content">
+            <div class="flex col-span-6 sm:col-span-4 items-center gap-2">
+                <x-feathericon-trash class="h-20 w-20 text-red-500 mr-2" />
+                <p>
+                    {{ __('Once deleted, the record cannot be recovered.') }}
+                </p>
+            </div>
+        </x-slot>
+
+        <x-slot name="footer">
+            <x-jet-danger-button wire:click="$set('deleteTypeModal', false)" wire:loading.attr="disabled">
+                {{ __('Cancel') }}
+            </x-jet-danger-button>
+            <x-jet-secondary-button class="ml-2" wire:click='deleteType' wire:loading.attr="disabled">
                 {{ __('Accept') }}
             </x-jet-secondary-button>
         </x-slot>

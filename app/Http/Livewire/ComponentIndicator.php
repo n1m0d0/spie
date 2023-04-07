@@ -46,6 +46,8 @@ class ComponentIndicator extends Component
     public $deleteModal;
     public $addModal;
     public $deleteDissociationModal;
+    public $addModalType;
+    public $deleteTypeModal;
 
     protected $queryString = [
         'search' => ['except' => ''],
@@ -53,7 +55,6 @@ class ComponentIndicator extends Component
     ];
 
     protected $rules = [
-        'type_id' => 'required',
         'description' => 'required',
         'formula' => 'required',
         'year' => 'required',
@@ -70,6 +71,8 @@ class ComponentIndicator extends Component
         $this->deleteModal = false;
         $this->dissociations = Dissociation::all();
         $this->types = Type::all();
+        $this->addModalType = false;
+        $this->deleteTypeModal = false;
     }
     
     public function render()
@@ -89,7 +92,6 @@ class ComponentIndicator extends Component
 
         $indicator = new Indicator();
         $indicator->planning_id = $this->planning->id;
-        $indicator->type_id = $this->type_id;
         $indicator->description = $this->description;
         $indicator->formula = $this->formula;
         $indicator->year = $this->year;
@@ -111,7 +113,6 @@ class ComponentIndicator extends Component
         
         $indicator = Indicator::find($id);
 
-        $this->type_id = $indicator->type_id;
         $this->description = $indicator->description;
         $this->formula = $indicator->formula;
         $this->year = $indicator->year;
@@ -129,7 +130,6 @@ class ComponentIndicator extends Component
 
         $this->validate();
 
-        $indicator->type_id = $this->type_id;
         $indicator->description = $this->description;
         $indicator->formula = $this->formula;
         $indicator->year = $this->year;
@@ -202,6 +202,49 @@ class ComponentIndicator extends Component
         $indicator->dissociations()->detach($this->dissociation_id);
 
         $this->deleteDissociationModal = false;
+        $this->clear();
+        toast()
+            ->success('Se elimino correctamente')
+            ->push();
+    }
+
+    public function modalAddType($id)
+    {
+        $this->indicator_id = $id;
+
+        $this->addModalType = true;
+    }
+
+    public function addType()
+    {
+        $this->validate([
+            'type_id' => 'required'
+        ]);
+
+        $indicator = Indicator::find($this->indicator_id);
+        $indicator->types()->attach($this->type_id);
+
+        $this->addModalType = false;
+        $this->clear();
+        toast()
+            ->success('Se añadido correctamente')
+            ->push();
+    }
+
+    public function modalDeleteType($id, $idType)
+    {
+        $this->indicator_id = $id;
+        $this->type_id = $idType;
+
+        $this->deleteTypeModal = true;
+    }
+
+    public function deleteType()
+    {
+        $indicator = Indicator::find($this->indicator_id);
+        $indicator->types()->detach($this->type_id);
+
+        $this->deleteTypeModal = false;
         $this->clear();
         toast()
             ->success('Se elimino correctamente')

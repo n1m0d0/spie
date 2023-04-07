@@ -135,8 +135,6 @@
                                     </ul>
                                 </td>
                                 <td class="py-4 px-6 text-right">
-                                    <a wire:click='modalAdd({{ $entity->id }})'
-                                        class="font-medium text-green-600 dark:text-red-green hover:underline cursor-pointer">{{ __('Add') }}</a>
                                     <a wire:click='edit({{ $entity->id }})'
                                         class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">{{ __('Edit') }}</a>
                                     <a wire:click='modalDelete({{ $entity->id }})'
