@@ -65,6 +65,7 @@ class ComponentPlanning extends Component
     public $inputSearchGoal;
     public $inputSearchResult;
     public $inputSearchAction;
+    public $inputSearchEntity;
 
     protected $queryString = [
         'search' => ['except' => ''],
@@ -135,8 +136,13 @@ class ComponentPlanning extends Component
             $searchActions = $searchActions->where('result_id', $this->result_id)->where('name', 'like', '%' . $this->inputSearchAction . '%')->get();
         }
 
+        $searchEntities = Entity::query();
+        if ($this->inputSearchEntity != null) {
+            $searchEntities = $searchEntities->where('name', 'like', '%' . $this->inputSearchEntity . '%')->get();
+        }
+
         $plannings = $Query->where('entity_id', $this->entity)->orderBy('id', 'DESC')->paginate(7);
-        return view('livewire.component-planning', compact('plannings', 'searchPillars', 'searchHubs', 'searchGoals', 'searchResults', 'searchActions'));
+        return view('livewire.component-planning', compact('plannings', 'searchPillars', 'searchHubs', 'searchGoals', 'searchResults', 'searchActions', 'searchEntities'));
     }
 
     public function selectPillar($id)
@@ -177,6 +183,12 @@ class ComponentPlanning extends Component
         $this->inputSearchAction = null;
 
         $this->updatedActionId();
+    }
+
+    public function selectEntity($id)
+    {
+        $this->entity_id = $id;
+        $this->inputSearchEntity = null;
     }
 
     public function updatedPillarId()
