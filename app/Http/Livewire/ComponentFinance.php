@@ -24,6 +24,8 @@ class ComponentFinance extends Component
     public $budget;
     public $finance_id;
 
+    public $visibility;
+
     public $deleteModal;
 
     protected $queryString = [
@@ -41,6 +43,15 @@ class ComponentFinance extends Component
         $this->activity = 'create';
         $this->iteration = rand(0, 999);
         $this->deleteModal = false;
+        $this->visibility = false;
+
+        foreach($this->planning->types as $type)
+        {
+            if($type->id == 9 || $type->id == 10 || $type->id == 11)
+            {
+                $this->visibility = true;
+            }
+        }
     }
 
     public function render()
