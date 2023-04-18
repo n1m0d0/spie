@@ -26,6 +26,8 @@ class ComponentConsolidated extends Component
 
     public $deleteModal;
 
+    public $visibility;
+
     protected $queryString = [
         'search' => ['except' => ''],
         'page' => ['except' => 1],
@@ -41,8 +43,59 @@ class ComponentConsolidated extends Component
         $this->activity = 'create';
         $this->iteration = rand(0, 999);
         $this->deleteModal = false;
+
+        $this->visibility = false;
+        foreach ($this->finance->planning->types as $type) {
+            if ($type->id == 9 || $type->id == 10 || $type->id == 11) {
+                $this->visibility = true;
+            }
+        }
+
+        /*if ($consolidated->count() > 0) {
+            
+        } else {
+            foreach ($this->finance->planning->types as $type) {
+                if ($type->id == 9 || $type->id == 10 || $type->id == 11) {
+                    $this->visibility = true;
+                }
+            }
+
+            if ($this->visibility) {
+                $auxInvestment = collect();
+                $auxCurrent = collect();
+                foreach ($this->finance->investments as $investment) {
+                    $auxInvestment->push(["date" => $investment->date, "budget" => $investment->budget]);
+                }
+
+                foreach ($this->finance->currents as $current) {
+                    $auxCurrent->push(["date" => $current->date, "budget" => $current->budget]);
+                }
+
+                $auxCurrent = $auxCurrent->unique('date');
+                $auxInvestment = $auxInvestment->unique('date');
+
+                $first = $auxCurrent->first();
+                $last = $auxCurrent->last();
+                $aux = collect();
+                $aux = $auxInvestment->concat($auxCurrent);
+
+                $filtered = $aux->where('date', "" . 2021);
+
+                $filtered->all();
+
+                for ($i = $first['date']; $i <= $last['date']; $i++) {
+                    $filtered = $aux->where('date', "" . $i);
+                    $sum = $filtered->sum('budget');
+                    $consolidated = new Consolidated();
+                    $consolidated->finance_id = $this->finance->id;
+                    $consolidated->date = $i;
+                    $consolidated->budget = $sum;
+                    $consolidated->save();
+                }
+            }
+        }*/
     }
-    
+
     public function render()
     {
         $Query = Consolidated::query();
@@ -58,7 +111,7 @@ class ComponentConsolidated extends Component
     {
         $this->validate();
 
-        $consolidated = new Consolidated();        
+        $consolidated = new Consolidated();
         $consolidated->finance_id = $this->finance->id;
         $consolidated->date = $this->date;
         $consolidated->budget = $this->budget;
@@ -73,9 +126,9 @@ class ComponentConsolidated extends Component
     public function edit($id)
     {
         $this->consolidated_id = $id;
-        
+
         $consolidated = Consolidated::find($id);
-        
+
         $this->date = $consolidated->date;
         $this->budget = $consolidated->budget;
 
@@ -91,7 +144,7 @@ class ComponentConsolidated extends Component
         $consolidated->date = $this->date;
         $consolidated->budget = $this->budget;
         $consolidated->save();
-        
+
         $this->activity = "create";
         $this->clear();
         toast()
@@ -116,6 +169,63 @@ class ComponentConsolidated extends Component
         toast()
             ->success('Se elimino correctamente')
             ->push();
+    }
+
+    public function generate()
+    {
+        $auxInvestment = collect();
+        $auxCurrent = collect();
+        foreach ($this->finance->investments as $investment) {
+            $auxInvestment->push(["date" => $investment->date, "budget" => $investment->budget]);
+        }
+
+        foreach ($this->finance->currents as $current) {
+            $auxCurrent->push(["date" => $current->date, "budget" => $current->budget]);
+        }
+
+        $auxCurrent = $auxCurrent->unique('date');
+        $auxInvestment = $auxInvestment->unique('date');
+
+        $firstInvestment = $auxInvestment->first();
+        $lastInvestment = $auxInvestment->last();
+        $firstCurrent = $auxCurrent->first();
+        $lastCurrent = $auxCurrent->last();
+        $aux = collect();
+        $aux = $auxInvestment->concat($auxCurrent);
+
+        if ($firstInvestment == null || $firstCurrent == null) {
+            toast()
+                ->warning('Se deben completar los registros previos')
+                ->push();
+        } else {
+            $first = 0;
+            $last = 0;
+            if ($firstInvestment['date'] > $firstCurrent['date']) {
+                $first = $firstCurrent['date'];
+            } else {
+                $first = $firstInvestment['date'];
+            }
+
+            if ($lastInvestment['date'] > $lastCurrent['date']) {
+                $last = $lastInvestment['date'];
+            } else {
+                $last = $lastCurrent['date'];
+            }
+
+            for ($i = $first; $i <= $last; $i++) {
+                $filtered = $aux->where('date', "" . $i);
+                $sum = $filtered->sum('budget');
+                $consolidated = new Consolidated();
+                $consolidated->finance_id = $this->finance->id;
+                $consolidated->date = $i;
+                $consolidated->budget = $sum;
+                $consolidated->save();
+            }
+
+            toast()
+                ->success('Se genero correctamente')
+                ->push();
+        }
     }
 
     public function clear()

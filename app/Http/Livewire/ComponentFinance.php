@@ -34,7 +34,7 @@ class ComponentFinance extends Component
     ];
 
     protected $rules = [
-        'programmatic_category' => 'required|numeric|min:0',
+        'programmatic_category' => 'required|max:200',
         'budget' => 'required|decimal:0,2',
     ];
 
