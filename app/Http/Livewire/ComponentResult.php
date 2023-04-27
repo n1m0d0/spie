@@ -49,12 +49,13 @@ class ComponentResult extends Component
     
     public function render()
     {
-        $Query = Result::query();
-        if ($this->search != null) {
-            $this->updatingSearch();
-            $Query = $Query->where('name', 'like', '%' . $this->search . '%');
-        }
-        $results = $Query->orderBy('id', 'DESC')->paginate(7);
+        $Query = Result::query()
+        ->when($this->search, function($query){
+            $query->where('name', 'like', '%' . $this->search . '%');
+        })
+        ->orderBy('id', 'DESC')->paginate(7);
+        
+        $results = $Query;
         return view('livewire.component-result', compact('results'));
     }
 

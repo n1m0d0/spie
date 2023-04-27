@@ -49,12 +49,13 @@ class ComponentGoal extends Component
     
     public function render()
     {
-        $Query = Goal::query();
-        if ($this->search != null) {
-            $this->updatingSearch();
-            $Query = $Query->where('name', 'like', '%' . $this->search . '%');
-        }
-        $goals = $Query->orderBy('id', 'DESC')->paginate(7);
+        $Query = Goal::query()
+        ->when($this->search, function($query){
+            $query->where('name', 'like', '%' . $this->search . '%');
+        })
+        ->orderBy('id', 'DESC')->paginate(7);
+        
+        $goals = $Query;
         return view('livewire.component-goal', compact('goals'));
     }
 

@@ -105,12 +105,6 @@ class ComponentPlanning extends Component
 
     public function render()
     {
-        $Query = Planning::query();
-        if ($this->search != null) {
-            $this->updatingSearch();
-            $Query = $Query->where('code', 'like', '%' . $this->search . '%')->orWhere('result_description', 'like', '%' . $this->search . '%')->orWhere('action_description', 'like', '%' . $this->search . '%');
-        }
-
         $searchPillars = Pillar::query();
         if ($this->inputSearchPillar != null) {
             $searchPillars = $searchPillars->where('name', 'like', '%' . $this->inputSearchPillar . '%')->get();
@@ -140,6 +134,11 @@ class ComponentPlanning extends Component
         if ($this->inputSearchEntity != null) {
             $searchEntities = $searchEntities->where('name', 'like', '%' . $this->inputSearchEntity . '%')->get();
         }
+
+        $Query = Planning::query()
+        ->when($this->search, function($query){
+            $query->where('code', 'like', '%' . $this->search . '%')->orWhere('result_description', 'like', '%' . $this->search . '%')->orWhere('action_description', 'like', '%' . $this->search . '%');
+        });
 
         $plannings = $Query->where('entity_id', $this->entity)->orderBy('id', 'DESC')->paginate(7);
         return view('livewire.component-planning', compact('plannings', 'searchPillars', 'searchHubs', 'searchGoals', 'searchResults', 'searchActions', 'searchEntities'));

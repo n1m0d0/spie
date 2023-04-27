@@ -52,12 +52,13 @@ class ComponentAction extends Component
 
     public function render()
     {
-        $Query = Action::query();
-        if ($this->search != null) {
-            $this->updatingSearch();
-            $Query = $Query->where('name', 'like', '%' . $this->search . '%');
-        }
-        $actions = $Query->orderBy('id', 'DESC')->paginate(7);
+        $Query = Action::query()
+        ->when($this->search, function($query){
+            $query->where('name', 'like', '%' . $this->search . '%');
+        })
+        ->orderBy('id', 'DESC')->paginate(7);
+        
+        $actions = $Query;
         return view('livewire.component-action', compact('actions'));
     }
 

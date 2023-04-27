@@ -59,11 +59,10 @@ class ComponentUser extends Component
 
     public function render()
     {
-        $Query = User::query();
-        if ($this->search != null) {
-            $this->updatingSearch();
-            $Query = $Query->where('name', 'like', '%' . $this->search . '%');
-        }
+        $Query = User::query()
+        ->when($this->search, function($query){
+            $query->where('name', 'like', '%' . $this->search . '%');
+        });
         $users = $Query->where('state_id', 1)->where('id', "!=", 1)->orderBy('id', 'DESC')->paginate(7);
         $entities = Entity::all();
         $roles = DB::table('roles')->where('guard_name', 'web')->get();

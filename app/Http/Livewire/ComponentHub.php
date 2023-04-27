@@ -52,12 +52,13 @@ class ComponentHub extends Component
     
     public function render()
     {
-        $Query = Hub::query();
-        if ($this->search != null) {
-            $this->updatingSearch();
-            $Query = $Query->where('name', 'like', '%' . $this->search . '%');
-        }
-        $hubs = $Query->orderBy('id', 'DESC')->paginate(7);
+        $Query = Hub::query()
+        ->when($this->search, function($query){
+            $query->where('name', 'like', '%' . $this->search . '%');
+        })
+        ->orderBy('id', 'DESC')->paginate(7);
+        
+        $hubs = $Query;
         return view('livewire.component-hub', compact("hubs"));
     }
 

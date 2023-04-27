@@ -43,12 +43,13 @@ class ComponentPillar extends Component
     
     public function render()
     {
-        $Query = Pillar::query();
-        if ($this->search != null) {
-            $this->updatingSearch();
-            $Query = $Query->where('name', 'like', '%' . $this->search . '%');
-        }
-        $pillars = $Query->orderBy('id', 'DESC')->paginate(7);
+        $Query = Pillar::query()
+        ->when($this->search, function($query){
+            $query->where('name', 'like', '%' . $this->search . '%');
+        })
+        ->orderBy('id', 'DESC')->paginate(7);
+
+        $pillars = $Query;
         return view('livewire.component-pillar', compact('pillars'));
     }
 

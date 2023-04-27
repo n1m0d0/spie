@@ -14,4 +14,9 @@ class Schedule extends Model implements Auditable
     use SoftDeletes;
 
     use \OwenIt\Auditing\Auditable;
+
+    public function indicator()
+    {
+        return $this->belongsTo(Indicator::class);
+    }
 }

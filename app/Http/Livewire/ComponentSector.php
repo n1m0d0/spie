@@ -43,12 +43,13 @@ class ComponentSector extends Component
     
     public function render()
     {
-        $Query = Sector::query();
-        if ($this->search != null) {
-            $this->updatingSearch();
-            $Query = $Query->where('name', 'like', '%' . $this->search . '%');
-        }
-        $sectors = $Query->orderBy('id', 'DESC')->paginate(7);
+        $Query = Sector::query()
+        ->when($this->search, function($query){
+            $query->where('name', 'like', '%' . $this->search . '%');
+        })
+        ->orderBy('id', 'DESC')->paginate(7);
+
+        $sectors = $Query;
         return view('livewire.component-sector', compact('sectors'));
     }
 
