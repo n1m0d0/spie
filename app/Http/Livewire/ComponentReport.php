@@ -2,12 +2,13 @@
 
 namespace App\Http\Livewire;
 
+use App\Exports\PlanningExport;
+use App\Models\Entity;
 use App\Models\Planning;
 use App\Models\Sector;
 use App\Models\Type;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Illuminate\Database\Eloquent\Builder;
 
 class ComponentReport extends Component
 {
@@ -17,9 +18,10 @@ class ComponentReport extends Component
 
     public $sector_id;
     public $type_id;
+    public $entity_id;
 
     public $sectors;
-
+    public $entities;
     public $types;
 
     protected $queryString = [
@@ -32,6 +34,7 @@ class ComponentReport extends Component
         $this->search = null;
         $this->sector_id = null;
         $this->sectors = Sector::all();
+        $this->entities = Entity::all();
         $this->types = Type::all();
     }
 
@@ -44,6 +47,9 @@ class ComponentReport extends Component
         ->when($this->sector_id, function($query){
             $query->where('sector_id', $this->sector_id);
         })
+        ->when($this->entity_id, function($query){
+            $query->where('entity_id', $this->entity_id);
+        })
         ->when($this->type_id, function($query){
             $query->whereHas('types', function($query) {
                 $query->where('types.id', $this->type_id);
@@ -53,6 +59,11 @@ class ComponentReport extends Component
 
         $plannings = $QueryReport;
         return view('livewire.component-report', compact('plannings'));
+    }
+
+    public function exportExcel()
+    {
+        return new PlanningExport($this->search, $this->sector_id, $this->entity_id, $this->type_id);
     }
 
     public function clear()
@@ -72,6 +83,11 @@ class ComponentReport extends Component
     }
 
     public function updatingSectorId()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingEntityId()
     {
         $this->resetPage();
     }
