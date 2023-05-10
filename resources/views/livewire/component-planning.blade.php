@@ -175,36 +175,37 @@
                         </select>
                         <x-jet-input-error for="sector_id" />
                     </div>
+                    <!--
+                                        <div class="relative z-0 mb-6 w-full group">
+                                            <label for="entity_id"
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">{{ __('Entity') }}</label>
+                                            <select id="entity_id" wire:model="entity_id"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                <option value="">{{ __('Select an option') }}</option>
+                                                @foreach ($entities as $entity)
+    <option value="{{ $entity->id }}">{{ $entity->name }}</option>
+    @endforeach
+                                            </select>
 
-                    <div class="relative z-0 mb-6 w-full group">
-                        <label for="entity_id"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">{{ __('Entity') }}</label>
-                        <select id="entity_id" wire:model="entity_id"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option value="">{{ __('Select an option') }}</option>
-                            @foreach ($entities as $entity)
-                                <option value="{{ $entity->id }}">{{ $entity->name }}</option>
-                            @endforeach
-                        </select>
+                                            <input wire:model='inputSearchEntity' type="text"
+                                                placeholder="{{ __('Search') }} {{ __('Entity') }}"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-2">
 
-                        <input wire:model='inputSearchEntity' type="text"
-                            placeholder="{{ __('Search') }} {{ __('Entity') }}"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-2">
+                                            @if ($inputSearchEntity != null)
+    <ul
+                                                    class="w-full max-h-64 overflow-y-auto text-sm font-medium text-gray-900 bg-white border border-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                                                    @foreach ($searchEntities as $searchEntity)
+    <li wire:click='selectEntity({{ $searchEntity->id }})'
+                                                            class="w-full px-4 py-2 border-b border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-500 cursor-pointer">
+                                                            {{ $searchEntity->name }}
+                                                        </li>
+    @endforeach
+                                                </ul>
+    @endif
 
-                        @if ($inputSearchEntity != null)
-                            <ul
-                                class="w-full max-h-64 overflow-y-auto text-sm font-medium text-gray-900 bg-white border border-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                                @foreach ($searchEntities as $searchEntity)
-                                    <li wire:click='selectEntity({{ $searchEntity->id }})'
-                                        class="w-full px-4 py-2 border-b border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-500 cursor-pointer">
-                                        {{ $searchEntity->name }}
-                                    </li>
-                                @endforeach
-                            </ul>
-                        @endif
-
-                        <x-jet-input-error for="entity_id" />
-                    </div>
+                                            <x-jet-input-error for="entity_id" />
+                                        </div>
+                                    -->
                 </div>
 
                 <div class="grid md:grid-cols-4 md:gap-6">
@@ -219,9 +220,8 @@
                         </label>
                         <x-jet-input-error for="code" />
                     </div>
-
-
                 </div>
+
                 <div class="grid md:grid-cols-2 md:gap-6">
                     <div class="relative z-0 mb-6 w-full group">
                         <label for="result_description"
@@ -244,21 +244,6 @@
                             placeholder=""></textarea>
                         <x-jet-input-error for="action_description" />
                     </div>
-                </div>
-
-                <div class="relative z-0 mb-6 w-full group">
-                    <label for="parent_id"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">{{ __('Father') }}</label>
-
-                    <select id="parent_id" wire:model="parent_id"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option value="">{{ __('Select an option') }}</option>
-                        @foreach ($parents as $parent)
-                            <option value="{{ $parent->id }}">- {{ $parent->code }}</option>
-                        @endforeach
-                    </select>
-
-                    <x-jet-input-error for="parent_id" />
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-12 gap-2">
@@ -323,6 +308,9 @@
                                 {{ __('Code') }}
                             </th>
                             <th scope="col" class="py-3 px-6">
+                                {{ __('Connected') }}
+                            </th>
+                            <th scope="col" class="py-3 px-6">
                                 {{ __('Type') }}
                             </th>
                             <th scope="col" class="py-3 px-6">
@@ -352,6 +340,18 @@
                                     class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ $planning->code }}
                                 </th>
+                                <th scope="row"
+                                    class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <ul>
+                                        @foreach ($planning->plannings as $child)
+                                            <li>
+                                                {{ $child->code }}
+                                                <a wire:click='modalDisconnect({{ $child->id }})'
+                                                    class="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer">{{ __('Delete') }}</a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </th>
                                 <td class="py-4 px-6">
                                     <ul>
                                         @foreach ($planning->types as $type)
@@ -373,10 +373,22 @@
                                     {{ $planning->action->name }}
                                 </td>
                                 <td class="py-4 px-6 text-right">
-                                    <a wire:click='edit({{ $planning->id }})'
-                                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">{{ __('Edit') }}</a>
-                                    <a wire:click='modalDelete({{ $planning->id }})'
-                                        class="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer">{{ __('Delete') }}</a>
+                                    <ul>
+                                        <li>
+                                            <a wire:click='edit({{ $planning->id }})'
+                                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">{{ __('Edit') }}</a>
+                                        </li>
+
+                                        <li>
+                                            <a wire:click='modalConnect({{ $planning->id }})'
+                                                class="font-medium text-orange-600 dark:text-orange-500 hover:underline cursor-pointer">{{ __('Connect') }}</a>
+                                        </li>
+
+                                        <li>
+                                            <a wire:click='modalDelete({{ $planning->id }})'
+                                                class="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer">{{ __('Delete') }}</a>
+                                        </li>
+                                    </ul>
                                 </td>
                                 <td class="py-4 px-6">
                                     <ul>
@@ -494,6 +506,68 @@
                 {{ __('Cancel') }}
             </x-jet-danger-button>
             <x-jet-secondary-button class="ml-2" wire:click='deleteType' wire:loading.attr="disabled">
+                {{ __('Accept') }}
+            </x-jet-secondary-button>
+        </x-slot>
+    </x-dialog-modal>
+
+    <x-dialog-modal wire:model="connectModal">
+        <x-slot name="title">
+            <div class="flex col-span-6 sm:col-span-4 items-center">
+                <x-feathericon-alert-triangle class="h-10 w-10 text-orange-500 mr-2" />
+                {{ __('Connect') }} {{ __('Planning') }}
+            </div>
+        </x-slot>
+
+        <x-slot name="content">
+            <div class="col-span-6 sm:col-span-4 items-center gap-2">
+                <label for="parent_id"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">{{ __('Planning') }}</label>
+
+                <select id="parent_id" wire:model="parent_id"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option value="">{{ __('Select an option') }}</option>
+                    @foreach ($parents as $parent)
+                        <option value="{{ $parent->id }}">{{ $parent->code }}</option>
+                    @endforeach
+                </select>
+
+                <x-jet-input-error for="parent_id" />
+            </div>
+        </x-slot>
+
+        <x-slot name="footer">
+            <x-jet-danger-button wire:click="$set('connectModal', false)" wire:loading.attr="disabled">
+                {{ __('Cancel') }}
+            </x-jet-danger-button>
+            <x-jet-secondary-button class="ml-2" wire:click='connect' wire:loading.attr="disabled">
+                {{ __('Accept') }}
+            </x-jet-secondary-button>
+        </x-slot>
+    </x-dialog-modal>
+
+    <x-dialog-modal wire:model="disconnectModal">
+        <x-slot name="title">
+            <div class="flex col-span-6 sm:col-span-4 items-center">
+                <x-feathericon-alert-triangle class="h-10 w-10 text-red-500 mr-2" />
+                {{ __('Delete') }} {{ __('Connect') }}
+            </div>
+        </x-slot>
+
+        <x-slot name="content">
+            <div class="flex col-span-6 sm:col-span-4 items-center gap-2">
+                <x-feathericon-trash class="h-20 w-20 text-red-500 mr-2" />
+                <p>
+                    {{ __('Once deleted, the record cannot be recovered.') }}
+                </p>
+            </div>
+        </x-slot>
+
+        <x-slot name="footer">
+            <x-jet-danger-button wire:click="$set('disconnectModal', false)" wire:loading.attr="disabled">
+                {{ __('Cancel') }}
+            </x-jet-danger-button>
+            <x-jet-secondary-button class="ml-2" wire:click='disconnect' wire:loading.attr="disabled">
                 {{ __('Accept') }}
             </x-jet-secondary-button>
         </x-slot>

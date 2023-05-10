@@ -27,11 +27,12 @@ class ComponentTerritory extends Component
     public $department_id;
     public $municipality_id;
     public $community;
+    public $district;
+
     public $territory_id;
 
     public $departments;
     public $municipalities;
-    public $districts;
 
     public $actions;
 
@@ -45,6 +46,7 @@ class ComponentTerritory extends Component
     protected $rules = [
         'municipality_id' => 'required',
         'community' => 'required',
+        'district' => 'nullable'
     ];
 
     public function mount()
@@ -82,6 +84,7 @@ class ComponentTerritory extends Component
         $territory->planning_id = $this->planning->id;
         $territory->municipality_id = $this->municipality_id;
         $territory->community = $this->community;
+        $territory->district = $this->district;
         $territory->save();
 
         $this->clear();
@@ -99,7 +102,8 @@ class ComponentTerritory extends Component
         $this->department_id = $territory->municipality->department->id;
         $this->updatedDepartmentId();
         $this->municipality_id = $territory->municipality->id;
-        $this->community = $territory->community;
+        $this->community = $territory->community;        
+        $this->district = $territory->district;
 
         $this->activity = "edit";
     }
@@ -112,6 +116,7 @@ class ComponentTerritory extends Component
 
         $territory->municipality_id = $this->municipality_id;
         $territory->community = $this->community;
+        $territory->district = $this->district;
         $territory->save();
         
         $this->activity = "create";
@@ -142,7 +147,7 @@ class ComponentTerritory extends Component
 
     public function clear()
     {
-        $this->reset(['department_id', 'municipality_id', 'community', 'territory_id']);
+        $this->reset(['department_id', 'municipality_id', 'community', 'district', 'territory_id']);
         $this->iteration++;
         $this->activity = "create";
     }

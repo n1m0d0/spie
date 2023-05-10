@@ -58,6 +58,8 @@ class ComponentPlanning extends Component
     public $deleteModal;
     public $addModalType;
     public $deleteTypeModal;
+    public $connectModal;
+    public $disconnectModal;
 
     //input select
     public $inputSearchPillar;
@@ -73,7 +75,6 @@ class ComponentPlanning extends Component
     ];
 
     protected $rules = [
-        'parent_id' => 'nullable',
         'action_id' => 'required',
         'sector_id' => 'required',
         'entity_id' => 'required',
@@ -86,11 +87,15 @@ class ComponentPlanning extends Component
     {
         $this->user_id = auth()->user()->id;
         $this->entity = auth()->user()->entity_id;
+        $this->entity_id = auth()->user()->entity_id;;
 
         $this->activity = 'create';
         $this->iteration = rand(0, 999);
         $this->deleteModal = false;
         $this->addModalType = false;
+        $this->deleteTypeModal = false;
+        $this->connectModal = false;
+        $this->disconnectModal = false;
         $this->pillars = Pillar::all();
         $this->hubs = collect();
         $this->goals = collect();
@@ -100,7 +105,7 @@ class ComponentPlanning extends Component
         $this->entities = Entity::all();
 
         $this->types = Type::all();
-        $this->parents = Planning::where('entity_id', $this->entity)->orderBy('id', 'DESC')->get();
+        $this->parents = collect();
     }
 
     public function render()
@@ -136,9 +141,11 @@ class ComponentPlanning extends Component
         }
 
         $Query = Planning::query()
-        ->when($this->search, function($query){
-            $query->where('code', 'like', '%' . $this->search . '%')->orWhere('result_description', 'like', '%' . $this->search . '%')->orWhere('action_description', 'like', '%' . $this->search . '%');
-        });
+            ->when($this->search, function ($query) {
+                $query->where(function ($query) {
+                    $query->where('code', 'like', '%' . $this->search . '%')->orWhere('result_description', 'like', '%' . $this->search . '%')->orWhere('action_description', 'like', '%' . $this->search . '%');
+                });
+            });
 
         $plannings = $Query->where('entity_id', $this->entity)->orderBy('id', 'DESC')->paginate(7);
         return view('livewire.component-planning', compact('plannings', 'searchPillars', 'searchHubs', 'searchGoals', 'searchResults', 'searchActions', 'searchEntities'));
@@ -263,7 +270,11 @@ class ComponentPlanning extends Component
 
             $this->actions = Action::where('result_id', $this->result_id)->get();
             $this->action_id = null;
-            $this->result_description = Result::find($this->result_id)->description;
+
+            if (auth()->user()->getRoleNames()[0] == "creador territorial") {
+            } else {
+                $this->result_description = Result::find($this->result_id)->description;
+            }
         } else {
             $this->action_id = null;
             $this->actions = collect();
@@ -275,7 +286,11 @@ class ComponentPlanning extends Component
     public function updatedActionId()
     {
         if ($this->action_id != null) {
-            $this->action_description = Action::find($this->action_id)->description;
+            if (auth()->user()->getRoleNames()[0] == "creador territorial") {
+            } else {
+
+                $this->action_description = Action::find($this->action_id)->description;
+            }
         } else {
             $this->action_description = null;
         }
@@ -286,8 +301,7 @@ class ComponentPlanning extends Component
         $this->validate();
 
         $planning = new Planning();
-        
-        $planning->planning_id = $this->parent_id;
+
         $planning->action_id = $this->action_id;
         $planning->sector_id = $this->sector_id;
         $planning->entity_id = $this->entity_id;
@@ -308,7 +322,6 @@ class ComponentPlanning extends Component
 
         $planning = Planning::find($id);
 
-        $this->parent_id = $planning->planning_id;
         $this->sector_id = $planning->sector_id;
         $this->entity_id = $planning->entity_id;
         $this->code = $planning->code;
@@ -325,7 +338,6 @@ class ComponentPlanning extends Component
         if ($this->action_id != null) {
             $this->validate();
 
-            $planning->planning_id = $this->parent_id;
             $planning->action_id = $this->action_id;
             $planning->sector_id = $this->sector_id;
             $planning->entity_id = $this->entity_id;
@@ -335,7 +347,6 @@ class ComponentPlanning extends Component
             $planning->save();
         } else {
             $this->validate([
-                'parent_id' => 'nullable',
                 'sector_id' => 'required',
                 'entity_id' => 'required',
                 'code' => 'required',
@@ -343,7 +354,6 @@ class ComponentPlanning extends Component
                 'action_description' => 'required'
             ]);
 
-            $planning->planning_id = $this->parent_id;
             $planning->sector_id = $this->sector_id;
             $planning->entity_id = $this->entity_id;
             $planning->code = $this->code;
@@ -416,6 +426,53 @@ class ComponentPlanning extends Component
         $planning->types()->detach($this->type_id);
 
         $this->deleteTypeModal = false;
+        $this->clear();
+        toast()
+            ->success('Se elimino correctamente')
+            ->push();
+    }
+
+    public function modalConnect($id)
+    {
+        $this->planning_id = $id;
+
+        $this->parents = Planning::where('entity_id', $this->entity)->where('id', '!=', $id)->orderBy('id', 'DESC')->get();
+
+        $this->connectModal = true;
+    }
+
+    public function connect()
+    {
+        $planning = Planning::find($this->planning_id);
+
+        $this->validate([
+            'parent_id' => 'required'
+        ]);
+
+        $planning->planning_id = $this->parent_id;
+        $planning->save();
+
+        $this->connectModal = false;
+        $this->clear();
+        toast()
+            ->success('Se añadido correctamente')
+            ->push();
+    }
+
+    public function modalDisconnect($id)
+    {
+        $this->planning_id = $id;
+
+        $this->disconnectModal = true;
+    }
+
+    public function disconnect()
+    {
+        $planning = Planning::find($this->planning_id);
+        $planning->planning_id = null;
+        $planning->save();
+
+        $this->disconnectModal = false;
         $this->clear();
         toast()
             ->success('Se elimino correctamente')

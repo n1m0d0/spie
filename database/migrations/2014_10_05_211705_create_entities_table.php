@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('entities', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('entity_id')->nullValue();
+            $table->unsignedBigInteger('entity_id')->nullable();
             $table->string('name');
             $table->string('acronym');
             $table->timestamps();

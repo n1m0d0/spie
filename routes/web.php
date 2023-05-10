@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
+use App\Models\Action;
+use App\Models\Result;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,8 +32,8 @@ Route::middleware([
 });
 
 Route::controller(PageController::class)->group(function () {
-    Route::get('user', 'user')->name('page.user')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);    
-    Route::get('type', 'type')->name('page.type')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']); 
+    Route::get('user', 'user')->name('page.user')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
+    Route::get('type', 'type')->name('page.type')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
     Route::get('entity', 'entity')->name('page.entity')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
     Route::get('measure', 'measure')->name('page.measure')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
     Route::get('pillar', 'pillar')->name('page.pillar')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
@@ -39,7 +42,7 @@ Route::controller(PageController::class)->group(function () {
     Route::get('result', 'result')->name('page.result')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
     Route::get('goal', 'goal')->name('page.goal')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
     Route::get('action', 'action')->name('page.action')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
-    Route::get('dissociation', 'dissociation')->name('page.dissociation')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);    
+    Route::get('dissociation', 'dissociation')->name('page.dissociation')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
     Route::get('planning', 'planning')->name('page.planning')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
     Route::get('indicator/{planning}', 'indicator')->name('page.indicator')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
     Route::get('schedule/{indicator}', 'schedule')->name('page.schedule')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
@@ -52,6 +55,35 @@ Route::controller(PageController::class)->group(function () {
     Route::get('investment/{finance}', 'investment')->name('page.investment')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
     Route::get('current/{finance}', 'current')->name('page.current')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
     Route::get('consolidated/{finance}', 'consolidated')->name('page.consolidated')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
-    Route::get('report', 'report')->name('page.report')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);    
+    Route::get('report', 'report')->name('page.report')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
     Route::get('frequency/{indicator}', 'frequency')->name('page.frequency')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
+});
+
+Route::get('util', function () {
+    $results = Result::all();
+    foreach ($results as $result) {
+        $necessary = true;
+        foreach ($result->actions as $action) {
+            if ($action->name == "-") {
+                $necessary = false;
+            }
+        }
+
+        if ($necessary) {
+            $action = new Action();
+            $action->name = "-";
+            $action->description = "-";
+            $action->result_id = $result->id;
+            $action->save();
+        }
+    }
+
+    for ($i = 49; $i <= 400; $i++)
+    {
+        $user = User::find($i);
+        $user->removeRole($user->getRoleNames()[0]);
+        $user->assignRole('creador territorial');
+    }
+
+    return view('dashboard');
 });

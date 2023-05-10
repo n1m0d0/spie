@@ -243,5 +243,7 @@
     "Frequency": "Frequency",
     "Continuity": "Continuity",
     "Acronym": "Acronym",
-    "Generate": "Generate"
+    "Generate": "Generate",
+    "Connect": "Connect",
+    "Connected": "Connected"
 }

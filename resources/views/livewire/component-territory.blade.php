@@ -1,11 +1,12 @@
 <div>
-    <x-data-form>      
+    <x-data-form>
         @slot('form')
             <form class="mt-2">
-                <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-xl lg:text-2xl dark:text-gray-400">
+                <h1
+                    class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-xl lg:text-2xl dark:text-gray-400">
                     {{ __('code') }}: {{ $planning->code }}
                 </h1>
-                
+
                 <div class="grid md:grid-cols-4 md:gap-6">
                     <div class="relative z-0 mb-6 w-full group">
                         <label for="department_id"
@@ -46,6 +47,22 @@
                         <x-jet-input-error for="community" />
                     </div>
                 </div>
+
+                @if (Auth::user()->getRoleNames()[0] == 'creador territorial')
+                    <div class="grid md:grid-cols-2 md:gap-6">
+                        <div class="relative z-0 mb-6 w-full group">
+                            <input type="text" name="district" id="district" wire:model='district'
+                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                placeholder=" " />
+
+                            <label for="district"
+                                class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                                {{ __('District') }}
+                            </label>
+                            <x-jet-input-error for="district" />
+                        </div>
+                    </div>
+                @endif
 
                 <div class="grid grid-cols-1 sm:grid-cols-12 gap-2">
                     @if ($activity == 'create')
@@ -112,6 +129,9 @@
                                 {{ __('Municipality') }}
                             </th>
                             <th scope="col" class="py-3 px-6">
+                                {{ __('District') }}
+                            </th>
+                            <th scope="col" class="py-3 px-6">
                                 {{ __('Area') }}
                             </th>
 
@@ -133,6 +153,9 @@
                                 </th>
                                 <td class="py-4 px-6">
                                     {{ $territory->municipality->name }}
+                                </td>
+                                <td class="py-4 px-6">
+                                    {{ $territory->district }}
                                 </td>
                                 <td class="py-4 px-6">
                                     {{ $territory->community }}
