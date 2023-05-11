@@ -176,36 +176,36 @@
                         <x-jet-input-error for="sector_id" />
                     </div>
                     <!--
-                                        <div class="relative z-0 mb-6 w-full group">
-                                            <label for="entity_id"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">{{ __('Entity') }}</label>
-                                            <select id="entity_id" wire:model="entity_id"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                <option value="">{{ __('Select an option') }}</option>
-                                                @foreach ($entities as $entity)
+                                                    <div class="relative z-0 mb-6 w-full group">
+                                                        <label for="entity_id"
+                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">{{ __('Entity') }}</label>
+                                                        <select id="entity_id" wire:model="entity_id"
+                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                            <option value="">{{ __('Select an option') }}</option>
+                                                            @foreach ($entities as $entity)
     <option value="{{ $entity->id }}">{{ $entity->name }}</option>
     @endforeach
-                                            </select>
+                                                        </select>
 
-                                            <input wire:model='inputSearchEntity' type="text"
-                                                placeholder="{{ __('Search') }} {{ __('Entity') }}"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-2">
+                                                        <input wire:model='inputSearchEntity' type="text"
+                                                            placeholder="{{ __('Search') }} {{ __('Entity') }}"
+                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-2">
 
-                                            @if ($inputSearchEntity != null)
+                                                        @if ($inputSearchEntity != null)
     <ul
-                                                    class="w-full max-h-64 overflow-y-auto text-sm font-medium text-gray-900 bg-white border border-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                                                    @foreach ($searchEntities as $searchEntity)
+                                                                class="w-full max-h-64 overflow-y-auto text-sm font-medium text-gray-900 bg-white border border-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                                                                @foreach ($searchEntities as $searchEntity)
     <li wire:click='selectEntity({{ $searchEntity->id }})'
-                                                            class="w-full px-4 py-2 border-b border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-500 cursor-pointer">
-                                                            {{ $searchEntity->name }}
-                                                        </li>
+                                                                        class="w-full px-4 py-2 border-b border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-500 cursor-pointer">
+                                                                        {{ $searchEntity->name }}
+                                                                    </li>
     @endforeach
-                                                </ul>
+                                                            </ul>
     @endif
 
-                                            <x-jet-input-error for="entity_id" />
-                                        </div>
-                                    -->
+                                                        <x-jet-input-error for="entity_id" />
+                                                    </div>
+                                                -->
                 </div>
 
                 <div class="grid md:grid-cols-4 md:gap-6">
@@ -220,6 +220,20 @@
                         </label>
                         <x-jet-input-error for="code" />
                     </div>
+
+                    @if (Auth::user()->getRoleNames()[0] == 'creador territorial')
+                        <div class="relative z-0 mb-6 w-full group">
+                            <input type="text" name="action_code" id="action_code" wire:model='action_code'
+                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                placeholder=" " />
+
+                            <label for="action_code"
+                                class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                                {{ __('Code') }} {{ __('Action') }}
+                            </label>
+                            <x-jet-input-error for="action_code" />
+                        </div>
+                    @endif
                 </div>
 
                 <div class="grid md:grid-cols-2 md:gap-6">
@@ -316,6 +330,11 @@
                             <th scope="col" class="py-3 px-6">
                                 {{ __('Result description') }}
                             </th>
+                            @if (Auth::user()->getRoleNames()[0] == 'creador territorial')
+                                <th scope="col" class="py-3 px-6">
+                                    {{ __('Code') }} {{ __('Action') }}
+                                </th>
+                            @endif
                             <th scope="col" class="py-3 px-6">
                                 {{ __('Action description') }}
                             </th>
@@ -366,6 +385,11 @@
                                 <td class="py-4 px-6">
                                     {{ $planning->result_description }}
                                 </td>
+                                @if (Auth::user()->getRoleNames()[0] == 'creador territorial')
+                                    <td class="py-4 px-6">
+                                        {{ $planning->action_code }}
+                                    </td>
+                                @endif
                                 <td class="py-4 px-6">
                                     {{ $planning->action_description }}
                                 </td>

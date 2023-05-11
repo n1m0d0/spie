@@ -39,6 +39,7 @@ class ComponentPlanning extends Component
     public $code;
     public $result_description;
     public $action_description;
+    public $action_code;
     public $planning_id;
 
     public $parent_id;
@@ -80,7 +81,8 @@ class ComponentPlanning extends Component
         'entity_id' => 'required',
         'code' => 'required',
         'result_description' => 'required',
-        'action_description' => 'required'
+        'action_description' => 'required',
+        'action_code' => 'nullable'
     ];
 
     public function mount()
@@ -308,6 +310,7 @@ class ComponentPlanning extends Component
         $planning->code = $this->code;
         $planning->result_description = $this->result_description;
         $planning->action_description = $this->action_description;
+        $planning->action_code = $this->action_code;
         $planning->save();
 
         $this->clear();
@@ -327,6 +330,7 @@ class ComponentPlanning extends Component
         $this->code = $planning->code;
         $this->result_description = $planning->result_description;
         $this->action_description = $planning->action_description;
+        $this->action_code = $planning->action_code;
 
         $this->activity = "edit";
     }
@@ -344,6 +348,7 @@ class ComponentPlanning extends Component
             $planning->code = $this->code;
             $planning->result_description = $this->result_description;
             $planning->action_description = $this->action_description;
+            $planning->action_code = $this->action_code;
             $planning->save();
         } else {
             $this->validate([
@@ -359,6 +364,7 @@ class ComponentPlanning extends Component
             $planning->code = $this->code;
             $planning->result_description = $this->result_description;
             $planning->action_description = $this->action_description;
+            $planning->action_code = $this->action_code;
             $planning->save();
         }
 
@@ -481,7 +487,7 @@ class ComponentPlanning extends Component
 
     public function clear()
     {
-        $this->reset(['pillar_id', 'hub_id', 'goal_id', 'result_id', 'action_id', 'sector_id', 'entity_id', 'code', 'result_description', 'action_description', 'planning_id', 'parent_id', 'type_id']);
+        $this->reset(['pillar_id', 'hub_id', 'goal_id', 'result_id', 'action_id', 'sector_id', 'code', 'result_description', 'action_description', 'action_code', 'planning_id', 'parent_id', 'type_id']);
         $this->iteration++;
         $this->activity = "create";
     }
