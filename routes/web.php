@@ -54,4 +54,7 @@ Route::controller(PageController::class)->group(function () {
     Route::get('consolidated/{finance}', 'consolidated')->name('page.consolidated')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
     Route::get('report', 'report')->name('page.report')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);    
     Route::get('frequency/{indicator}', 'frequency')->name('page.frequency')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
+    Route::get('approach', 'approach')->name('page.approach')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
+    Route::get('diagnostic/{approach}', 'diagnostic')->name('page.diagnostic')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
+    Route::get('record/{diagnostic}', 'record')->name('page.record')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
 });

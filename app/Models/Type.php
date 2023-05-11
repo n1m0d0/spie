@@ -38,4 +38,9 @@ class Type extends Model
     {
         return $this->belongsToMany(Indicator::class);
     }
+
+    public function approaches()
+    {
+        return $this->hasMany(Approach::class);
+    }
 }
