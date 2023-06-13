@@ -4,6 +4,20 @@
             <form class="mt-2">
                 <div class="grid md:grid-cols-2 md:gap-6">
                     <div class="relative z-0 mb-6 w-full group">
+                        <label for="entity_id"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">{{ __('Entity') }}</label>
+                        <select id="entity_id" wire:model="entity_id"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option value="">{{ __('Select an option') }}</option>
+                            <option value="{{ $entityFather->id }}">{{ $entityFather->name }}</option>
+                            @foreach ($entities as $entity)
+                                <option value="{{ $entity->id }}">{{ $entity->name }}</option>
+                            @endforeach
+                        </select>
+                        <x-jet-input-error for="entity_id" />
+                    </div>
+
+                    <div class="relative z-0 mb-6 w-full group">
                         <label for="sector_id"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">{{ __('Sector') }}</label>
                         <select id="sector_id" wire:model="sector_id"
@@ -27,20 +41,7 @@
                             @endforeach
                         </select>
                         <x-jet-input-error for="type_id" />
-                    </div>
-
-                    <div class="relative z-0 mb-6 w-full group">
-                        <label for="entity_id"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">{{ __('Entity') }}</label>
-                        <select id="entity_id" wire:model="entity_id"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option value="">{{ __('Select an option') }}</option>
-                            @foreach ($entities as $entity)
-                                <option value="{{ $entity->id }}">{{ $entity->name }}</option>
-                            @endforeach
-                        </select>
-                        <x-jet-input-error for="entity_id" />
-                    </div>
+                    </div>                    
 
                     <div class="relative z-0 mb-6 w-full group">
                         <a wire:click='exportExcel' wire:loading.attr="exportExcel" wire:target="exportExcel"

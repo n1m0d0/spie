@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Approach;
+use App\Models\Diagnostic;
 use App\Models\Finance;
 use App\Models\Indicator;
 use App\Models\Planning;
@@ -132,5 +134,45 @@ class PageController extends Controller
     public function frequency(Indicator $indicator)
     {
         return view('pages.frequency', compact('indicator'));
+    }
+
+    public function approach()
+    {
+        return view('pages.approach');
+    }
+
+    public function diagnostic(Approach $approach)
+    {
+        return view('pages.diagnostic', compact('approach'));
+    }
+
+    public function record(Diagnostic $diagnostic)
+    {
+        return view('pages.record', compact('diagnostic'));
+    }
+
+    public function verify()
+    {
+        return view('pages.verify');
+    }
+
+    public function show(Planning $planning)
+    {
+        return view('pages.show', compact('planning'));
+    }
+
+    public function showIndicator(Planning $planning)
+    {
+        return view('pages.show-indicator', compact('planning'));
+    }
+
+    public function observation(Planning $planning)
+    {
+        return view('pages.observation', compact('planning'));
+    }
+
+    public function showObservation(Planning $planning)
+    {
+        return view('pages.show-observation', compact('planning'));
     }
 }

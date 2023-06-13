@@ -70,6 +70,10 @@ class ComponentPlanning extends Component
     public $inputSearchAction;
     public $inputSearchEntity;
 
+    public $filterEntities;
+    public $defaultFilterEntity;
+    public $filterEntity_id;
+
     protected $queryString = [
         'search' => ['except' => ''],
         'page' => ['except' => 1],
@@ -78,7 +82,7 @@ class ComponentPlanning extends Component
     protected $rules = [
         'action_id' => 'required',
         'sector_id' => 'required',
-        'entity_id' => 'required',
+        'entity_id' => 'nullable',
         'code' => 'required',
         'result_description' => 'required',
         'action_description' => 'required',
@@ -89,7 +93,8 @@ class ComponentPlanning extends Component
     {
         $this->user_id = auth()->user()->id;
         $this->entity = auth()->user()->entity_id;
-        $this->entity_id = auth()->user()->entity_id;;
+        $this->defaultFilterEntity = auth()->user()->entity;
+        //$this->entity_id = auth()->user()->entity_id;
 
         $this->activity = 'create';
         $this->iteration = rand(0, 999);
@@ -104,7 +109,8 @@ class ComponentPlanning extends Component
         $this->results = collect();
         $this->actions = collect();
         $this->sectors = Sector::all();
-        $this->entities = Entity::all();
+        $this->entities = Entity::where('entity_id', $this->entity)->get();
+        $this->filterEntities = Entity::where('entity_id', $this->entity)->get();
 
         $this->types = Type::all();
         $this->parents = collect();
@@ -142,14 +148,41 @@ class ComponentPlanning extends Component
             $searchEntities = $searchEntities->where('name', 'like', '%' . $this->inputSearchEntity . '%')->get();
         }
 
+        /*$Query = Planning::query()
+            ->where('entity_id', $this->entity)
+            ->when($this->search, function ($query) {
+                $query->where(function ($query) {
+                    $query->where('code', 'like', '%' . $this->search . '%')->orWhere('result_description', 'like', '%' . $this->search . '%')->orWhere('action_description', 'like', '%' . $this->search . '%');
+                });
+            });*/
+
         $Query = Planning::query()
             ->when($this->search, function ($query) {
                 $query->where(function ($query) {
                     $query->where('code', 'like', '%' . $this->search . '%')->orWhere('result_description', 'like', '%' . $this->search . '%')->orWhere('action_description', 'like', '%' . $this->search . '%');
                 });
+            })
+            ->when($this->filterEntity_id, function ($query) {
+                $query->where('entity_id', $this->filterEntity_id);
             });
 
-        $plannings = $Query->where('entity_id', $this->entity)->orderBy('id', 'DESC')->paginate(7);
+        if ($this->filterEntity_id == null) {
+            $Query = $Query->whereIn('entity_id', function ($query) {
+                $query->select('id')
+                    ->from('entities')
+                    ->where('id', $this->entity)
+                    ->orWhere('entity_id', $this->entity)
+                    ->orWhereIn('entity_id', function ($query) {
+                        $query->select('id')
+                            ->from('entities')
+                            ->where('entity_id', $this->entity);
+                    });
+            });
+        }
+
+        
+
+        $plannings = $Query->orderBy('id', 'DESC')->paginate(7);
         return view('livewire.component-planning', compact('plannings', 'searchPillars', 'searchHubs', 'searchGoals', 'searchResults', 'searchActions', 'searchEntities'));
     }
 
@@ -302,6 +335,10 @@ class ComponentPlanning extends Component
     {
         $this->validate();
 
+        if ($this->entity_id == null) {
+            $this->entity_id = $this->entity;
+        }
+
         $planning = new Planning();
 
         $planning->action_id = $this->action_id;
@@ -338,6 +375,10 @@ class ComponentPlanning extends Component
     public function update()
     {
         $planning = Planning::find($this->planning_id);
+
+        if ($this->entity_id == null) {
+            $this->entity_id = $this->entity;
+        }
 
         if ($this->action_id != null) {
             $this->validate();
@@ -408,8 +449,11 @@ class ComponentPlanning extends Component
             'type_id' => 'required'
         ]);
 
+
         $planning = Planning::find($this->planning_id);
-        $planning->types()->attach($this->type_id);
+        if ($planning->is_approved == false) {
+            $planning->types()->attach($this->type_id);
+        }
 
         $this->addModalType = false;
         $this->clear();
@@ -429,7 +473,9 @@ class ComponentPlanning extends Component
     public function deleteType()
     {
         $planning = Planning::find($this->planning_id);
-        $planning->types()->detach($this->type_id);
+        if ($planning->is_approved == false) {
+            $planning->types()->detach($this->type_id);
+        }
 
         $this->deleteTypeModal = false;
         $this->clear();
@@ -455,8 +501,10 @@ class ComponentPlanning extends Component
             'parent_id' => 'required'
         ]);
 
-        $planning->planning_id = $this->parent_id;
-        $planning->save();
+        if ($planning->is_approved == false) {
+            $planning->planning_id = $this->parent_id;
+            $planning->save();
+        }
 
         $this->connectModal = false;
         $this->clear();
@@ -475,8 +523,11 @@ class ComponentPlanning extends Component
     public function disconnect()
     {
         $planning = Planning::find($this->planning_id);
-        $planning->planning_id = null;
-        $planning->save();
+
+        if ($planning->is_approved == false) {
+            $planning->planning_id = null;
+            $planning->save();
+        }
 
         $this->disconnectModal = false;
         $this->clear();
@@ -487,7 +538,7 @@ class ComponentPlanning extends Component
 
     public function clear()
     {
-        $this->reset(['pillar_id', 'hub_id', 'goal_id', 'result_id', 'action_id', 'sector_id', 'code', 'result_description', 'action_description', 'action_code', 'planning_id', 'parent_id', 'type_id']);
+        $this->reset(['pillar_id', 'hub_id', 'goal_id', 'result_id', 'action_id', 'sector_id', 'code', 'result_description', 'action_description', 'action_code', 'planning_id', 'entity_id', 'parent_id', 'type_id']);
         $this->iteration++;
         $this->activity = "create";
     }
@@ -499,6 +550,11 @@ class ComponentPlanning extends Component
     }
 
     public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingFilterEntityId()
     {
         $this->resetPage();
     }

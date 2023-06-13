@@ -245,5 +245,14 @@
     "Acronym": "Acrónimo",
     "Generate": "Generar",
     "Connect": "Conectar",
-    "Connected": "Conectado"
+    "Connected": "Conectado",
+    "Validate": "Validar",
+    "Approved": "Aprobado",
+    "Review": "Revisar",
+    "Pending": "Pendiente",
+    "State": "Estado",
+    "Show": "Ver",
+    "Observation": "Observación",
+    "Complete": "Completo",
+    "To complete": "Completar"
 }

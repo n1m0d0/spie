@@ -33,4 +33,9 @@ class Sector extends Model
     {
         return $this->hasMany(Planning::class);
     }
+
+    public function approaches()
+    {
+        return $this->hasMany(Approach::class);
+    }
 }

@@ -16,6 +16,8 @@ class ComponentReport extends Component
 
     public $search;
 
+    public $entityFather;
+
     public $sector_id;
     public $type_id;
     public $entity_id;
@@ -23,6 +25,8 @@ class ComponentReport extends Component
     public $sectors;
     public $entities;
     public $types;
+
+    public $resultQuery;
 
     protected $queryString = [
         'search' => ['except' => ''],
@@ -32,38 +36,58 @@ class ComponentReport extends Component
     public function mount()
     {
         $this->search = null;
+        $this->entityFather = auth()->user()->entity;
         $this->sector_id = null;
         $this->sectors = Sector::all();
-        $this->entities = Entity::all();
+        $this->entities = Entity::where('entity_id', $this->entityFather->id)->get();
         $this->types = Type::all();
     }
 
     public function render()
     {
         $QueryReport = Planning::query()
-        ->when($this->search, function($query){
-            $query->where('code', 'like', '%' . $this->search . '%')->orWhere('result_description', 'like', '%' . $this->search . '%')->orWhere('action_description', 'like', '%' . $this->search . '%');
-        })
-        ->when($this->sector_id, function($query){
-            $query->where('sector_id', $this->sector_id);
-        })
-        ->when($this->entity_id, function($query){
-            $query->where('entity_id', $this->entity_id);
-        })
-        ->when($this->type_id, function($query){
-            $query->whereHas('types', function($query) {
-                $query->where('types.id', $this->type_id);
+            ->when($this->search, function ($query) {
+                $query->where('code', 'like', '%' . $this->search . '%')->orWhere('result_description', 'like', '%' . $this->search . '%')->orWhere('action_description', 'like', '%' . $this->search . '%');
+            })
+            ->when($this->sector_id, function ($query) {
+                $query->where('sector_id', $this->sector_id);
+            })
+            ->when($this->entity_id, function ($query) {
+                $query->where('entity_id', $this->entity_id);
+            })
+            ->when($this->type_id, function ($query) {
+                $query->whereHas('types', function ($query) {
+                    $query->where('types.id', $this->type_id);
+                });
             });
-        })
-        ->paginate(7);
 
-        $plannings = $QueryReport;
+        if ($this->entity_id == null) {
+            //$QueryReport = $QueryReport->where('entity_id', $this->entityFather->id);
+            /*$QueryReport = $QueryReport->whereHas('entity', function ($query) {
+                $query->where('entity_id', $this->entityFather->id);
+            });*/
+            $QueryReport = $QueryReport->whereIn('entity_id', function ($query) {
+                $query->select('id')
+                    ->from('entities')
+                    ->where('id', $this->entityFather->id)
+                    ->orWhere('entity_id', $this->entityFather->id)
+                    ->orWhereIn('entity_id', function ($query) {
+                        $query->select('id')
+                            ->from('entities')
+                            ->where('entity_id', $this->entityFather->id);
+                    });
+            });
+        }
+
+        $this->resultQuery = $QueryReport->get();
+        $plannings = $QueryReport->paginate(7);
         return view('livewire.component-report', compact('plannings'));
     }
 
     public function exportExcel()
     {
-        return new PlanningExport($this->search, $this->sector_id, $this->entity_id, $this->type_id);
+        //return new PlanningExport($this->search, $this->sector_id, $this->entity_id, $this->type_id);
+        return new PlanningExport($this->resultQuery);
     }
 
     public function clear()

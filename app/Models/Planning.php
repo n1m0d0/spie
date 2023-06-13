@@ -59,4 +59,9 @@ class Planning extends Model implements Auditable
     {
         return $this->hasMany(Planning::class)->with('plannings');
     }
+
+    public function observations()
+    {
+        return $this->belongsToMany(observation::class);
+    }
 }
