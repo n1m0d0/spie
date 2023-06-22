@@ -16,17 +16,17 @@ return new class extends Migration
         Schema::create('plannings', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('planning_id')->nullable();
-            $table->unsignedBigInteger('type_id');
             $table->unsignedBigInteger('action_id');
             $table->unsignedBigInteger('sector_id');
             $table->unsignedBigInteger('entity_id');
             $table->string('code');
             $table->longText('result_description');
+            $table->string('action_code');
             $table->longText('action_description');
+            $table->boolean('is_approved');
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('type_id')->references('id')->on('types');
             $table->foreign('action_id')->references('id')->on('actions');
             $table->foreign('sector_id')->references('id')->on('sectors');
             $table->foreign('entity_id')->references('id')->on('entities');

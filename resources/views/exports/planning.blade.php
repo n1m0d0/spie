@@ -132,21 +132,41 @@
 
                 <td class="py-4 px-6">
                     @foreach ($planning->indicators as $indicator)
-                        {{ $indicator->description }}
+                        @if ($indicator_type_id != null)
+                            @if ($indicator->types->where('id', $indicator_type_id)->count() > 0)
+                                {{ $indicator->description }}
+
+                                <br>
+
+                                <h1 class="text-lg m-2 text-gray-900 dark:text-white">{{ __('Schedule') }}
+                                </h1>
+
+                                <ul
+                                    class="flex flex-wrap items-center justify-center mb-6 text-gray-900 dark:text-white">
+                                    @foreach ($indicator->schedules as $schedule)
+                                        <li>
+                                            {{ $schedule->date }} => {{ $schedule->description }}
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @endif
+                        @else
+                            {{ $indicator->description }}
+
+                            <br>
+
+                            <h1 class="text-lg m-2 text-gray-900 dark:text-white">{{ __('Schedule') }}
+                            </h1>
+
+                            <ul class="flex flex-wrap items-center justify-center mb-6 text-gray-900 dark:text-white">
+                                @foreach ($indicator->schedules as $schedule)
+                                    <li>
+                                        {{ $schedule->date }} => {{ $schedule->description }}
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
                     @endforeach
-                    
-                    <br>
-
-                    <h1 class="text-lg m-2 text-gray-900 dark:text-white">{{ __('Schedule') }}
-                    </h1>
-
-                    <ul class="flex flex-wrap items-center justify-center mb-6 text-gray-900 dark:text-white">
-                        @foreach ($indicator->schedules as $schedule)
-                            <li>
-                                {{ $schedule->date }} => {{ $schedule->description }}
-                            </li>
-                        @endforeach
-                    </ul>
                 </td>
 
                 <td class="py-4 px-6">

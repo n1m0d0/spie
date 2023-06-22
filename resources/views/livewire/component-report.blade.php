@@ -41,7 +41,21 @@
                             @endforeach
                         </select>
                         <x-jet-input-error for="type_id" />
-                    </div>                    
+                    </div>
+
+                    <div class="relative z-0 mb-6 w-full group">
+                        <label for="indicator_type_id"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">{{ __('Type') }}
+                            {{ __('Indicator') }}</label>
+                        <select id="indicator_type_id" wire:model="indicator_type_id"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option value="">{{ __('Select an option') }}</option>
+                            @foreach ($indicator_types as $indicator_type)
+                                <option value="{{ $indicator_type->id }}">{{ $indicator_type->name }}</option>
+                            @endforeach
+                        </select>
+                        <x-jet-input-error for="indicator_type_id" />
+                    </div>
 
                     <div class="relative z-0 mb-6 w-full group">
                         <a wire:click='exportExcel' wire:loading.attr="exportExcel" wire:target="exportExcel"
@@ -220,7 +234,76 @@
                                     @foreach ($planning->indicators as $indicator)
                                         <ul
                                             class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
-                                            <li>
+                                            @if ($indicator_type_id != null)
+                                                @if ($indicator->types->where('id', $indicator_type_id)->count() > 0)
+                                                    <li>
+                                                        {{ $indicator->description }}
+
+                                                        <h1 class="text-lg m-2 text-gray-900 dark:text-white">
+                                                            {{ __('Schedule') }}
+                                                        </h1>
+
+                                                        <table
+                                                            class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                                            <thead
+                                                                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                                                <tr>
+                                                                    @foreach ($indicator->schedules as $schedule)
+                                                                        <th scope="col" class="py-3 px-6">
+                                                                            {{ $schedule->date }}
+                                                                        </th>
+                                                                    @endforeach
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody>
+                                                                <tr
+                                                                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                                    @foreach ($indicator->schedules as $schedule)
+                                                                        <td class="py-4 px-6">
+                                                                            {{ $schedule->description }}
+                                                                        </td>
+                                                                    @endforeach
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </li>
+                                                @endif
+                                            @else
+                                                <li>
+                                                    {{ $indicator->description }}
+
+                                                    <h1 class="text-lg m-2 text-gray-900 dark:text-white">
+                                                        {{ __('Schedule') }}
+                                                    </h1>
+
+                                                    <table
+                                                        class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                                        <thead
+                                                            class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                                            <tr>
+                                                                @foreach ($indicator->schedules as $schedule)
+                                                                    <th scope="col" class="py-3 px-6">
+                                                                        {{ $schedule->date }}
+                                                                    </th>
+                                                                @endforeach
+                                                            </tr>
+                                                        </thead>
+
+                                                        <tbody>
+                                                            <tr
+                                                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                                @foreach ($indicator->schedules as $schedule)
+                                                                    <td class="py-4 px-6">
+                                                                        {{ $schedule->description }}
+                                                                    </td>
+                                                                @endforeach
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </li>
+                                            @endif
+                                            {{--  <li>
                                                 {{ $indicator->description }}
 
                                                 <h1 class="text-lg m-2 text-gray-900 dark:text-white">{{ __('Schedule') }}
@@ -239,7 +322,8 @@
                                                     </thead>
 
                                                     <tbody>
-                                                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                        <tr
+                                                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                                             @foreach ($indicator->schedules as $schedule)
                                                                 <td class="py-4 px-6">
                                                                     {{ $schedule->description }}
@@ -249,6 +333,7 @@
                                                     </tbody>
                                                 </table>
                                             </li>
+                                            --}}
                                         </ul>
                                     @endforeach
                                 </td>

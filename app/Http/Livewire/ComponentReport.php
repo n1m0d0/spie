@@ -21,10 +21,12 @@ class ComponentReport extends Component
     public $sector_id;
     public $type_id;
     public $entity_id;
+    public $indicator_type_id;
 
     public $sectors;
     public $entities;
     public $types;
+    public $indicator_types;
 
     public $resultQuery;
 
@@ -41,6 +43,7 @@ class ComponentReport extends Component
         $this->sectors = Sector::all();
         $this->entities = Entity::where('entity_id', $this->entityFather->id)->get();
         $this->types = Type::all();
+        $this->indicator_types = Type::all();
     }
 
     public function render()
@@ -87,7 +90,7 @@ class ComponentReport extends Component
     public function exportExcel()
     {
         //return new PlanningExport($this->search, $this->sector_id, $this->entity_id, $this->type_id);
-        return new PlanningExport($this->resultQuery);
+        return new PlanningExport($this->resultQuery, $this->indicator_type_id);
     }
 
     public function clear()

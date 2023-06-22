@@ -22,6 +22,7 @@ return new class extends Migration
                 "RURAL",
                 "URBANO/RURAL"
             ]);
+            $table->tinyText('district')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

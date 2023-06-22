@@ -63,6 +63,9 @@
                         <x-jet-nav-link href="{{ route('page.planning') }}" :active="request()->routeIs('page.planning')">
                             {{ __('Planning') }}
                         </x-jet-nav-link>
+                        <x-jet-nav-link href="{{ route('page.pmdi') }}" :active="request()->routeIs('page.pmdi')">
+                            {{ __('PMDI') }}
+                        </x-jet-nav-link>
                     @endrole
 
                     @role('validador')

@@ -24,6 +24,7 @@ class PlanningExport implements FromView, ShouldAutoSize, Responsable
     private $entity_id;
 
     private $resultQuery;
+    private $indicator_type_id;
 
     /*public function __construct($search, $sector_id, $entity_id, $type_id)
     {
@@ -33,9 +34,10 @@ class PlanningExport implements FromView, ShouldAutoSize, Responsable
         $this->type_id = $type_id;
     }*/
 
-    public function __construct($resultQuery)
+    public function __construct($resultQuery, $indicator_type_id)
     {
         $this->resultQuery = $resultQuery;
+        $this->indicator_type_id = $indicator_type_id;
     }
 
     /**
@@ -61,6 +63,9 @@ class PlanningExport implements FromView, ShouldAutoSize, Responsable
                 })->get()
         ]);*/
 
-        return view('exports.planning', ['plannings' => $this->resultQuery]);
+        return view('exports.planning', [
+            'plannings' => $this->resultQuery,
+            'indicator_type_id' => $this->indicator_type_id
+        ]);
     }
 }

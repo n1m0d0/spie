@@ -175,4 +175,9 @@ class PageController extends Controller
     {
         return view('pages.show-observation', compact('planning'));
     }
+
+    public function pmdi()
+    {
+        return view('pages.pmdi');
+    }
 }

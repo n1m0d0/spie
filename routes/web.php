@@ -65,6 +65,7 @@ Route::controller(PageController::class)->group(function () {
     Route::get('show-indicator/{planning}', 'showIndicator')->name('page.showIndicator')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
     Route::get('observation/{planning}', 'observation')->name('page.observation')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
     Route::get('show-observation/{planning}', 'showObservation')->name('page.showObservation')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
+    Route::get('pmdi', 'pmdi')->name('page.pmdi')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
 });
 
 Route::get('util', function () {
