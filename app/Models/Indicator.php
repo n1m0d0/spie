@@ -34,4 +34,9 @@ class Indicator extends Model implements Auditable
     {
         return $this->hasMany(Schedule::class);
     }
+
+    public function pointers()
+    {
+        return $this->belongsToMany(Pointer::class);
+    }
 }

@@ -20,14 +20,17 @@
                         <x-jet-nav-link href="{{ route('page.user') }}" :active="request()->routeIs('page.user')">
                             {{ __('User') }}
                         </x-jet-nav-link>
+                        <x-jet-nav-link href="{{ route('page.entity') }}" :active="request()->routeIs('page.entity')">
+                            {{ __('Entity') }}
+                        </x-jet-nav-link>
                         <!--
-                                    <x-jet-nav-link href="{{ route('page.type') }}" :active="request()->routeIs('page.type')">
-                                        {{ __('Type') }}
-                                    </x-jet-nav-link>
-                                    <x-jet-nav-link href="{{ route('page.measure') }}" :active="request()->routeIs('page.measure')">
-                                        {{ __('Measure') }}
-                                    </x-jet-nav-link>
-                                -->
+                                                                        <x-jet-nav-link href="{{ route('page.type') }}" :active="request()->routeIs('page.type')">
+                                                                            {{ __('Type') }}
+                                                                        </x-jet-nav-link>
+                                                                        <x-jet-nav-link href="{{ route('page.measure') }}" :active="request()->routeIs('page.measure')">
+                                                                            {{ __('Measure') }}
+                                                                        </x-jet-nav-link>
+                                                                    -->
                         <x-jet-nav-link href="{{ route('page.sector') }}" :active="request()->routeIs('page.sector')">
                             {{ __('Sector') }}
                         </x-jet-nav-link>
@@ -47,16 +50,16 @@
                             {{ __('Action') }}
                         </x-jet-nav-link>
                         <!--
-                                <x-jet-nav-link href="{{ route('page.department') }}" :active="request()->routeIs('page.department')">
-                                    {{ __('Department') }}
-                                </x-jet-nav-link>
-                                <x-jet-nav-link href="{{ route('page.municipality') }}" :active="request()->routeIs('page.municipality')">
-                                    {{ __('Municipality') }}
-                                </x-jet-nav-link>
-                                <x-jet-nav-link href="{{ route('page.organization') }}" :active="request()->routeIs('page.organization')">
-                                    {{ __('Organization') }}
-                                </x-jet-nav-link>
-                                -->
+                                                                    <x-jet-nav-link href="{{ route('page.department') }}" :active="request()->routeIs('page.department')">
+                                                                        {{ __('Department') }}
+                                                                    </x-jet-nav-link>
+                                                                    <x-jet-nav-link href="{{ route('page.municipality') }}" :active="request()->routeIs('page.municipality')">
+                                                                        {{ __('Municipality') }}
+                                                                    </x-jet-nav-link>
+                                                                    <x-jet-nav-link href="{{ route('page.organization') }}" :active="request()->routeIs('page.organization')">
+                                                                        {{ __('Organization') }}
+                                                                    </x-jet-nav-link>
+                                                                    -->
                     @endrole
 
                     @role('creador|creador territorial')
@@ -66,6 +69,9 @@
                         <x-jet-nav-link href="{{ route('page.pmdi') }}" :active="request()->routeIs('page.pmdi')">
                             {{ __('PMDI') }}
                         </x-jet-nav-link>
+                        <x-jet-nav-link href="{{ route('page.indicatorMatch') }}" :active="request()->routeIs('page.indicatorMatch')">
+                            {{ __('Match') }}
+                        </x-jet-nav-link>
                     @endrole
 
                     @role('validador')
@@ -74,6 +80,42 @@
                         </x-jet-nav-link>
                     @endrole
                 </div>
+
+                @role('admin')
+                    <div class="hidden sm:flex sm:items-center sm:ml-6">
+                        <x-jet-dropdown>
+                            <x-slot name="trigger">
+                                <span class="inline-flex rounded-md">
+                                    <button type="button"
+                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-white bg-white dark:bg-gray-900 hover:text-gray-700 dark:hover:text-gray-400 focus:outline-none transition">
+                                        ODS
+
+                                        <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                    </button>
+                                </span>
+                            </x-slot>
+
+                            <x-slot name="content">
+                                <x-jet-dropdown-link href="{{ route('page.objective') }}">
+                                    {{ __('Objective') }}
+                                </x-jet-dropdown-link>
+
+                                <x-jet-dropdown-link href="{{ route('page.aim') }}">
+                                    {{ __('Aim') }}
+                                </x-jet-dropdown-link>
+
+                                <x-jet-dropdown-link href="{{ route('page.pointer') }}">
+                                    {{ __('Pointer') }}
+                                </x-jet-dropdown-link>
+                            </x-slot>
+                        </x-jet-dropdown>
+                    </div>
+                @endrole
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -219,35 +261,56 @@
             <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="{{ route('page.user') }}" :active="request()->routeIs('page.user')">
-                {{ __('User') }}
-            </x-jet-responsive-nav-link>
-            <!--
-            <x-jet-responsive-nav-link href="{{ route('page.type') }}" :active="request()->routeIs('page.type')">
-                {{ __('Type') }}
-            </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="{{ route('page.measure') }}" :active="request()->routeIs('page.measure')">
-                {{ __('Measure') }}
-            </x-jet-responsive-nav-link>
-            -->
-            <x-jet-responsive-nav-link href="{{ route('page.sector') }}" :active="request()->routeIs('page.sector')">
-                {{ __('Sector') }}
-            </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="{{ route('page.pillar') }}" :active="request()->routeIs('page.pillar')">
-                {{ __('Pillar') }}
-            </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="{{ route('page.hub') }}" :active="request()->routeIs('page.hub')">
-                {{ __('Hub') }}
-            </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="{{ route('page.goal') }}" :active="request()->routeIs('page.goal')">
-                {{ __('Goal') }}
-            </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="{{ route('page.result') }}" :active="request()->routeIs('page.result')">
-                {{ __('Result') }}
-            </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="{{ route('page.action') }}" :active="request()->routeIs('page.action')">
-                {{ __('Action') }}
-            </x-jet-responsive-nav-link>
+            @role('admin')
+                <x-jet-responsive-nav-link href="{{ route('page.user') }}" :active="request()->routeIs('page.user')">
+                    {{ __('User') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('page.entity') }}" :active="request()->routeIs('page.user')">
+                    {{ __('Entity') }}
+                </x-jet-responsive-nav-link>
+                <!--
+                        <x-jet-responsive-nav-link href="{{ route('page.type') }}" :active="request()->routeIs('page.type')">
+                            {{ __('Type') }}
+                        </x-jet-responsive-nav-link>
+                        <x-jet-responsive-nav-link href="{{ route('page.measure') }}" :active="request()->routeIs('page.measure')">
+                            {{ __('Measure') }}
+                        </x-jet-responsive-nav-link>
+                        -->
+                <x-jet-responsive-nav-link href="{{ route('page.sector') }}" :active="request()->routeIs('page.sector')">
+                    {{ __('Sector') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('page.pillar') }}" :active="request()->routeIs('page.pillar')">
+                    {{ __('Pillar') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('page.hub') }}" :active="request()->routeIs('page.hub')">
+                    {{ __('Hub') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('page.goal') }}" :active="request()->routeIs('page.goal')">
+                    {{ __('Goal') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('page.result') }}" :active="request()->routeIs('page.result')">
+                    {{ __('Result') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('page.action') }}" :active="request()->routeIs('page.action')">
+                    {{ __('Action') }}
+                </x-jet-responsive-nav-link>
+
+                <div class="border-t border-gray-100">
+                    <h1 class="px-3 py-2 text-sm leading-4 font-medium text-gray-500 dark:text-white">
+                        ODS
+                    </h1>
+                </div>
+
+                <x-jet-responsive-nav-link href="{{ route('page.objective') }}" :active="request()->routeIs('page.objective')">
+                    {{ __('Objective') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('page.aim') }}" :active="request()->routeIs('page.aim')">
+                    {{ __('Aim') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('page.pointer') }}" :active="request()->routeIs('page.pointer')">
+                    {{ __('Pointer') }}
+                </x-jet-responsive-nav-link>
+            @endrole
             <!--
             <x-jet-responsive-nav-link href="{{ route('page.department') }}" :active="request()->routeIs('page.department')">
                 {{ __('Department') }}
@@ -259,6 +322,17 @@
                 {{ __('Organization') }}
             </x-jet-responsive-nav-link>
             -->
+            @role('creador|creador territorial')
+                <x-jet-responsive-nav-link href="{{ route('page.planning') }}" :active="request()->routeIs('page.planning')">
+                    {{ __('Planning') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('page.pmdi') }}" :active="request()->routeIs('page.pmdi')">
+                    {{ __('PMDI') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('page.indicatorMatch') }}" :active="request()->routeIs('page.indicatorMatch')">
+                    {{ __('Match') }}
+                </x-jet-responsive-nav-link>
+            @endrole
         </div>
 
         <!-- Responsive Settings Options -->

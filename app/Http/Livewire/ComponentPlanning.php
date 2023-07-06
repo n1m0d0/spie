@@ -145,7 +145,7 @@ class ComponentPlanning extends Component
 
         $searchEntities = Entity::query();
         if ($this->inputSearchEntity != null) {
-            $searchEntities = $searchEntities->where('name', 'like', '%' . $this->inputSearchEntity . '%')->get();
+            $searchEntities = $searchEntities->where('entity_id', $this->entity)->where('name', 'like', '%' . $this->inputSearchEntity . '%')->get();
         }
 
         /*$Query = Planning::query()

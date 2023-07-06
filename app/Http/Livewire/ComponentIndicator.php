@@ -77,12 +77,16 @@ class ComponentIndicator extends Component
     
     public function render()
     {
-        $Query = Indicator::query();
-        if ($this->search != null) {
-            $this->updatingSearch();
-            $Query = $Query->where('description', 'like', '%' . $this->search . '%');
-        }
-        $indicators = $Query->where('planning_id', $this->planning->id)->orderBy('id', 'DESC')->paginate(7);
+        $Query = Indicator::query()
+        //->where('planning_id', $this->planning->id)
+        ->where(function($query) {
+            $query->where('planning_id', $this->planning->id)->orWhere('planning_id', $this->planning->planning_id);
+        })
+        ->when($this->search, function($query){
+            $query->where('description', 'like', '%' . $this->search . '%');
+        });
+
+        $indicators = $Query->orderBy('id', 'DESC')->paginate(7);
         return view('livewire.component-indicator', compact('indicators'));
     }
 

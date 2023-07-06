@@ -263,7 +263,12 @@
                                         <li>
                                             <a href="{{ route('page.schedule', $indicator) }}"
                                                 class="font-medium text-orange-600 dark:text-orange-500 hover:underline cursor-pointer">{{ __('Schedule') }}</a>
-                                        </li>                                        
+                                        </li>          
+                                        
+                                        <li>
+                                            <a href="{{ route('page.articulate', $indicator) }}"
+                                                class="font-medium text-yellow-600 dark:text-yellow-500 hover:underline cursor-pointer">{{ __('Articulate') }}</a>
+                                        </li>    
                                     </ul>
                                 </td>
                             </tr>

@@ -55,6 +55,9 @@
                             <th scope="col" class="py-3 px-6">
                                 {{ __('Dissociation') }}
                             </th>
+                            <th scope="col" class="py-3 px-6">
+                                {{ __('Articulate') }}
+                            </th>
 
                             <th scope="col" class="py-3 px-6">
                                 <span class="sr-only">Actions</span>
@@ -102,6 +105,16 @@
                                         @foreach ($indicator->dissociations as $dissociation)
                                             <li class="flex items-center gap-2">
                                                 {{ $dissociation->name }}
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </td>
+
+                                <td class="py-4 px-6">
+                                    <ul>
+                                        @foreach ($indicator->pointers as $pointer)
+                                            <li class="flex items-center gap-2">
+                                                {{ $pointer->description }}
                                             </li>
                                         @endforeach
                                     </ul>

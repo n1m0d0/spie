@@ -93,6 +93,11 @@ class ComponentEntity extends Component
 
         $this->validate();
 
+        if($this->parent_id == "null")
+        {
+            $this->parent_id = null;
+        }
+
         $entity->entity_id = $this->parent_id;
         $entity->name = $this->name;
         $entity->acronym = $this->acronym;

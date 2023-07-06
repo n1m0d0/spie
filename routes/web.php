@@ -66,6 +66,11 @@ Route::controller(PageController::class)->group(function () {
     Route::get('observation/{planning}', 'observation')->name('page.observation')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
     Route::get('show-observation/{planning}', 'showObservation')->name('page.showObservation')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
     Route::get('pmdi', 'pmdi')->name('page.pmdi')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
+    Route::get('indicatorMatch', 'indicatorMatch')->name('page.indicatorMatch')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
+    Route::get('objective', 'objective')->name('page.objective')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
+    Route::get('aim', 'aim')->name('page.aim')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
+    Route::get('pointer', 'pointer')->name('page.pointer')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
+    Route::get('articulate/{indicator}', 'articulate')->name('page.articulate')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
 });
 
 Route::get('util', function () {

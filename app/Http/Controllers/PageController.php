@@ -180,4 +180,29 @@ class PageController extends Controller
     {
         return view('pages.pmdi');
     }
+
+    public function indicatorMatch()
+    {
+        return view('pages.match');
+    }
+
+    public function objective()
+    {
+        return view('pages.objective');
+    }
+
+    public function aim()
+    {
+        return view('pages.aim');
+    }
+
+    public function pointer()
+    {
+        return view('pages.pointer');
+    }
+
+    public function articulate(Indicator $indicator)
+    {
+        return view('pages.articulate', compact('indicator'));
+    }
 }
