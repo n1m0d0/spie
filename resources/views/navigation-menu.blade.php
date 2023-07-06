@@ -24,13 +24,17 @@
                             {{ __('Entity') }}
                         </x-jet-nav-link>
                         <!--
-                                                                        <x-jet-nav-link href="{{ route('page.type') }}" :active="request()->routeIs('page.type')">
-                                                                            {{ __('Type') }}
-                                                                        </x-jet-nav-link>
-                                                                        <x-jet-nav-link href="{{ route('page.measure') }}" :active="request()->routeIs('page.measure')">
-                                                                            {{ __('Measure') }}
-                                                                        </x-jet-nav-link>
-                                                                    -->
+                                                                                <x-jet-nav-link href="{{ route('page.type') }}" :active="request()->routeIs(
+                                                                                    'page.type',
+                                                                                )">
+                                                                                    {{ __('Type') }}
+                                                                                </x-jet-nav-link>
+                                                                                <x-jet-nav-link href="{{ route('page.measure') }}" :active="request()->routeIs(
+                                                                                    'page.measure',
+                                                                                )">
+                                                                                    {{ __('Measure') }}
+                                                                                </x-jet-nav-link>
+                                                                            -->
                         <x-jet-nav-link href="{{ route('page.sector') }}" :active="request()->routeIs('page.sector')">
                             {{ __('Sector') }}
                         </x-jet-nav-link>
@@ -50,16 +54,22 @@
                             {{ __('Action') }}
                         </x-jet-nav-link>
                         <!--
-                                                                    <x-jet-nav-link href="{{ route('page.department') }}" :active="request()->routeIs('page.department')">
-                                                                        {{ __('Department') }}
-                                                                    </x-jet-nav-link>
-                                                                    <x-jet-nav-link href="{{ route('page.municipality') }}" :active="request()->routeIs('page.municipality')">
-                                                                        {{ __('Municipality') }}
-                                                                    </x-jet-nav-link>
-                                                                    <x-jet-nav-link href="{{ route('page.organization') }}" :active="request()->routeIs('page.organization')">
-                                                                        {{ __('Organization') }}
-                                                                    </x-jet-nav-link>
-                                                                    -->
+                                                                            <x-jet-nav-link href="{{ route('page.department') }}" :active="request()->routeIs(
+                                                                                'page.department',
+                                                                            )">
+                                                                                {{ __('Department') }}
+                                                                            </x-jet-nav-link>
+                                                                            <x-jet-nav-link href="{{ route('page.municipality') }}" :active="request()->routeIs(
+                                                                                'page.municipality',
+                                                                            )">
+                                                                                {{ __('Municipality') }}
+                                                                            </x-jet-nav-link>
+                                                                            <x-jet-nav-link href="{{ route('page.organization') }}" :active="request()->routeIs(
+                                                                                'page.organization',
+                                                                            )">
+                                                                                {{ __('Organization') }}
+                                                                            </x-jet-nav-link>
+                                                                            -->
                     @endrole
 
                     @role('creador|creador territorial')
@@ -269,13 +279,13 @@
                     {{ __('Entity') }}
                 </x-jet-responsive-nav-link>
                 <!--
-                        <x-jet-responsive-nav-link href="{{ route('page.type') }}" :active="request()->routeIs('page.type')">
-                            {{ __('Type') }}
-                        </x-jet-responsive-nav-link>
-                        <x-jet-responsive-nav-link href="{{ route('page.measure') }}" :active="request()->routeIs('page.measure')">
-                            {{ __('Measure') }}
-                        </x-jet-responsive-nav-link>
-                        -->
+                                <x-jet-responsive-nav-link href="{{ route('page.type') }}" :active="request()->routeIs('page.type')">
+                                    {{ __('Type') }}
+                                </x-jet-responsive-nav-link>
+                                <x-jet-responsive-nav-link href="{{ route('page.measure') }}" :active="request()->routeIs('page.measure')">
+                                    {{ __('Measure') }}
+                                </x-jet-responsive-nav-link>
+                                -->
                 <x-jet-responsive-nav-link href="{{ route('page.sector') }}" :active="request()->routeIs('page.sector')">
                     {{ __('Sector') }}
                 </x-jet-responsive-nav-link>
@@ -331,6 +341,12 @@
                 </x-jet-responsive-nav-link>
                 <x-jet-responsive-nav-link href="{{ route('page.indicatorMatch') }}" :active="request()->routeIs('page.indicatorMatch')">
                     {{ __('Match') }}
+                </x-jet-responsive-nav-link>
+            @endrole
+
+            @role('validador')
+                <x-jet-responsive-nav-link href="{{ route('page.verify') }}" :active="request()->routeIs('page.verify')">
+                    {{ __('Validate') }}
                 </x-jet-responsive-nav-link>
             @endrole
         </div>
