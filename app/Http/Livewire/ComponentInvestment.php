@@ -33,7 +33,7 @@ class ComponentInvestment extends Component
 
     protected $rules = [
         'date' => 'required|max:200',
-        'budget' => 'required|max:200'
+        'budget' => 'required|decimal:0,2|min:0'
     ];
 
     public function mount()
